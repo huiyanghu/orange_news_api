@@ -1,6 +1,6 @@
-package com.it7890.orange.dao;
+package com.it7890.orange.api.dao;
 
-import com.it7890.orange.entity.AppAdvert;
+import com.it7890.orange.api.entity.AppAdvert;
 
 import java.util.ArrayList;
 import java.util.List;

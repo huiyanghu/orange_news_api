@@ -1,11 +1,11 @@
-package com.it7890.orange.cloud;
+package com.it7890.orange.api.cloud;
 
 import cn.leancloud.EngineFunction;
 import cn.leancloud.EngineFunctionParam;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
-import com.it7890.orange.entity.AppAdvert;
+import com.it7890.orange.api.entity.AppAdvert;
 
 import java.util.ArrayList;
 import java.util.List;
