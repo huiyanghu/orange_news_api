@@ -1,4 +1,4 @@
-package com.orange.entity;
+package com.it7890.orange.entity;
 
 import com.alibaba.fastjson.JSON;
 import com.avos.avoscloud.AVClassName;

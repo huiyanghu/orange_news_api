@@ -1,6 +1,6 @@
-package com.orange.dao;
+package com.it7890.orange.dao;
 
-import com.orange.entity.AppAdvert;
+import com.it7890.orange.entity.AppAdvert;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +12,10 @@ public class AppAdvertDao {
 
 	public List<AppAdvert> findAppAdverListByCountryCode(String countryCode) {
 		List<AppAdvert> adverList = new ArrayList<AppAdvert>();
+		if(countryCode != null && countryCode != "") {
+
+		}
+
 		return adverList;
 	}
 }
