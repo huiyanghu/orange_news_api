@@ -56,7 +56,7 @@ public class Cloud {
 
 	@EngineFunction("listTest")
 	public static List<AVObject> getTests(@EngineFunctionParam("name") String name) throws AVException {
-		System.out.print("<---listTest--->");
+		System.out.print("<---orange_news_api listTest--->");
 		AVQuery<AVObject> query = new AVQuery<>("Test");
 		query.orderByDescending("createdAt");
 		query.limit(Integer.parseInt(name));
