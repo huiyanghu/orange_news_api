@@ -1,9 +1,12 @@
 package com.it7890.orange.api.entity;
 
+import com.alibaba.fastjson.JSON;
 import com.avos.avoscloud.AVClassName;
 import com.avos.avoscloud.AVObject;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @AVClassName("AppTopics")
 public class AppTopics extends AVObject {
@@ -78,6 +81,22 @@ public class AppTopics extends AVObject {
 
 	public void setCreateuid(int createuId) {
 		this.put("createuId",createuId);
+	}
+
+
+	@Override
+	public String toString() {
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("hubiId", this.getString("hubiId"));
+		result.put("topicType", this.getString("topicType"));
+		result.put("keyWords", this.getString("keyWords"));
+		result.put("topicIcon", this.getString("topicIcon"));
+		result.put("rank", this.getString("rank"));
+		result.put("topicName", this.getString("topicName"));
+		result.put("countryId", this.getString("countryId"));
+		result.put("topicId", this.getInt("topicId"));
+		result.put("createuId", this.getInt("createuId"));
+		return JSON.toJSONString(result);
 	}
 
 }

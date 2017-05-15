@@ -15,85 +15,85 @@ public class HbCountrys extends AVObject {
         super();
     }
 
-    public int getStatus() {
-        return getInt("status");
-    }
-
-    public void setStatus(int status) {
-        this.put("status", status);
-    }
-
-    public int getLangid() {
-        return getInt("langid");
-    }
-
-    public void setLangid(int langid) {
-        this.put("langid", langid);
-    }
-
-    public String getCountryicon() {
-        return getString("countryicon");
-    }
-
-    public void setCountryicon(String countryicon) {
-        this.put("countryicon", countryicon);
-    }
-
-    public String getShortname() {
-        return getString("shortname");
-    }
-
-    public void setShortname(String shortname) {
-        this.put("shortname", shortname);
-    }
-
-    public String getCnname() {
-        return getString("cnname");
-    }
-
-    public void setCnname(String cnname) {
-        this.put("cnname", cnname);
-    }
-
-    public String getEnname() {
-        return getString("enname");
-    }
-
-    public void setEnname(String enname) {
-        this.put("enname", enname);
-    }
-
-    public String getCode() {
-        return getString("code");
-    }
-
-    public void setCode(String code) {
-        this.put("code", code);
-    }
-
-    public String getContinentid() {
-        return getString("continentid");
-    }
-
-    public void setContinentid(String continentid) {
-        this.put("continentid", continentid);
-    }
-
-    public String getContinent() {
-        return getString("continent");
-    }
-
-    public void setContinent(String continent) {
-        this.put("continent", continent);
-    }
-
-    public int getIsopen() {
-        return getInt("isopen");
-    }
-
-    public void setIsopen(int isopen) {
-        this.put("isopen", isopen);
-    }
+//    public int getStatus() {
+//        return getInt("status");
+//    }
+//
+//    public void setStatus(int status) {
+//        this.put("status", status);
+//    }
+//
+//    public int getLangid() {
+//        return getInt("langid");
+//    }
+//
+//    public void setLangid(int langid) {
+//        this.put("langid", langid);
+//    }
+//
+//    public String getCountryicon() {
+//        return getString("countryicon");
+//    }
+//
+//    public void setCountryicon(String countryicon) {
+//        this.put("countryicon", countryicon);
+//    }
+//
+//    public String getShortname() {
+//        return getString("shortname");
+//    }
+//
+//    public void setShortname(String shortname) {
+//        this.put("shortname", shortname);
+//    }
+//
+//    public String getCnname() {
+//        return getString("cnname");
+//    }
+//
+//    public void setCnname(String cnname) {
+//        this.put("cnname", cnname);
+//    }
+//
+//    public String getEnname() {
+//        return getString("enname");
+//    }
+//
+//    public void setEnname(String enname) {
+//        this.put("enname", enname);
+//    }
+//
+//    public String getCode() {
+//        return getString("code");
+//    }
+//
+//    public void setCode(String code) {
+//        this.put("code", code);
+//    }
+//
+//    public String getContinentid() {
+//        return getString("continentid");
+//    }
+//
+//    public void setContinentid(String continentid) {
+//        this.put("continentid", continentid);
+//    }
+//
+//    public String getContinent() {
+//        return getString("continent");
+//    }
+//
+//    public void setContinent(String continent) {
+//        this.put("continent", continent);
+//    }
+//
+//    public int getIsopen() {
+//        return getInt("isopen");
+//    }
+//
+//    public void setIsopen(int isopen) {
+//        this.put("isopen", isopen);
+//    }
 
     @Override
     public String toString() {

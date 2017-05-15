@@ -14,7 +14,7 @@ public class AppTopicsDao {
 	public List<AppTopics> getAppTopicsListByCountryId(String Id) {
 		List<AppTopics> topicsList = new ArrayList<AppTopics>();
 		if(Id != null && !"".equals(Id)) {
-			String cql = " select * from AppTopics where countryCode = ?";
+			String cql = " select * from AppTopics where objectId = ?";
 			try {
 				AVCloudQueryResult avCloudQueryResult = AVQuery.doCloudQuery(cql, Id);
 				topicsList = (List<AppTopics>) avCloudQueryResult.getResults();
