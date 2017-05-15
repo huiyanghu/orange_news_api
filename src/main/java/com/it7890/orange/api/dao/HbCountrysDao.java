@@ -14,7 +14,7 @@ public class HbCountrysDao {
     public List<HbCountrys> getCountryByCountryCode(String countryCode) {
         List<HbCountrys> cList = new ArrayList<HbCountrys>();
         if (countryCode != null && !"".equals(countryCode)) {
-            String cql = " select * from hb_countrys where code = ?";
+            String cql = " select * from hb_countrys where countryCode = ?";
             try {
                 AVCloudQueryResult avCloudQueryResult = AVQuery.doCloudQuery(cql, HbCountrys.class, countryCode);
                 cList = (List<HbCountrys>) avCloudQueryResult.getResults();
