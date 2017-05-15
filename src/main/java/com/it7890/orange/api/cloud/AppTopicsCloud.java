@@ -15,13 +15,13 @@ import java.util.List;
 
 
 public class AppTopicsCloud {
-	private static Logger logger = LogManager.getLogger(AppTopicsCloud.class.getName());
+	private static Logger logger = LogManager.getLogger(AppTopicsCloud.class);
 
-
-	HbCountrysDao hbCountrysDao;
 	@EngineFunction("queryCountryTopics")
 	public List<AppTopics> queryCountryTopics(@EngineFunctionParam("countryCode") String countryCode) throws AVException {
+		logger.info("0000000000000000000000000000000");
 		List<HbCountrys> hs = new HbCountrysServiceImpl().getcsByCode(countryCode);
+		logger.info(hs.size());
 		return new AppTopicsServiceImpl().getAppTopicsById(hs.get(0).getObjectId());
 	}
 }
