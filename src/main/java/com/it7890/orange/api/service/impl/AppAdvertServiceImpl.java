@@ -21,8 +21,6 @@ public class AppAdvertServiceImpl implements AppAdvertService {
 	private static final Logger logger = LogManager.getLogger(AppAdvertServiceImpl.class);
 
 	public List<AppAdvert> findAppAdverListByCountryCode(String countryCode) {
-		logger.info("AppAdvertServiceImpl" + appAdvertDao);
-
-		return appAdvertDao.findAppAdverListByCountryCode(countryCode);
+		return new AppAdvertDao().findAppAdverListByCountryCode(countryCode);
 	}
 }

@@ -19,13 +19,11 @@ import java.util.List;
  */
 public class AppAdvertCloud {
 
-
-	private static AppAdvertService appAdvertService2;
-
 	@Resource
-	private static AppAdvertService appAdvertService;
+	private AppAdvertService appAdvertService;
 	@Resource
 	private AppAdvertDao appAdvertDao;
+
 	private static final Logger logger = LogManager.getLogger(AppAdvertCloud.class);
 
 	/**
@@ -36,15 +34,7 @@ public class AppAdvertCloud {
 	 */
 	@EngineFunction("startImg")
 	public static List<AppAdvert> startImg(@EngineFunctionParam("countryCode") String countryCode) throws AVException {
-		logger.info("startImg args:" + countryCode);
-		return new AppAdvertDao().findAppAdverListByCountryCode(countryCode);
-//		return appAdvertService.findAppAdverListByCountryCode(countryCode);
-	}
-
-	private void test() {
-		appAdvertService2 = appAdvertService;
-		logger.info("============================= appAdvertService  " + appAdvertService);
-		logger.info("============================= appAdvertService2  " + appAdvertService2);
-		logger.info("============================= appAdvertDao  " + appAdvertDao);
+		logger.info("startImg args: " + countryCode);
+		return new AppAdvertServiceImpl().findAppAdverListByCountryCode(countryCode);
 	}
 }
