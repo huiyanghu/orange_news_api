@@ -17,7 +17,7 @@ import com.avos.avoscloud.internal.impl.JavaRequestSignImplementation;
 
 import cn.leancloud.LeanEngine;
 
-//@WebListener
+@WebListener
 public class AppInitListener implements ServletContextListener {
 
   private static final Logger logger = LogManager.getLogger(AppInitListener.class);
