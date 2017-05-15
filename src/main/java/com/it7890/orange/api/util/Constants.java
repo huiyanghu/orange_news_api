@@ -8,9 +8,9 @@ public class Constants {
 	/**-------------------- 操作结果code --------------------**/
 
 	/** 操作成功 **/
-	public final static int CODE_SUCCESS = 0;
+	public final static int CODE_SUCCESS = 1;
 	/** 参数错误 **/
-	public final static int CODE_PARAMS_FAIL = 1;
+	public final static int CODE_PARAMS_FAIL = 0;
 	/** 操作失败，服务端异常 **/
 	public final static int CODE_SERVER_FAIL = 2;
 	/** 重复操作提示 **/
