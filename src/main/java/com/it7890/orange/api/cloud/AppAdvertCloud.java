@@ -35,6 +35,7 @@ public class AppAdvertCloud {
 	 */
 	@EngineFunction("startImg")
 	public static List<AppAdvert> startimg(@EngineFunctionParam("countryCode") String countryCode) throws AVException {
+		logger.info("startImg args:" + countryCode);
 		return new AppAdvertDao().findAppAdverListByCountryCode(countryCode);
 //		return appAdvertService.findAppAdverListByCountryCode(countryCode);
 	}
