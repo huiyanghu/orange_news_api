@@ -218,7 +218,7 @@ public class AppAdvert extends AVObject{
 		result.put("adApkSize", this.getInt("adapksize"));
 		result.put("adType", this.getInt("adType"));
 		result.put("conType", this.getInt("conType"));
-		result.put("countryCode", this.getInt("countryCode"));
+		result.put("countryCode", this.getString("countryCode"));
 		result.put("jointType", this.getInt("jointType"));
 		result.put("urlType", this.getInt("urlType"));
 		result.put("starLv", this.getInt("starLv"));

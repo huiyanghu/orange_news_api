@@ -19,11 +19,7 @@ public class AppTopicsCloud {
 
 	@EngineFunction("queryCountryTopics")
 	public  static List<AppTopics> queryCountryTopics(@EngineFunctionParam("countryCode") String countryCode) throws AVException {
-		logger.info("0000000000000000000000000000000");
 		List<HbCountrys> hs = new HbCountrysServiceImpl().getcsByCode(countryCode);
-
-		logger.info("rrrrrrrrrrrr"+hs.size());
-		logger.info("tttttttttttttt"+hs.get(0).getObjectId());
 		return new AppTopicsServiceImpl().getAppTopicsById(hs.get(0).getObjectId());
 	}
 }

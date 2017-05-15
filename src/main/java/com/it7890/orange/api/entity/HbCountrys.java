@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-@AVClassName("HbCountrys")
+@AVClassName("hb_countrys")
 public class HbCountrys extends AVObject {
 
     public HbCountrys(){
@@ -63,13 +63,13 @@ public class HbCountrys extends AVObject {
 //        this.put("enname", enname);
 //    }
 //
-    public String getCode() {
-        return getString("code");
-    }
-
-    public void setCode(String code) {
-        this.put("code", code);
-    }
+//    public String getCode() {
+//        return getString("code");
+//    }
+//
+//    public void setCode(String code) {
+//        this.put("code", code);
+//    }
 //
 //    public String getContinentid() {
 //        return getString("continentid");
@@ -95,14 +95,14 @@ public class HbCountrys extends AVObject {
 //        this.put("isopen", isopen);
 //    }
 
-    @Override
-    public String toString() {
-        Map<String, Object> result = new HashMap<String, Object>();
+//    @Override
+//    public String toString() {
+//        Map<String, Object> result = new HashMap<String, Object>();
 //        result.put("cnname", this.getString("cnname"));
 //        result.put("enname", this.getString("enname"));
 //        result.put("shortname", this.getString("shortname"));
 //        result.put("countryicon", this.getString("countryicon"));
-        result.put("code", this.getString("code"));
+//        result.put("code", this.getString("code"));
 //        result.put("continentid", this.getInt("continentid"));
 //        result.put("continent", this.getString("continent"));
 //        result.put("isopen", this.getInt("isopen"));
@@ -110,7 +110,7 @@ public class HbCountrys extends AVObject {
 //        result.put("status", this.getInt("status"));
 //        result.put("objectId", this.getObjectId());
 //        result.put("createdAt", this.getCreatedAt());
-        return JSON.toJSONString(result);
-    }
+//        return JSON.toJSONString(result);
+//    }
 
 }
