@@ -5,7 +5,9 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
 import cn.leancloud.demo.todo.Todo;
+import com.avos.avoscloud.AVOSCloud;
 import com.it7890.orange.api.cloud.AppAdvertCloud;
+import com.it7890.orange.api.cloud.AppTopicsCloud;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -36,9 +38,10 @@ public class AppInitListener implements ServletContextListener {
     // 在请求签名中使用masterKey以激活云代码的最高权限
     JavaRequestSignImplementation.instance().setUseMasterKey(true);
     // 打开 debug 日志
-    // AVOSCloud.setDebugLogEnabled(true);
+     AVOSCloud.setDebugLogEnabled(true);
     // 向云引擎注册云函数
     LeanEngine.register(AppAdvertCloud.class);
+    LeanEngine.register(AppTopicsCloud.class);
     if (System.getenv("LEANCLOUD_APP_ENV").equals("development")) {
       // 如果是开发环境，则设置 AVCloud.callFunction 和 AVCloud.rpcFunction 调用本地云函数实现
       // 如果需要本地开发时调用云端云函数实现，则注释掉下面语句。
