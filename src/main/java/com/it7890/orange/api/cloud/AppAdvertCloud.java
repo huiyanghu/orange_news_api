@@ -65,18 +65,10 @@ public class AppAdvertCloud {
 		AppAdvertDto appAdvertDto = null;
 		List<AppAdvertDto> appAdvertDTOList = new ArrayList<AppAdvertDto>();
 		for(AppAdvert appAdvert : appAdvertList) {
-			appAdvertDto = new AppAdvertDto();
-			appAdvertDto.setObjectId(appAdvert.getObjectId());
-			appAdvertDto.setAdName(appAdvert.getAdName());
-			appAdvertDto.setAdTitle(appAdvert.getAdTitle());
-			appAdvertDto.setAdContent(appAdvert.getAdContent());
-			appAdvertDto.setAdimg(appAdvert.getAdImg());
-			appAdvertDto.setCountryCode(appAdvert.getCountryCode());
-			appAdvertDto.setLangId(appAdvert.getLangId());
-			appAdvertDto.setModelId(appAdvert.getModeId());
-			appAdvertDto.setUrlType(appAdvert.getUrlType());
-			appAdvertDto.setAdType(appAdvert.getAdType());
-			appAdvertDTOList.add(appAdvertDto);
+			appAdvertDto = AppAdvertDto.objectToDto(appAdvert);
+			if (null != appAdvertDto) {
+				appAdvertDTOList.add(appAdvertDto);
+			}
 		}
 		return appAdvertDTOList;
 	}

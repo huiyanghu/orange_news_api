@@ -100,4 +100,22 @@ public class AppAdvertDto {
 	public void setAdType(String adType) {
 		this.adType = adType;
 	}
+
+	public static AppAdvertDto objectToDto(AppAdvert appAdvertInfo) {
+		AppAdvertDto appAdvertDto = null;
+		if(null != appAdvertInfo) {
+			appAdvertDto = new AppAdvertDto();
+			appAdvertDto.setObjectId(appAdvertInfo.getObjectId());
+			appAdvertDto.setAdName(appAdvertInfo.getAdName());
+			appAdvertDto.setAdTitle(appAdvertInfo.getAdTitle());
+			appAdvertDto.setAdContent(appAdvertInfo.getAdContent());
+			appAdvertDto.setAdimg(appAdvertInfo.getAdImg());
+			appAdvertDto.setCountryCode(appAdvertInfo.getCountryCode());
+			appAdvertDto.setLangId(appAdvertInfo.getLangId());
+			appAdvertDto.setModelId(appAdvertInfo.getModeId());
+			appAdvertDto.setUrlType(appAdvertInfo.getUrlType());
+			appAdvertDto.setAdType(appAdvertInfo.getAdType());
+		}
+		return appAdvertDto;
+	}
 }
