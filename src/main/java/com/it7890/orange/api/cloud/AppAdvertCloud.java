@@ -40,7 +40,7 @@ public class AppAdvertCloud {
 	 */
 	@EngineFunction("startImg")
 	public static String startImg(@EngineFunctionParam("countryCode") String countryCode) throws AVException {
-		logger.info("startImg args: " + countryCode + "-- " + StringUtil.isNotEmpty(countryCode));
+		logger.info("args===>: " + countryCode);
 //		return new AppAdvertServiceImpl().findAppAdverListByCountryCode(countryCode);
 
 		int resultCode = Constants.CODE_SUCCESS;
@@ -62,8 +62,8 @@ public class AppAdvertCloud {
 	}
 
 	private static List<AppAdvertDto> transformBean(List<AppAdvert> appAdvertList) {
-		AppAdvertDto appAdvertDto = null;
-		List<AppAdvertDto> appAdvertDTOList = new ArrayList<AppAdvertDto>();
+		AppAdvertDto appAdvertDto;
+		List<AppAdvertDto> appAdvertDTOList = new ArrayList<>();
 		for(AppAdvert appAdvert : appAdvertList) {
 			appAdvertDto = AppAdvertDto.objectToDto(appAdvert);
 			if (null != appAdvertDto) {
