@@ -18,7 +18,7 @@ public class AppAdvertDao {
 		if(countryCode != null && !"".equals(countryCode)) {
 			String cql = " select * from AppAdvert where countryCode = ?";
 			try {
-				AVCloudQueryResult avCloudQueryResult = AVQuery.doCloudQuery(cql, countryCode);
+				AVCloudQueryResult avCloudQueryResult = AVQuery.doCloudQuery(cql, AppAdvert.class, countryCode);
 				adverList = (List<AppAdvert>) avCloudQueryResult.getResults();
 			} catch (Exception e) {
 				e.printStackTrace();

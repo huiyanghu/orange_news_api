@@ -2,6 +2,7 @@ package com.it7890.orange.api.cloud;
 
 import cn.leancloud.EngineFunction;
 import cn.leancloud.EngineFunctionParam;
+import com.alibaba.fastjson.JSON;
 import com.avos.avoscloud.AVException;
 import com.it7890.orange.api.dao.AppAdvertDao;
 import com.it7890.orange.api.entity.AppAdvert;
@@ -34,7 +35,7 @@ public class AppAdvertCloud {
 	 * @throws AVException
 	 */
 	@EngineFunction("startImg")
-	public static List<AppAdvert> startimg(@EngineFunctionParam("countryCode") String countryCode) throws AVException {
+	public static List<AppAdvert> startImg(@EngineFunctionParam("countryCode") String countryCode) throws AVException {
 		logger.info("startImg args:" + countryCode);
 		return new AppAdvertDao().findAppAdverListByCountryCode(countryCode);
 //		return appAdvertService.findAppAdverListByCountryCode(countryCode);

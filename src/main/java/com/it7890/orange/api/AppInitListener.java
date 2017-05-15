@@ -8,6 +8,7 @@ import cn.leancloud.demo.todo.Todo;
 import com.avos.avoscloud.AVOSCloud;
 import com.it7890.orange.api.cloud.AppAdvertCloud;
 import com.it7890.orange.api.cloud.AppTopicsCloud;
+import com.it7890.orange.api.entity.AppAdvert;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -32,7 +33,7 @@ public class AppInitListener implements ServletContextListener {
   public void contextInitialized(ServletContextEvent arg0) {
     logger.info("LeanEngine app init.");
     // 注册子类化
-    AVObject.registerSubclass(Todo.class);
+    AVObject.registerSubclass(AppAdvert.class);
     // 初始化AVOSCloud，请保证在整个项目中间只初始化一次
     LeanEngine.initialize(appId, appKey, appMasterKey);
     // 在请求签名中使用masterKey以激活云代码的最高权限
