@@ -28,15 +28,20 @@ public class AppTopicsCloud {
 
 	@EngineFunction("queryCountryTopics")
 	public  static String queryCountryTopics(@EngineFunctionParam("countryCode") String countryCode) throws AVException {
-		logger.info("queryCountryTopics===========>args=="+countryCode);
+		logger.info("queryCountryTopics===========>params:"+"countryCode="+countryCode);
 		int resultCode = Constants.CODE_SUCCESS;
 		String resultMsg = "成功";
 		List<AppTopics> ls = new ArrayList<AppTopics>();
 		List<AppTopicsDTO> resDTOList = new ArrayList<AppTopicsDTO>();
 		if (StringUtil.isNotEmpty(countryCode)){
-			List<HbCountrys> hs = new HbCountrysServiceImpl().getcsByCode(countryCode);
-			if(StringUtil.isNotEmpty(hs.get(0).getObjectId())){
-				ls = new AppTopicsServiceImpl().getAppTopicsById(hs.get(0).getObjectId());
+			List<HbCountrys> hs = new HbCountrysServiceImpl().getcsByCode(countryCode.toUpperCase());
+			if(hs.size()>0){
+				if(StringUtil.isNotEmpty(hs.get(0).getObjectId())){
+					ls = new AppTopicsServiceImpl().getAppTopicsById(hs.get(0).getObjectId());
+				}else {
+					resultCode = Constants.CODE_PARAMS_FAIL;
+					resultMsg = "内部参数有误";
+				}
 			}else {
 				resultCode = Constants.CODE_PARAMS_FAIL;
 				resultMsg = "国家不存在";
