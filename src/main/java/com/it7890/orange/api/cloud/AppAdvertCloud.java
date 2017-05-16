@@ -41,14 +41,13 @@ public class AppAdvertCloud {
 	@EngineFunction("startImg")
 	public static String startImg(@EngineFunctionParam("countryCode") String countryCode) throws AVException {
 		logger.info("args===>: " + countryCode);
-//		return new AppAdvertServiceImpl().findAppAdverListByCountryCode(countryCode);
 
 		int resultCode = Constants.CODE_SUCCESS;
 		String resultMsg = "成功";
 		List<AppAdvertDto> appAdvertDTOList = new ArrayList<>();
 		if (StringUtil.isNotEmpty(countryCode)) {
 			List<AppAdvert> appAdvertList = new AppAdvertServiceImpl().findAppAdverListByCountryCode(countryCode);
-			appAdvertDTOList = transformBean(appAdvertList);
+			appAdvertDTOList = buildAppAdvertDtoList(appAdvertList);
 		} else {
 			resultCode = Constants.CODE_PARAMS_FAIL;
 			resultMsg = "参数错误";
@@ -61,7 +60,7 @@ public class AppAdvertCloud {
 		return JSON.toJSONString(resultMap);
 	}
 
-	private static List<AppAdvertDto> transformBean(List<AppAdvert> appAdvertList) {
+	private static List<AppAdvertDto> buildAppAdvertDtoList(List<AppAdvert> appAdvertList) {
 		AppAdvertDto appAdvertDto;
 		List<AppAdvertDto> appAdvertDTOList = new ArrayList<>();
 		for(AppAdvert appAdvert : appAdvertList) {
