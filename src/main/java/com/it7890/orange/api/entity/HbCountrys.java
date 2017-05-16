@@ -15,6 +15,13 @@ public class HbCountrys extends AVObject {
         super();
     }
 
+//    public String getObjectId() {
+//        return getString("objectId");
+//    }
+//
+//    public void setObjectId(String objectId) {
+//        this.put("objectId", objectId);
+//    }
 //    public int getStatus() {
 //        return getInt("status");
 //    }
