@@ -242,4 +242,11 @@ public class ConArticle extends AVObject {
 		this.put("writer",writer);
 	}
 
+	public int getImgcount() {
+		return getInt("imgcount");
+	}
+
+	public void setImgcount(int imgcount) {
+		this.put("imgcount",imgcount);
+	}
 }

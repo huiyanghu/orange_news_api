@@ -51,7 +51,7 @@ public class AppTopicsCloud {
 			resultMsg = "参数错误";
 		}
 		if(resultCode == 1){
-			resDTOList = buildAppAdvertDtoList(ls);
+			resDTOList = buildDtoList(ls);
 		}
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("code", resultCode);
@@ -61,7 +61,7 @@ public class AppTopicsCloud {
 
 	}
 
-	private static List<AppTopicsDTO> buildAppAdvertDtoList(List<AppTopics> tmp) {
+	private static List<AppTopicsDTO> buildDtoList(List<AppTopics> tmp) {
 		AppTopicsDTO appTopicsDTO;
 		List<AppTopicsDTO> appTopicsDTOList = new ArrayList<>();
 		for(AppTopics appTopics : tmp) {
