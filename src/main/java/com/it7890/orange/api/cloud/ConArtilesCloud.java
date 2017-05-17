@@ -26,8 +26,8 @@ import java.util.Map;
 public class ConArtilesCloud {
 	private static Logger logger = LogManager.getLogger(ConArtilesCloud.class);
 
-	@EngineFunction("queryCountryTopics")
-	public  static String queryCountryTopics() throws AVException {
+	@EngineFunction("queryConArtilesList")
+	public  static String queryConArtilesList() throws AVException {
 		int resultCode = Constants.CODE_SUCCESS;
 		String resultMsg = "成功";
 		List<ConArticle> ls = new ArrayList<ConArticle>();
