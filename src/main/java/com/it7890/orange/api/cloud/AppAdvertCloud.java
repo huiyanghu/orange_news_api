@@ -56,7 +56,7 @@ public class AppAdvertCloud {
 		Map<String, Object> resultMap = new HashMap<>();
 		resultMap.put("code", resultCode);
 		resultMap.put("msg", resultMsg);
-		resultMap.put("privilegeList", appAdvertDTOList);
+		resultMap.put("appAdvertList", appAdvertDTOList);
 		return JSON.toJSONString(resultMap);
 	}
 
