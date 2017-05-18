@@ -5,6 +5,8 @@ import com.avos.avoscloud.AVObject;
 import com.it7890.orange.api.entity.AppAdvert;
 import com.it7890.orange.api.entity.AppTopics;
 
+import java.util.Date;
+
 @AVClassName("AppTopics")
 public class AppTopicsDTO {
 
@@ -19,6 +21,15 @@ public class AppTopicsDTO {
     private int rank;
     private int channelId;
     private int createuId;
+    private Date createTime;
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 
     public String getObjectId() {
         return objectId;
@@ -123,6 +134,7 @@ public class AppTopicsDTO {
             appTopicsDTO.setTopicId(tmp.getTopicId());
             appTopicsDTO.setTopicName(tmp.getTopicName());
             appTopicsDTO.setTopicType(tmp.getTopicType());
+            appTopicsDTO.setCreateTime(tmp.getCreatedAt());
         }
         return appTopicsDTO;
     }

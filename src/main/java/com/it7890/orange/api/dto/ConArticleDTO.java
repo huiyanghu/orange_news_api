@@ -5,51 +5,49 @@ import com.it7890.orange.api.entity.ConArticle;
 
 public class ConArticleDTO {
 
-    private long id;
-
     private String abstracts;
 
-    private String articleid;
+    private String articleId;
 
-    private String countrycode;
+    private String countryCode;
 
     private String title;
 
-    private String titlepic;
+    private String titlePic;
 
-    private int topicsid;
+    private int topicsId;
 
-    private String langid;
+    private String langId;
 
-    private String linkurl;
+    private String linkUrl;
 
     private int attr;
 
     private String author;
 
-    private int channelid;
+    private int channelId;
 
-    private int createuid;
+    private int createuId;
 
-    private int ctype;
+    private int cType;
 
-    private int imgcount;
+    private int imgCount;
 
-    private String keywords;
+    private String keyWords;
 
     private int latitude;
 
     private int longitude;
 
-    private String medialink;
+    private String mediaLink;
 
-    private int publicationid;
+    private int publicationId;
 
     private int rank;
 
     private String source;
 
-    private String sourceurl;
+    private String sourceUrl;
 
     private int status;
 
@@ -57,25 +55,17 @@ public class ConArticleDTO {
 
     private String writer;
 
-    private String sourcetitilepic;
+    private String sourceTitilePic;
 
     private String starttime;
 
     private String endtime;
 
-    private int pushnum;
+    private int pushNum;
 
     private String plogo;
 
     private String authorheadimg;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getAbstracts() {
         return abstracts;
@@ -85,20 +75,20 @@ public class ConArticleDTO {
         this.abstracts = abstracts;
     }
 
-    public String getArticleid() {
-        return articleid;
+    public String getArticleId() {
+        return articleId;
     }
 
-    public void setArticleid(String articleid) {
-        this.articleid = articleid;
+    public void setArticleId(String articleId) {
+        this.articleId = articleId;
     }
 
-    public String getCountrycode() {
-        return countrycode;
+    public String getCountryCode() {
+        return countryCode;
     }
 
-    public void setCountrycode(String countrycode) {
-        this.countrycode = countrycode;
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
     }
 
     public String getTitle() {
@@ -109,36 +99,36 @@ public class ConArticleDTO {
         this.title = title;
     }
 
-    public String getTitlepic() {
-        return titlepic;
+    public String getTitlePic() {
+        return titlePic;
     }
 
-    public void setTitlepic(String titlepic) {
-        this.titlepic = titlepic;
+    public void setTitlePic(String titlePic) {
+        this.titlePic = titlePic;
     }
 
-    public int getTopicsid() {
-        return topicsid;
+    public int getTopicsId() {
+        return topicsId;
     }
 
-    public void setTopicsid(int topicsid) {
-        this.topicsid = topicsid;
+    public void setTopicsId(int topicsId) {
+        this.topicsId = topicsId;
     }
 
-    public String getLangid() {
-        return langid;
+    public String getLangId() {
+        return langId;
     }
 
-    public void setLangid(String langid) {
-        this.langid = langid;
+    public void setLangId(String langId) {
+        this.langId = langId;
     }
 
-    public String getLinkurl() {
-        return linkurl;
+    public String getLinkUrl() {
+        return linkUrl;
     }
 
-    public void setLinkurl(String linkurl) {
-        this.linkurl = linkurl;
+    public void setLinkUrl(String linkUrl) {
+        this.linkUrl = linkUrl;
     }
 
     public int getAttr() {
@@ -157,44 +147,44 @@ public class ConArticleDTO {
         this.author = author;
     }
 
-    public int getChannelid() {
-        return channelid;
+    public int getChannelId() {
+        return channelId;
     }
 
-    public void setChannelid(int channelid) {
-        this.channelid = channelid;
+    public void setChannelId(int channelId) {
+        this.channelId = channelId;
     }
 
-    public int getCreateuid() {
-        return createuid;
+    public int getCreateuId() {
+        return createuId;
     }
 
-    public void setCreateuid(int createuid) {
-        this.createuid = createuid;
+    public void setCreateuId(int createuId) {
+        this.createuId = createuId;
     }
 
-    public int getCtype() {
-        return ctype;
+    public int getcType() {
+        return cType;
     }
 
-    public void setCtype(int ctype) {
-        this.ctype = ctype;
+    public void setcType(int cType) {
+        this.cType = cType;
     }
 
-    public int getImgcount() {
-        return imgcount;
+    public int getImgCount() {
+        return imgCount;
     }
 
-    public void setImgcount(int imgcount) {
-        this.imgcount = imgcount;
+    public void setImgCount(int imgCount) {
+        this.imgCount = imgCount;
     }
 
-    public String getKeywords() {
-        return keywords;
+    public String getKeyWords() {
+        return keyWords;
     }
 
-    public void setKeywords(String keywords) {
-        this.keywords = keywords;
+    public void setKeyWords(String keyWords) {
+        this.keyWords = keyWords;
     }
 
     public int getLatitude() {
@@ -213,20 +203,20 @@ public class ConArticleDTO {
         this.longitude = longitude;
     }
 
-    public String getMedialink() {
-        return medialink;
+    public String getMediaLink() {
+        return mediaLink;
     }
 
-    public void setMedialink(String medialink) {
-        this.medialink = medialink;
+    public void setMediaLink(String mediaLink) {
+        this.mediaLink = mediaLink;
     }
 
-    public int getPublicationid() {
-        return publicationid;
+    public int getPublicationId() {
+        return publicationId;
     }
 
-    public void setPublicationid(int publicationid) {
-        this.publicationid = publicationid;
+    public void setPublicationId(int publicationId) {
+        this.publicationId = publicationId;
     }
 
     public int getRank() {
@@ -245,12 +235,12 @@ public class ConArticleDTO {
         this.source = source;
     }
 
-    public String getSourceurl() {
-        return sourceurl;
+    public String getSourceUrl() {
+        return sourceUrl;
     }
 
-    public void setSourceurl(String sourceurl) {
-        this.sourceurl = sourceurl;
+    public void setSourceUrl(String sourceUrl) {
+        this.sourceUrl = sourceUrl;
     }
 
     public int getStatus() {
@@ -277,12 +267,12 @@ public class ConArticleDTO {
         this.writer = writer;
     }
 
-    public String getSourcetitilepic() {
-        return sourcetitilepic;
+    public String getSourceTitilePic() {
+        return sourceTitilePic;
     }
 
-    public void setSourcetitilepic(String sourcetitilepic) {
-        this.sourcetitilepic = sourcetitilepic;
+    public void setSourceTitilePic(String sourceTitilePic) {
+        this.sourceTitilePic = sourceTitilePic;
     }
 
     public String getStarttime() {
@@ -301,12 +291,12 @@ public class ConArticleDTO {
         this.endtime = endtime;
     }
 
-    public int getPushnum() {
-        return pushnum;
+    public int getPushNum() {
+        return pushNum;
     }
 
-    public void setPushnum(int pushnum) {
-        this.pushnum = pushnum;
+    public void setPushNum(int pushNum) {
+        this.pushNum = pushNum;
     }
 
     public String getPlogo() {
@@ -330,32 +320,33 @@ public class ConArticleDTO {
         if(null != tmp) {
             conArticleDTO = new ConArticleDTO();
             conArticleDTO.setAbstracts(tmp.getAbstracts());
-            conArticleDTO.setArticleid(tmp.getArticleid());
+            conArticleDTO.setArticleId(tmp.getArticleid());
             conArticleDTO.setAttr(tmp.getAttr());
             conArticleDTO.setAuthor(tmp.getAuthor());
             conArticleDTO.setAuthorheadimg(tmp.getAuthorheadimg());
-            conArticleDTO.setChannelid(tmp.getChannelid());
-            conArticleDTO.setCountrycode(tmp.getCountrycode());
-            conArticleDTO.setCreateuid(tmp.getCreateuid());
-            conArticleDTO.setCtype(tmp.getCtype());
-            conArticleDTO.setImgcount(tmp.getImgcount());
-            conArticleDTO.setKeywords(tmp.getKeywords());
-            conArticleDTO.setLangid(tmp.getLangid());
+            conArticleDTO.setChannelId(tmp.getChannelid());
+            conArticleDTO.setCountryCode(tmp.getCountrycode());
+            conArticleDTO.setCreateuId(tmp.getCreateuid());
+            conArticleDTO.setcType(tmp.getCtype());
+            conArticleDTO.setImgCount(tmp.getImgcount());
+            conArticleDTO.setKeyWords(tmp.getKeywords());
+            conArticleDTO.setLangId(tmp.getLangid());
             conArticleDTO.setLatitude(tmp.getLatitude());
-            conArticleDTO.setLinkurl("");
+            conArticleDTO.setLinkUrl(tmp.getLinkurl());
+//            conArticleDTO.setLinkUrl("");
             conArticleDTO.setLongitude(tmp.getLongitude());
-            conArticleDTO.setMedialink(tmp.getMedialink());
+            conArticleDTO.setMediaLink(tmp.getMedialink());
             conArticleDTO.setWriter(tmp.getWriter());
-            conArticleDTO.setTopicsid(tmp.getTopicsid());
-            conArticleDTO.setTitlepic(tmp.getTitlepic());
+            conArticleDTO.setTopicsId(tmp.getTopicsid());
+            conArticleDTO.setTitlePic(tmp.getTitlepic());
             conArticleDTO.setTitle(tmp.getTitle());
             conArticleDTO.setSubuid(tmp.getSubuid());
             conArticleDTO.setStatus(tmp.getStatus());
-            conArticleDTO.setSourceurl(tmp.getSourceurl());
-            conArticleDTO.setSourcetitilepic(tmp.getSourcetitilepic());
+            conArticleDTO.setSourceUrl(tmp.getSourceurl());
+            conArticleDTO.setSourceTitilePic(tmp.getSourcetitilepic());
             conArticleDTO.setRank(tmp.getRank());
-            conArticleDTO.setPushnum(tmp.getPushnum());
-            conArticleDTO.setPublicationid(tmp.getPublicationid());
+            conArticleDTO.setPushNum(tmp.getPushnum());
+            conArticleDTO.setPublicationId(tmp.getPublicationid());
             conArticleDTO.setPlogo(tmp.getPlogo());
         }
         return conArticleDTO;

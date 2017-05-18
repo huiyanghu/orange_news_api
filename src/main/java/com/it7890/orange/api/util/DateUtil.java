@@ -325,6 +325,26 @@ public class DateUtil {
     }
 	
 	public static void main(String[] args) {
-		System.out.println( getDistanceDay(getCurrentTimeMillis(), 1421247720063l) );
+//		System.out.println( getDistanceDay(getCurrentTimeMillis(), 1421247720063l) );
+
+
+//		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+//		DateFormat df1 = new SimpleDateFormat("HH:mm:ss");
+//		DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//		String s = df.format(new Date());
+//		String s1 = df1.format(new Date());
+//		String s3 = df2.format(new Date());
+//		String sss = s3.replace(" ","T")+".000Z";
+//
+//		System.out.println(s);
+//		System.out.println(s1);
+//		String ss = s + "T" + s1 +".000Z";
+//		System.out.println(ss);
+//		System.out.println(sss);
+		Long time = 1494578956898L - 28800000L;
+
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'.000Z'");
+		String s =  df.format(time);
+		System.out.println(s);
 	}
 }
