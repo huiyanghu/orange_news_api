@@ -40,7 +40,7 @@ public class AppAdvertCloud {
 	 */
 	@EngineFunction("startImg")
 	public static String startImg(@EngineFunctionParam("countryCode") String countryCode) throws AVException {
-		logger.info("args===>: " + countryCode);
+		logger.info("args===>：{}", countryCode);
 
 		int resultCode = Constants.CODE_SUCCESS;
 		String resultMsg = "成功";
@@ -53,7 +53,7 @@ public class AppAdvertCloud {
 			resultMsg = "参数错误";
 		}
 
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+		Map<String, Object> resultMap = new HashMap<>();
 		resultMap.put("code", resultCode);
 		resultMap.put("msg", resultMsg);
 		resultMap.put("privilegeList", appAdvertDTOList);
