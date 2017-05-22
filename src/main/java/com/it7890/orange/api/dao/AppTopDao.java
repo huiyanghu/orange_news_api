@@ -24,7 +24,8 @@ public class AppTopDao {
         List<AppTop> appTopsList = new ArrayList<AppTop>();
         if(StringUtils.isNotEmpty(topCreateTime)){
             long ltime = DateUtil.stringToLong(topCreateTime,DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS);
-            String createdAt = DateUtil.befor8HoursLong2String(ltime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS);
+//            String createdAt = DateUtil.befor8HoursLong2StringUTC(ltime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS);
+            String createdAt = DateUtil.Long2StringUTC(ltime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS);
             String cql = " select * from AppTop where status = ? and countryCode = ? and createdAt > date(?) order by createdAt desc";
             try {
                 AVCloudQueryResult avCloudQueryResult = AVQuery.doCloudQuery(cql, AppTop.class, 0,countryCode,createdAt);
