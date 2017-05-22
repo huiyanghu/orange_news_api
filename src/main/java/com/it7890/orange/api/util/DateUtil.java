@@ -18,7 +18,7 @@ public class DateUtil {
 	
 	public static final String FORMATER_YYYY_MM_DD = "yyyy-MM-dd";
 	public static final String FORMATER_YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
-	public static final String FORMATER_UTC_YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd'T'HH:mm:ss'.000Z'";
+	public static final String FORMATER_UTC_YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd'T'HH:mm:ss'.999Z'";
 
 	
 	/**
