@@ -20,9 +20,9 @@ public class ConArticleDao {
 
     public List<ConArticle> getArticlesList() {
         List<ConArticle> articlesList = new ArrayList<ConArticle>();
-        String cql = " select * from conarticle where status = ?";
+        String cql = " select * from conarticle where status = ? limit ? order by createdAt desc";
         try {
-            AVCloudQueryResult avCloudQueryResult = AVQuery.doCloudQuery(cql, ConArticle.class, 0);
+            AVCloudQueryResult avCloudQueryResult = AVQuery.doCloudQuery(cql, ConArticle.class, 0,10);
             articlesList = (List<ConArticle>) avCloudQueryResult.getResults();
         } catch (Exception e) {
             e.getMessage();
