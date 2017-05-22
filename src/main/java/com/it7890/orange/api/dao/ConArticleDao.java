@@ -45,13 +45,13 @@ public class ConArticleDao {
         return articlesList;
     }
 
-    public List<ConArticle> getTopicsArticlesList(String tid,String time) {
-        String createdAt = "";
+    public List<ConArticle> getTopicsArticlesList(String tid,String time,int direct) {//direct 0上拉 1下拉
+        String timeAt = "";
         long ltime = 0;
         if(StringUtils.isNotEmpty(time)){
             try {
                 ltime = DateUtil.stringToLong(time,DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS);
-                createdAt = DateUtil.befor8HoursLong2String(ltime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS);
+                timeAt = DateUtil.befor8HoursLong2String(ltime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -64,12 +64,12 @@ public class ConArticleDao {
 //            logger.info("22222222222222222222222"+createdAt);
             cql.append(" and createdAt > date(?) limit ? order by createdAt desc");
             try {
-                AVCloudQueryResult avCloudQueryResult = AVQuery.doCloudQuery(cql.toString(), ConArticle.class, 0,tid,createdAt,10);
+                AVCloudQueryResult avCloudQueryResult = AVQuery.doCloudQuery(cql.toString(), ConArticle.class, 0,tid,timeAt,10);
                 articlesList = (List<ConArticle>) avCloudQueryResult.getResults();
             } catch (Exception e) {
                 logger.info(e.getMessage());
             }
-        }else {
+        }else {//首次刷新
 //            logger.info("11111111111111111111111"+time);
             cql.append(" limit ? order by createdAt desc");
             try {
