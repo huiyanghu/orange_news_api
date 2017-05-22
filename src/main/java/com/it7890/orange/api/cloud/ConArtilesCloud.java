@@ -33,7 +33,9 @@ public class ConArtilesCloud {
 
 	@EngineFunction("queryIndexAndRecommendList")
 	public static String queryIndexAndRecommendList(@EngineFunctionParam("countryCode") String countryCode,
-											 @EngineFunctionParam("topCreateTime") String topCreateTime) throws AVException, ParseException {
+											 		@EngineFunctionParam("topCreateTime") String topCreateTime,
+													@EngineFunctionParam("artCreateTime") String artCreateTime,
+													@EngineFunctionParam("direct") int direct) throws AVException, ParseException {
 		int resultCode = Constants.CODE_SUCCESS;
 		String resultMsg = "成功";
 		List<ConArticleDTO> resArtDTOList = new ArrayList<ConArticleDTO>();
@@ -69,7 +71,7 @@ public class ConArtilesCloud {
 
 
 		if (true){
-			resArtDTOList = new ConArticleServiceImpl().getArticlesList();
+			resArtDTOList = new ConArticleServiceImpl().getArticlesList(artCreateTime,direct);
 		}else {
 			resultCode = Constants.CODE_PARAMS_FAIL;
 			resultMsg = "参数错误";
@@ -86,13 +88,14 @@ public class ConArtilesCloud {
 
 	@EngineFunction("queryTopicsArticlesList")
 	public static String queryTopicsArticlesList(@EngineFunctionParam("topicID") String topicID,
-													@EngineFunctionParam("createTime") String createTime) throws AVException, ParseException {
+												 @EngineFunctionParam("createTime") String createTime,
+												 @EngineFunctionParam("direct") int direct) throws AVException, ParseException {
 		int resultCode = Constants.CODE_SUCCESS;
 		String resultMsg = "成功";
 		List<ConArticleDTO> resArtDTOList = new ArrayList<ConArticleDTO>();
 
 		if (StringUtils.isNotEmpty(topicID)){
-			resArtDTOList = new ConArticleServiceImpl().getTopicsArticlesList(topicID,createTime);
+			resArtDTOList = new ConArticleServiceImpl().getTopicsArticlesList(topicID,createTime,direct);
 		}else {
 			resultCode = Constants.CODE_PARAMS_FAIL;
 			resultMsg = "参数错误,topicID不能为空";

@@ -35,12 +35,17 @@ public class AppTopicsCloud {
 		List<AppTopicsDTO> resDTOList = new ArrayList<AppTopicsDTO>();
 		if (StringUtil.isNotEmpty(countryCode)){
 			List<HbCountrys> hs = new HbCountrysServiceImpl().getcsByCode(countryCode.toUpperCase());
-			if(hs.size()>0){
-				if(StringUtil.isNotEmpty(hs.get(0).getObjectId())){
-					ls = new AppTopicsServiceImpl().getAppTopicsById(hs.get(0).getObjectId());
+			if(hs!=null){
+				if(hs.size()>0){
+					if(StringUtil.isNotEmpty(hs.get(0).getObjectId())){
+						ls = new AppTopicsServiceImpl().getAppTopicsById(hs.get(0).getObjectId());
+					}else {
+						resultCode = Constants.CODE_PARAMS_FAIL;
+						resultMsg = "内部参数有误";
+					}
 				}else {
 					resultCode = Constants.CODE_PARAMS_FAIL;
-					resultMsg = "内部参数有误";
+					resultMsg = "国家不存在";
 				}
 			}else {
 				resultCode = Constants.CODE_PARAMS_FAIL;

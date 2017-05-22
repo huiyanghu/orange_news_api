@@ -7,9 +7,9 @@ import java.util.List;
 
 
 public interface IConArticleService {
-	public List<ConArticleDTO> getArticlesList();
+	public List<ConArticleDTO> getArticlesList(String time,int direct);
 
 	public List<ConArticleDTO> getArticleById(String articleid);
 
-	public List<ConArticleDTO> getTopicsArticlesList(String id,String time);
+	public List<ConArticleDTO> getTopicsArticlesList(String id,String time,int direct);
 }
