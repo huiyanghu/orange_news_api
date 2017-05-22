@@ -38,31 +38,35 @@ public class ConArtilesCloud {
 		String resultMsg = "成功";
 		List<ConArticleDTO> resArtDTOList = new ArrayList<ConArticleDTO>();
 		List<AppTopDTO> resTopDTOList = new ArrayList<AppTopDTO>();
+		List<AppTopDTO> AppTopDTOLs = new ArrayList<AppTopDTO>();
 
 		//根据国家code获取置顶大图
-		List<AppTopDTO> AppTopDTOLs = new AppTopServiceImpl().getAppTopsList(countryCode,topCreateTime);
-		for(int i=0;i<AppTopDTOLs.size();i++){
-			AppTopDTO topDTO=AppTopDTOLs.get(i);
-			AppTopDTO newDto ;
-			if(topDTO.getiType()==1){//文章
-				List<ConArticleDTO> lsid = new ConArticleServiceImpl().getArticleById(topDTO.getObjId());
+		AppTopDTOLs = new AppTopServiceImpl().getAppTopsList(countryCode,topCreateTime);
+		if(AppTopDTOLs!=null){
+			for(int i=0;i<AppTopDTOLs.size();i++){
+				AppTopDTO topDTO=AppTopDTOLs.get(i);
+				AppTopDTO newDto ;
+				if(topDTO.getiType()==1){//文章
+					List<ConArticleDTO> lsid = new ConArticleServiceImpl().getArticleById(topDTO.getObjId());
 //				artvo.setCommentnum(interactiveService.getCommentnumByArtid(Integer.parseInt(top.getObjid().toString())));
-				if(lsid!=null){
-					newDto = new AppTopDTO();
-					BeanUtils.copyProperties(lsid.get(0), newDto);
-					newDto.setArticleId(topDTO.getObjId());
-					newDto.setObjId(topDTO.getObjId());
-					newDto.setCountryCode(topDTO.getCountryCode());
-                    resTopDTOList.add(newDto);
-				}
+					if(lsid!=null){
+						newDto = new AppTopDTO();
+						BeanUtils.copyProperties(lsid.get(0), newDto);
+						newDto.setArticleId(topDTO.getObjId());
+						newDto.setObjId(topDTO.getObjId());
+						newDto.setCountryCode(topDTO.getCountryCode());
+						resTopDTOList.add(newDto);
+					}
 //				String titlepic=newDto.getTitlePic();
 //				if(titlepic.indexOf("!")>-1){
 //					titlepic=titlepic.substring(0, titlepic.indexOf("!"));
 //					titlepic=titlepic+"!320";
 //				}
 //				newDto.setTitlePic(titlepic);
+				}
 			}
 		}
+
 
 		if (true){
 			resArtDTOList = new ConArticleServiceImpl().getArticlesList();
