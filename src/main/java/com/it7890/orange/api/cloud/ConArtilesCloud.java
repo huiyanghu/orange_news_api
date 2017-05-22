@@ -38,6 +38,7 @@ public class ConArtilesCloud {
 													@EngineFunctionParam("direct") int direct) throws AVException, ParseException {
 		int resultCode = Constants.CODE_SUCCESS;
 		String resultMsg = "成功";
+		Map<String, Object> resultMap = new HashMap<String, Object>();
 		List<ConArticleDTO> resArtDTOList = new ArrayList<ConArticleDTO>();
 		List<AppTopDTO> resTopDTOList = new ArrayList<AppTopDTO>();
 		List<AppTopDTO> appTopDTOLs = new ArrayList<AppTopDTO>();
@@ -67,21 +68,23 @@ public class ConArtilesCloud {
 //				newDto.setTitlePic(titlepic);
 				}
 			}
-		}
 
-
-		if (true){
-			resArtDTOList = new ConArticleServiceImpl().getArticlesList(artCreateTime,direct);
+			resultMap.put("topsList", resTopDTOList);
 		}else {
-			resultCode = Constants.CODE_PARAMS_FAIL;
-			resultMsg = "参数错误";
+			resultMsg = "置顶大图已最新";
 		}
 
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+		//开始文章查询
+		resArtDTOList = new ConArticleServiceImpl().getArticlesList(artCreateTime,direct);
+		if(resArtDTOList==null){
+			resultMsg = "文章已最新";
+		}else {
+			resultMap.put("artsList", resArtDTOList);
+		}
+
 		resultMap.put("code", resultCode);
 		resultMap.put("msg", resultMsg);
-		resultMap.put("artsList", resArtDTOList);
-		resultMap.put("topsList", resTopDTOList);
+
 		return JSON.toJSONString(resultMap);
 
 	}
@@ -92,19 +95,23 @@ public class ConArtilesCloud {
 												 @EngineFunctionParam("direct") int direct) throws AVException, ParseException {
 		int resultCode = Constants.CODE_SUCCESS;
 		String resultMsg = "成功";
+		Map<String, Object> resultMap = new HashMap<String, Object>();
 		List<ConArticleDTO> resArtDTOList = new ArrayList<ConArticleDTO>();
 
 		if (StringUtils.isNotEmpty(topicID)){
 			resArtDTOList = new ConArticleServiceImpl().getTopicsArticlesList(topicID,createTime,direct);
+			if(resArtDTOList!=null){
+				resultMap.put("artsList", resArtDTOList);
+			}else {
+				resultMsg = "文章已是最新";
+			}
 		}else {
 			resultCode = Constants.CODE_PARAMS_FAIL;
 			resultMsg = "参数错误,topicID不能为空";
 		}
 
-		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("code", resultCode);
 		resultMap.put("msg", resultMsg);
-		resultMap.put("artsList", resArtDTOList);
 
 		return JSON.toJSONString(resultMap);
 
