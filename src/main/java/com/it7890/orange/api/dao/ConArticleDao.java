@@ -53,7 +53,7 @@ public class ConArticleDao {
 
     public List<ConArticle> getArticleById(String articleid){
         List<ConArticle> articlesList = new ArrayList<ConArticle>();
-        String cql = " select * from conarticle where status = ? and articleid = ?";
+        String cql = " select * from conarticle where status = ? and objectId = ?";
         ConArticle art = new ConArticle();
         try {
 //            AVCloudQueryResult avCloudQueryResult = AVQuery.doCloudQuery(cql, ConArticle.class, Arrays.asList(0,articleid));

@@ -40,13 +40,13 @@ public class ConArtilesCloud {
 		String resultMsg = "成功";
 		List<ConArticleDTO> resArtDTOList = new ArrayList<ConArticleDTO>();
 		List<AppTopDTO> resTopDTOList = new ArrayList<AppTopDTO>();
-		List<AppTopDTO> AppTopDTOLs = new ArrayList<AppTopDTO>();
+		List<AppTopDTO> appTopDTOLs = new ArrayList<AppTopDTO>();
 
 		//根据国家code获取置顶大图
-		AppTopDTOLs = new AppTopServiceImpl().getAppTopsList(countryCode,topCreateTime);
-		if(AppTopDTOLs!=null){
-			for(int i=0;i<AppTopDTOLs.size();i++){
-				AppTopDTO topDTO=AppTopDTOLs.get(i);
+		appTopDTOLs = new AppTopServiceImpl().getAppTopsList(countryCode,topCreateTime);
+		if(appTopDTOLs!=null){
+			for(int i=0;i<appTopDTOLs.size();i++){
+				AppTopDTO topDTO=appTopDTOLs.get(i);
 				AppTopDTO newDto ;
 				if(topDTO.getiType()==1){//文章
 					List<ConArticleDTO> lsid = new ConArticleServiceImpl().getArticleById(topDTO.getObjId());
