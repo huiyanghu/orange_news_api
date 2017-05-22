@@ -27,6 +27,12 @@ public class ConArticleServiceImpl implements IConArticleService {
 		}
 	}
 
+	@Override
+	public List<ConArticleDTO> getTopicsArticlesList(String id, String time) {
+		List<ConArticle> ls = new ConArticleDao().getTopicsArticlesList(id,time);
+		return buildDtoList(ls);
+	}
+
 	private static List<ConArticleDTO> buildDtoList(List<ConArticle> tmp) {
 		ConArticleDTO conArticleDTO;
 		List<ConArticleDTO> DTOList = new ArrayList<ConArticleDTO>();

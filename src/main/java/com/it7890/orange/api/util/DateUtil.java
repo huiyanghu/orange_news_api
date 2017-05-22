@@ -18,7 +18,8 @@ public class DateUtil {
 	
 	public static final String FORMATER_YYYY_MM_DD = "yyyy-MM-dd";
 	public static final String FORMATER_YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
-	
+	public static final String FORMATER_UTC_YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd'T'HH:mm:ss'.000Z'";
+
 	
 	/**
 	 * 返回java.sql.Date类型的当前时间
@@ -323,6 +324,33 @@ public class DateUtil {
         
         return bigDay.intValue();
     }
+
+	public static long stringToLong(String strTime, String formatType)
+			throws ParseException {
+		Date date = stringToDate(strTime, formatType); // String类型转成date类型
+		if (date == null) {
+			return 0;
+		} else {
+			long currentTime = dateToLong(date); // date类型转成long类型
+			return currentTime;
+		}
+	}
+	public static long dateToLong(Date date) {
+		return date.getTime();
+	}
+	public static Date stringToDate(String strTime, String formatType)
+			throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat(formatType);
+		Date date = null;
+		date = formatter.parse(strTime);
+		return date;
+	}
+
+	public  static String befor8HoursLong2String(long tmp,String type){
+		long tmp1 = tmp - 28800000L;
+		DateFormat df = new SimpleDateFormat(type);
+		return  df.format(tmp1);
+	}
 	
 	public static void main(String[] args) {
 //		System.out.println( getDistanceDay(getCurrentTimeMillis(), 1421247720063l) );
@@ -341,10 +369,16 @@ public class DateUtil {
 //		String ss = s + "T" + s1 +".000Z";
 //		System.out.println(ss);
 //		System.out.println(sss);
-		Long time = 1494578956898L - 28800000L;
-
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'.000Z'");
-		String s =  df.format(time);
-		System.out.println(s);
+//		Long time = 1494578956898L - 28800000L;
+//
+//		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'.000Z'");
+//		String s =  df.format(time);
+//		System.out.println(s);
+		try {
+			long l = DateUtil.stringToLong("2017-05-19 10:02:00",DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS);
+			System.out.println(l);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 	}
 }

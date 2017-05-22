@@ -10,4 +10,6 @@ public interface IConArticleService {
 	public List<ConArticleDTO> getArticlesList();
 
 	public List<ConArticleDTO> getArticleById(String articleid);
+
+	public List<ConArticleDTO> getTopicsArticlesList(String id,String time);
 }

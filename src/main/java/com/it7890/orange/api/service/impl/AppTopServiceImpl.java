@@ -5,6 +5,7 @@ import com.it7890.orange.api.dto.AppTopDTO;
 import com.it7890.orange.api.entity.AppTop;
 import com.it7890.orange.api.service.IAppTopService;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
 public class AppTopServiceImpl implements IAppTopService {
 
 	@Override
-	public List<AppTopDTO> getAppTopsList(String countryCode,Long topCreateTime) {
+	public List<AppTopDTO> getAppTopsList(String countryCode,String topCreateTime) throws ParseException {
 		List<AppTop> ls =  new AppTopDao().getAppTopsList(countryCode,topCreateTime);
 		if (ls.size()>0){
 			return buildDtoList(ls);

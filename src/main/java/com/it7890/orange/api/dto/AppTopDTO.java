@@ -2,6 +2,7 @@ package com.it7890.orange.api.dto;
 
 import com.it7890.orange.api.entity.AppTop;
 import com.it7890.orange.api.entity.AppTopics;
+import com.it7890.orange.api.util.DateUtil;
 
 import java.util.Date;
 
@@ -66,17 +67,17 @@ public class AppTopDTO {
 	private int commentNum;
 
 	private int iType; // 类型 1文章 2 竞猜 3广告
-	private Date createTime;
+	private String createTime;
 
 	public int getiType() {
 		return iType;
 	}
 
-	public Date getCreateTime() {
+	public String getCreateTime() {
 		return createTime;
 	}
 
-	public void setCreateTime(Date createTime) {
+	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
 	}
 
@@ -347,7 +348,7 @@ public class AppTopDTO {
 			appTopDTO.setSourceTitilePic(tmp.getSourceTitilePic());
 			appTopDTO.setPushNum(tmp.getPushNum());
 			appTopDTO.setPublicationId(tmp.getPublicationId());
-			appTopDTO.setCreateTime(tmp.getCreatedAt());
+			appTopDTO.setCreateTime(DateUtil.formatFromDate(DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS,tmp.getCreatedAt()));
 			appTopDTO.setiType(tmp.getiType());
 		}
 		return appTopDTO;

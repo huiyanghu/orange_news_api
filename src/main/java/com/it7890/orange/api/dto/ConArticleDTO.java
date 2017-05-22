@@ -2,6 +2,7 @@ package com.it7890.orange.api.dto;
 
 
 import com.it7890.orange.api.entity.ConArticle;
+import com.it7890.orange.api.util.DateUtil;
 
 public class ConArticleDTO {
 
@@ -66,6 +67,16 @@ public class ConArticleDTO {
     private String plogo;
 
     private String authorheadimg;
+
+    public String getCreatTime() {
+        return creatTime;
+    }
+
+    public void setCreatTime(String creatTime) {
+        this.creatTime = creatTime;
+    }
+
+    private String creatTime;
 
     public String getAbstracts() {
         return abstracts;
@@ -348,6 +359,7 @@ public class ConArticleDTO {
             conArticleDTO.setPushNum(tmp.getPushnum());
             conArticleDTO.setPublicationId(tmp.getPublicationid());
             conArticleDTO.setPlogo(tmp.getPlogo());
+            conArticleDTO.setCreatTime(DateUtil.formatFromDate(DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS,tmp.getCreatedAt()));
         }
         return conArticleDTO;
     }

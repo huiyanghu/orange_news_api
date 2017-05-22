@@ -16,10 +16,12 @@ import com.it7890.orange.api.service.impl.ConArticleServiceImpl;
 import com.it7890.orange.api.service.impl.HbCountrysServiceImpl;
 import com.it7890.orange.api.util.Constants;
 import com.it7890.orange.api.util.StringUtil;
+import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,9 +31,9 @@ import java.util.Map;
 public class ConArtilesCloud {
 	private static Logger logger = LogManager.getLogger(ConArtilesCloud.class);
 
-	@EngineFunction("queryIndexAndConArtilesList")
-	public static String queryConArtilesList(@EngineFunctionParam("countryCode") String countryCode,
-											 @EngineFunctionParam("topCreateTime") Long topCreateTime) throws AVException {
+	@EngineFunction("queryIndexAndRecommendList")
+	public static String queryIndexAndRecommendList(@EngineFunctionParam("countryCode") String countryCode,
+											 @EngineFunctionParam("topCreateTime") String topCreateTime) throws AVException, ParseException {
 		int resultCode = Constants.CODE_SUCCESS;
 		String resultMsg = "成功";
 		List<ConArticleDTO> resArtDTOList = new ArrayList<ConArticleDTO>();
@@ -50,6 +52,7 @@ public class ConArtilesCloud {
 					BeanUtils.copyProperties(lsid.get(0), newDto);
 					newDto.setArticleId(topDTO.getObjId());
 					newDto.setObjId(topDTO.getObjId());
+					newDto.setCountryCode(topDTO.getCountryCode());
                     resTopDTOList.add(newDto);
 				}
 //				String titlepic=newDto.getTitlePic();
@@ -73,6 +76,29 @@ public class ConArtilesCloud {
 		resultMap.put("msg", resultMsg);
 		resultMap.put("artsList", resArtDTOList);
 		resultMap.put("topsList", resTopDTOList);
+		return JSON.toJSONString(resultMap);
+
+	}
+
+	@EngineFunction("queryTopicsArticlesList")
+	public static String queryTopicsArticlesList(@EngineFunctionParam("topicID") String topicID,
+													@EngineFunctionParam("createTime") String createTime) throws AVException, ParseException {
+		int resultCode = Constants.CODE_SUCCESS;
+		String resultMsg = "成功";
+		List<ConArticleDTO> resArtDTOList = new ArrayList<ConArticleDTO>();
+
+		if (StringUtils.isNotEmpty(topicID)){
+			resArtDTOList = new ConArticleServiceImpl().getTopicsArticlesList(topicID,createTime);
+		}else {
+			resultCode = Constants.CODE_PARAMS_FAIL;
+			resultMsg = "参数错误,topicID不能为空";
+		}
+
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("code", resultCode);
+		resultMap.put("msg", resultMsg);
+		resultMap.put("artsList", resArtDTOList);
+
 		return JSON.toJSONString(resultMap);
 
 	}
