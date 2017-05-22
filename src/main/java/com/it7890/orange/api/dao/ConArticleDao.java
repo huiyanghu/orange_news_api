@@ -29,8 +29,10 @@ public class ConArticleDao {
                 e.printStackTrace();
             }
             if (direct == 0){
+                logger.info("RECOMMtimeAt00000000000000000::::"+timeAt);
                 cql.append(" and createdAt > date(?) limit ? order by createdAt desc");
             } else if (direct == 1) {
+                logger.info("RECOMMtimeAt11111111111111111111::::"+timeAt);
                 cql.append(" and createdAt < date(?) limit ? order by createdAt desc");
             }
             try {
@@ -80,8 +82,10 @@ public class ConArticleDao {
                 e.printStackTrace();
             }
             if(direct == 0){
+                logger.info("TOPICtimeAt00000000000000000::::"+timeAt);
                 cql.append(" and createdAt > date(?) limit ? order by createdAt desc");
             } else if (direct == 1) {
+                logger.info("TOPICtimeAt11111111111111111111::::"+timeAt);
                 cql.append(" and createdAt < date(?) limit ? order by createdAt desc");
             }
             try {
