@@ -24,7 +24,8 @@ public class ConArticleDao {
         if(StringUtils.isNotEmpty(time)){
             try {
                 ltime = DateUtil.stringToLong(time,DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS);
-                timeAt = DateUtil.befor8HoursLong2String(ltime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS);
+//                timeAt = DateUtil.befor8HoursLong2StringUTC(ltime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS);
+                timeAt = DateUtil.Long2StringUTC(ltime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -77,7 +78,8 @@ public class ConArticleDao {
         if(StringUtils.isNotEmpty(time)){
             try {
                 ltime = DateUtil.stringToLong(time,DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS);
-                timeAt = DateUtil.befor8HoursLong2String(ltime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS);
+//                timeAt = DateUtil.befor8HoursLong2StringUTC(ltime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS);
+                timeAt = DateUtil.Long2StringUTC(ltime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS);
             } catch (ParseException e) {
                 e.printStackTrace();
             }

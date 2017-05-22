@@ -346,10 +346,14 @@ public class DateUtil {
 		return date;
 	}
 
-	public  static String befor8HoursLong2String(long tmp,String type){
+	public  static String befor8HoursLong2StringUTC(long tmp,String type){
 		long tmp1 = tmp - 28800000L;
 		DateFormat df = new SimpleDateFormat(type);
 		return  df.format(tmp1);
+	}
+	public  static String Long2StringUTC(long tmp,String type){
+		DateFormat df = new SimpleDateFormat(type);
+		return  df.format(tmp);
 	}
 	
 	public static void main(String[] args) {
