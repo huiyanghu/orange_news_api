@@ -1,5 +1,6 @@
 package com.it7890.orange.api.entity;
 import com.avos.avoscloud.AVClassName;
+import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVObject;
 
 
@@ -251,11 +252,11 @@ public class ConArticle extends AVObject {
 	}
 
 
-	public AVObject getTitlePicObj() {
-		return getAVObject("titlePicObj");
+	public AVFile  getTitlePicObj() {
+		return getAVFile("titlePicObj");
 	}
 
-	public void setTitelPicObj(AVObject titlePicObj) {
+	public void setTitelPicObj(AVFile titlePicObj) {
 		this.put("titlePicObj", titlePicObj);
 	}
 

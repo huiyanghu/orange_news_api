@@ -1,11 +1,15 @@
 package com.it7890.orange.api.dto;
 
 
+import com.it7890.orange.api.cloud.ConArtilesCloud;
 import com.it7890.orange.api.entity.ConArticle;
 import com.it7890.orange.api.util.DateUtil;
 import com.it7890.orange.api.util.StringUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class ConArticleDTO {
+    private static Logger logger = LogManager.getLogger(ConArticleDTO.class);
 
     private String abstracts;
 
@@ -371,7 +375,7 @@ public class ConArticleDTO {
             conArticleDTO.setPublicationId(tmp.getPublicationid());
             conArticleDTO.setPlogo(tmp.getPlogo());
             conArticleDTO.setCreatTime(DateUtil.formatFromDate(DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS,tmp.getCreatedAt()));
-            conArticleDTO.setTitlePic(null != tmp.getTitlePicObj() ? tmp.getTitlePicObj().getString("ulr") : "");
+            conArticleDTO.setTitlePic(null != tmp.getTitlePicObj() ? tmp.getTitlePicObj().getUrl() : "");
             conArticleDTO.setTitlePicId(null != tmp.getTitlePicObj() ? tmp.getTitlePicObj().getObjectId() : "");
         }
         return conArticleDTO;

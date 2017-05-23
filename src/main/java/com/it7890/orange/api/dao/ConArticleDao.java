@@ -72,7 +72,7 @@ public class ConArticleDao {
     public List<ConArticle> getTopicsArticlesList(String tid,String time,int direct) {//direct 0下拉 1上拉,默认0
         List<ConArticle> articlesList = new ArrayList<ConArticle>();
         StringBuffer cql = new StringBuffer();
-        cql.append("select * from conarticle where status = ? and topicObj = pointer('AppTopics', ?)") ;
+        cql.append("select include titlePicObj,* from conarticle where status = ? and topicObj = pointer('AppTopics', ?)") ;
         String timeAt = "";
         long ltime = 0;
         if(StringUtils.isNotEmpty(time)){
