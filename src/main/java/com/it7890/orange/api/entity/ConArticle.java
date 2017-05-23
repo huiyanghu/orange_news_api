@@ -249,4 +249,14 @@ public class ConArticle extends AVObject {
 	public void setImgcount(int imgcount) {
 		this.put("imgcount",imgcount);
 	}
+
+
+	public AVObject getTitlePicObj() {
+		return getAVObject("titlePicObj");
+	}
+
+	public void setTitelPicObj(AVObject titlePicObj) {
+		this.put("titlePicObj", titlePicObj);
+	}
+
 }

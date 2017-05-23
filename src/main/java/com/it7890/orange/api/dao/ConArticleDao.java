@@ -18,7 +18,7 @@ public class ConArticleDao {
     public List<ConArticle> getArticlesList(String time,int direct) {
         List<ConArticle> articlesList = new ArrayList<ConArticle>();
         StringBuffer cql = new StringBuffer();
-        cql.append("select * from conarticle where status = ?");
+        cql.append("select include titlePicObj, * from conarticle where status = ?");
         String timeAt = "";
         long ltime = 0;
         if(StringUtils.isNotEmpty(time)){

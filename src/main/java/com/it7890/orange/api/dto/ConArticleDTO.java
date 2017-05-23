@@ -3,6 +3,7 @@ package com.it7890.orange.api.dto;
 
 import com.it7890.orange.api.entity.ConArticle;
 import com.it7890.orange.api.util.DateUtil;
+import com.it7890.orange.api.util.StringUtil;
 
 public class ConArticleDTO {
 
@@ -15,6 +16,16 @@ public class ConArticleDTO {
     private String title;
 
     private String titlePic;
+
+    public String getTitlePicId() {
+        return titlePicId;
+    }
+
+    public void setTitlePicId(String titlePicId) {
+        this.titlePicId = titlePicId;
+    }
+
+    private String titlePicId;
 
     private int topicsId;
 
@@ -360,6 +371,8 @@ public class ConArticleDTO {
             conArticleDTO.setPublicationId(tmp.getPublicationid());
             conArticleDTO.setPlogo(tmp.getPlogo());
             conArticleDTO.setCreatTime(DateUtil.formatFromDate(DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS,tmp.getCreatedAt()));
+            conArticleDTO.setTitlePic(null != tmp.getTitlePicObj() ? tmp.getTitlePicObj().getString("ulr") : "");
+            conArticleDTO.setTitlePicId(null != tmp.getTitlePicObj() ? tmp.getTitlePicObj().getObjectId() : "");
         }
         return conArticleDTO;
     }
