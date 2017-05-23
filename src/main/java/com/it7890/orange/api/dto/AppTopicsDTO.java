@@ -12,7 +12,7 @@ public class AppTopicsDTO {
 
     private String objectId;
     private String countryId;
-    private int topicId;
+    private String topicId;
     private String topicIcon;
     private String topicName;
     private String hubiId;
@@ -47,11 +47,11 @@ public class AppTopicsDTO {
         this.countryId = countryId;
     }
 
-    public int getTopicId() {
+    public String getTopicId() {
         return topicId;
     }
 
-    public void setTopicId(int topicId) {
+    public void setTopicId(String topicId) {
         this.topicId = topicId;
     }
 
@@ -123,7 +123,7 @@ public class AppTopicsDTO {
         AppTopicsDTO appTopicsDTO = null;
         if(null != tmp) {
             appTopicsDTO = new AppTopicsDTO();
-            appTopicsDTO.setObjectId(tmp.getObjectId());
+//            appTopicsDTO.setObjectId(tmp.getObjectId());
             appTopicsDTO.setChannelId(tmp.getChannelId());
             appTopicsDTO.setCountryId(tmp.getCountryId());
             appTopicsDTO.setCreateuId(tmp.getCreateuId());
@@ -131,7 +131,7 @@ public class AppTopicsDTO {
             appTopicsDTO.setKeyWords(tmp.getKeyWords());
             appTopicsDTO.setRank(tmp.getRank());
             appTopicsDTO.setTopicIcon(tmp.getTopicIcon());
-            appTopicsDTO.setTopicId(tmp.getTopicId());
+            appTopicsDTO.setTopicId(tmp.getObjectId());
             appTopicsDTO.setTopicName(tmp.getTopicName());
             appTopicsDTO.setTopicType(tmp.getTopicType());
             appTopicsDTO.setCreateTime(tmp.getCreatedAt());
