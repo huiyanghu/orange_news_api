@@ -8,6 +8,8 @@ import com.it7890.orange.api.util.StringUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.List;
+
 public class ConArticleDTO {
     private static Logger logger = LogManager.getLogger(ConArticleDTO.class);
 
@@ -21,6 +23,11 @@ public class ConArticleDTO {
 
     private String titlePic;
 
+
+
+    private List titlePicList;
+    private List contentPicObjArr;
+
     public String getTitlePicId() {
         return titlePicId;
     }
@@ -31,7 +38,7 @@ public class ConArticleDTO {
 
     private String titlePicId;
 
-    private int topicsId;
+    private String topicsId;
 
     private String langId;
 
@@ -133,11 +140,11 @@ public class ConArticleDTO {
         this.titlePic = titlePic;
     }
 
-    public int getTopicsId() {
+    public String getTopicsId() {
         return topicsId;
     }
 
-    public void setTopicsId(int topicsId) {
+    public void setTopicsId(String topicsId) {
         this.topicsId = topicsId;
     }
 
@@ -341,12 +348,27 @@ public class ConArticleDTO {
         this.authorheadimg = authorheadimg;
     }
 
+    public List getTitlePicList() {
+        return titlePicList;
+    }
+
+    public void setTitlePicList(List titlePicList) {
+        this.titlePicList = titlePicList;
+    }
+    public List getContentPicObjArr() {
+        return contentPicObjArr;
+    }
+
+    public void setContentPicObjArr(List contentPicObjArr) {
+        this.contentPicObjArr = contentPicObjArr;
+    }
+
     public static ConArticleDTO objectToDto(ConArticle tmp) {
         ConArticleDTO conArticleDTO = null;
         if(null != tmp) {
             conArticleDTO = new ConArticleDTO();
             conArticleDTO.setAbstracts(tmp.getAbstracts());
-            conArticleDTO.setArticleId(tmp.getArticleid());
+            conArticleDTO.setArticleId(tmp.getObjectId());
             conArticleDTO.setAttr(tmp.getAttr());
             conArticleDTO.setAuthor(tmp.getAuthor());
             conArticleDTO.setAuthorheadimg(tmp.getAuthorheadimg());
@@ -363,7 +385,7 @@ public class ConArticleDTO {
             conArticleDTO.setLongitude(tmp.getLongitude());
             conArticleDTO.setMediaLink(tmp.getMedialink());
             conArticleDTO.setWriter(tmp.getWriter());
-            conArticleDTO.setTopicsId(tmp.getTopicsid());
+            conArticleDTO.setTopicsId(tmp.getTopicObj().getObjectId());
             conArticleDTO.setTitlePic(tmp.getTitlepic());
             conArticleDTO.setTitle(tmp.getTitle());
             conArticleDTO.setSubuid(tmp.getSubuid());
@@ -377,6 +399,8 @@ public class ConArticleDTO {
             conArticleDTO.setCreatTime(DateUtil.formatFromDate(DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS,tmp.getCreatedAt()));
             conArticleDTO.setTitlePic(null != tmp.getTitlePicObj() ? tmp.getTitlePicObj().getUrl() : "");
             conArticleDTO.setTitlePicId(null != tmp.getTitlePicObj() ? tmp.getTitlePicObj().getObjectId() : "");
+            conArticleDTO.setTitlePicList(tmp.getTitlePicList());
+            conArticleDTO.setContentPicObjArr(tmp.getContentPicObjArr());
         }
         return conArticleDTO;
     }
