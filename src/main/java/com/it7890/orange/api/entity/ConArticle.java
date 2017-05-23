@@ -3,6 +3,8 @@ import com.avos.avoscloud.AVClassName;
 import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVObject;
 
+import java.util.List;
+
 
 @AVClassName("conarticle")
 public class ConArticle extends AVObject {
@@ -33,6 +35,21 @@ public class ConArticle extends AVObject {
 
 	public void setTitlepic(String titlepic) {
 		this.put("titlepic",titlepic);
+	}
+
+	public List getTitlePicList() {
+		return getList("titlePicObjArr");
+	}
+
+	public void setTitlePicList(List titlePicObjArr) {
+		this.put("titlePicObjArr",titlePicObjArr);
+	}
+
+	public List getContentPicObjArr(){
+		return getList("contentPicObjArr");
+	}
+	public void setContentPicObjArr(List contentPicObjArr){
+		this.put("contentPicObjArr",contentPicObjArr);
 	}
 
 	public String getSourcetitilepic() {
@@ -258,6 +275,12 @@ public class ConArticle extends AVObject {
 
 	public void setTitelPicObj(AVFile titlePicObj) {
 		this.put("titlePicObj", titlePicObj);
+	}
+	public AVObject getTopicObj(){
+		return getAVObject("topicObj");
+	}
+	public void  setTopicObj(AVObject topicObj){
+		this.put("topicObj",topicObj);
 	}
 
 }
