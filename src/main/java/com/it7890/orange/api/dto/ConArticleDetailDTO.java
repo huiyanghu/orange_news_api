@@ -1,6 +1,7 @@
 package com.it7890.orange.api.dto;
 
 import com.it7890.orange.api.entity.ConArticlesContent;
+import com.it7890.orange.api.util.DateUtil;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -104,6 +105,7 @@ public class ConArticleDetailDTO {
 			conArticleDetailDTO.setContentBody(encoder.encode(tmp.getContent().getBytes()));
 			conArticleDetailDTO.setCategory(tmp.getTopicObj().getString("topicName"));
 			conArticleDetailDTO.setCountry(tmp.getArticleObj().getString("countrycode"));
+			conArticleDetailDTO.setPubTime(DateUtil.formatFromDate(DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS,tmp.getArticleObj().getCreatedAt()));
 		}
 		return conArticleDetailDTO;
 	}
