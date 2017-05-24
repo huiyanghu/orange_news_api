@@ -32,4 +32,6 @@ public class Constants {
 	public final static int CODE_EMAIL_EXIST = 203;
 	/** 没有提供电子邮箱地址 **/
 	public final static int CODE_EMAIL_EMPTY = 204;
+	/**  用户名和密码不匹配 **/
+	public final static int CODE_USER_UNMATCH = 210;
 }
