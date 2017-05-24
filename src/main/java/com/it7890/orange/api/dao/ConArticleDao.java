@@ -23,17 +23,25 @@ public class ConArticleDao {
         String timeAt = "";
         long ltime = 0;
         if(StringUtils.isNotEmpty(time)){
-            try {
-                ltime = DateUtil.stringToLong(time,DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS);
-//                timeAt = DateUtil.befor8HoursLong2StringUTC(ltime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS);
-                timeAt = DateUtil.Long2StringUTC(ltime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+
             if (direct == 0){
+                try {
+                    ltime = DateUtil.stringToLong(time,DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS);
+//                timeAt = DateUtil.befor8HoursLong2StringUTC(ltime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS);
+                    timeAt = DateUtil.Long2StringUTC(ltime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS_0);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 logger.info("RECOMMtimeAt00000000000000000::::"+timeAt);
                 cql.append(" and createdAt > date(?) limit ? order by createdAt desc");
             } else if (direct == 1) {
+                try {
+                    ltime = DateUtil.stringToLong(time,DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS);
+//                timeAt = DateUtil.befor8HoursLong2StringUTC(ltime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS);
+                    timeAt = DateUtil.Long2StringUTC(ltime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS_1);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 logger.info("RECOMMtimeAt11111111111111111111::::"+timeAt);
                 cql.append(" and createdAt < date(?) limit ? order by createdAt desc");
             }
@@ -77,17 +85,25 @@ public class ConArticleDao {
         String timeAt = "";
         long ltime = 0;
         if(StringUtils.isNotEmpty(time)){
-            try {
-                ltime = DateUtil.stringToLong(time,DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS);
-//                timeAt = DateUtil.befor8HoursLong2StringUTC(ltime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS);
-                timeAt = DateUtil.Long2StringUTC(ltime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+
             if(direct == 0){
+                try {
+                    ltime = DateUtil.stringToLong(time,DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS);
+//                timeAt = DateUtil.befor8HoursLong2StringUTC(ltime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS);
+                    timeAt = DateUtil.Long2StringUTC(ltime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS_0);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 logger.info("TOPICtimeAt00000000000000000::::"+timeAt);
                 cql.append(" and createdAt > date(?) limit ? order by createdAt desc");
             } else if (direct == 1) {
+                try {
+                    ltime = DateUtil.stringToLong(time,DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS);
+//                timeAt = DateUtil.befor8HoursLong2StringUTC(ltime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS);
+                    timeAt = DateUtil.Long2StringUTC(ltime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS_1);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 logger.info("TOPICtimeAt11111111111111111111::::"+timeAt);
                 cql.append(" and createdAt < date(?) limit ? order by createdAt desc");
             }
