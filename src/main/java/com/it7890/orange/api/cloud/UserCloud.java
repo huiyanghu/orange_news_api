@@ -4,9 +4,7 @@ import cn.leancloud.EngineFunction;
 import cn.leancloud.EngineFunctionParam;
 import com.alibaba.fastjson.JSON;
 import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVUser;
-import com.it7890.orange.api.service.IUserService;
 import com.it7890.orange.api.service.impl.UserServiceImpl;
 import com.it7890.orange.api.util.Constants;
 import com.it7890.orange.api.util.StringUtil;
@@ -38,9 +36,9 @@ public class UserCloud {
 			boolean isExist = new UserServiceImpl().getIsExistUsername(email);
 			if (!isExist) {
 				AVUser user = new AVUser();
+				user.setEmail(email);
 				user.setUsername(email);
 				user.setPassword(password);
-				user.setEmail(email); // 设置邮箱
 				try {
 					user.signUp();
 				} catch (AVException e) {
