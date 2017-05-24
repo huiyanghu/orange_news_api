@@ -1,5 +1,6 @@
 package com.it7890.orange.api.dto;
 
+import com.avos.avoscloud.AVFile;
 import com.it7890.orange.api.entity.ConArticlesContent;
 import com.it7890.orange.api.util.DateUtil;
 import org.apache.logging.log4j.LogManager;
@@ -9,6 +10,8 @@ import sun.misc.BASE64Encoder;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ConArticleDetailDTO {
 	private static Logger logger = LogManager.getLogger(ConArticleDetailDTO.class);
@@ -20,6 +23,7 @@ public class ConArticleDetailDTO {
 	private String category;//目录
 	private String contentBody;//文章内容
 	private String pubTime;//发布时间
+	private List titlePicList;//顶图
 
 	public String getTitle() {
 		return title;
@@ -85,6 +89,14 @@ public class ConArticleDetailDTO {
 		this.pubTime = pubTime;
 	}
 
+	public List getTitlePicList() {
+		return titlePicList;
+	}
+
+	public void setTitlePicList(List titlePicList) {
+		this.titlePicList = titlePicList;
+	}
+
 	public static ConArticleDetailDTO objectToDto(ConArticlesContent tmp) throws IOException {
 		ConArticleDetailDTO conArticleDetailDTO = null;
 		if(null != tmp) {
@@ -106,7 +118,17 @@ public class ConArticleDetailDTO {
 			conArticleDetailDTO.setCountry(tmp.getArticleObj().getString("countrycode"));
 			conArticleDetailDTO.setPubTime(DateUtil.formatFromDate(DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS,tmp.getArticleObj().getCreatedAt()));
 			conArticleDetailDTO.setCopyright(tmp.getPubicationObj().getString("name"));
+
+			List<String> titlePicUrls = new ArrayList<>();
+			List<AVFile> titlePics = tmp.getArticleObj().getList("titlePicObjArr");
+			if(titlePics!=null){
+				for (AVFile titlePic : titlePics) {
+					titlePicUrls.add(titlePic.getUrl());
+				}
+			}
+			conArticleDetailDTO.setTitlePicList(titlePicUrls);
 		}
 		return conArticleDetailDTO;
+
 	}
 }
