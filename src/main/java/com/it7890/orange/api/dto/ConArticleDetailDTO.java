@@ -1,11 +1,17 @@
 package com.it7890.orange.api.dto;
 
-import com.it7890.orange.api.entity.AppTopics;
 import com.it7890.orange.api.entity.ConArticlesContent;
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 
 public class ConArticleDetailDTO {
+	private static Logger logger = LogManager.getLogger(ConArticleDetailDTO.class);
 	private String title;//标题
 	private String country;//国家
 	private String excerpt;//摘要
@@ -79,12 +85,23 @@ public class ConArticleDetailDTO {
 		this.pubTime = pubTime;
 	}
 
-	public static ConArticleDetailDTO objectToDto(ConArticlesContent tmp) {
+	public static ConArticleDetailDTO objectToDto(ConArticlesContent tmp) throws IOException {
 		ConArticleDetailDTO conArticleDetailDTO = null;
 		if(null != tmp) {
 			conArticleDetailDTO = new ConArticleDetailDTO();
 			conArticleDetailDTO.setTitle(tmp.getArticleObj().getString("title"));
-			conArticleDetailDTO.setContentBody(tmp.getContent());
+//			conArticleDetailDTO.setContentBody(tmp.getContent());
+			BASE64Encoder encoder = new BASE64Encoder();
+
+//			String enStr = encoder.encode(tmp.getContent().getBytes());
+//			logger.info("enenenenenenen:::"+enStr);
+//			BASE64Decoder decoder = new BASE64Decoder();
+//			String ss = new String(decoder.decodeBuffer(enStr));
+//			logger.info("ddededededede::::"+ss);
+//			String str = new String(decoder.decodeBuffer(tmp.getContent()));
+//			conArticleDetailDTO.setContentBody(StringEscapeUtils.unescapeHtml4(tmp.getContent()));
+
+			conArticleDetailDTO.setContentBody(encoder.encode(tmp.getContent().getBytes()));
 			conArticleDetailDTO.setCategory(tmp.getTopicObj().getString("topicName"));
 			conArticleDetailDTO.setCountry(tmp.getArticleObj().getString("countrycode"));
 		}

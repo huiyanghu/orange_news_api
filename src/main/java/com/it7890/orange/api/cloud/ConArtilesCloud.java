@@ -7,6 +7,7 @@ import com.avos.avoscloud.AVException;
 import com.it7890.orange.api.dto.AppTopDTO;
 import com.it7890.orange.api.dto.AppTopicsDTO;
 import com.it7890.orange.api.dto.ConArticleDTO;
+import com.it7890.orange.api.dto.ConArticleDetailDTO;
 import com.it7890.orange.api.entity.AppTopics;
 import com.it7890.orange.api.entity.ConArticle;
 import com.it7890.orange.api.entity.HbCountrys;
@@ -21,6 +22,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -118,32 +120,30 @@ public class ConArtilesCloud {
 	}
 
 
-//	@EngineFunction("getArticlesList")
-//	public static String queryTopicsArticlesList(@EngineFunctionParam("topicID") String topicID,
-//												 @EngineFunctionParam("createTime") String createTime,
-//												 @EngineFunctionParam("direct") int direct) throws AVException, ParseException {
-//		int resultCode = Constants.CODE_SUCCESS;
-//		String resultMsg = "成功";
-//		Map<String, Object> resultMap = new HashMap<String, Object>();
-//		List<ConArticleDTO> resArtDTOList = new ArrayList<ConArticleDTO>();
-//
-//		if (StringUtils.isNotEmpty(topicID)){
-//			resArtDTOList = new ConArticleServiceImpl().getTopicsArticlesList(topicID,createTime,direct);
-//			if(resArtDTOList!=null){
-//				resultMap.put("artsList", resArtDTOList);
-//			}else {
-//				resultMsg = "文章已是最新";
-//			}
-//		}else {
-//			resultCode = Constants.CODE_PARAMS_FAIL;
-//			resultMsg = "参数错误,topicID不能为空";
-//		}
-//
-//		resultMap.put("code", resultCode);
-//		resultMap.put("msg", resultMsg);
-//
-//		return JSON.toJSONString(resultMap);
-//
-//	}
+	@EngineFunction("getArtContentById")
+	public static String getArtContent(@EngineFunctionParam("articleId") String articleId) throws AVException, IOException {
+		int resultCode = Constants.CODE_SUCCESS;
+		String resultMsg = "成功";
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		ConArticleDetailDTO resArtContentDTO = new ConArticleDetailDTO();
+
+		if (StringUtils.isNotEmpty(articleId)){
+			resArtContentDTO = new ConArticleServiceImpl().getArtContentById(articleId);
+			if(resArtContentDTO!=null){
+				resultMap.put("articleDetails", resArtContentDTO);
+			}else {
+				resultMsg = "文章内容不存在";
+			}
+		}else {
+			resultCode = Constants.CODE_PARAMS_FAIL;
+			resultMsg = "参数错误,articleId不能为空";
+		}
+
+		resultMap.put("code", resultCode);
+		resultMap.put("msg", resultMsg);
+
+		return JSON.toJSONString(resultMap);
+
+	}
 
 }

@@ -4,6 +4,7 @@ import com.it7890.orange.api.dto.ConArticleDTO;
 import com.it7890.orange.api.dto.ConArticleDetailDTO;
 import com.it7890.orange.api.entity.ConArticle;
 
+import java.io.IOException;
 import java.util.List;
 
 
@@ -14,5 +15,5 @@ public interface IConArticleService {
 
 	public List<ConArticleDTO> getTopicsArticlesList(String id,String time,int direct);
 
-	public  List<ConArticleDetailDTO> getArtContentById(String articleid);
+	public  ConArticleDetailDTO getArtContentById(String articleid) throws IOException;
 }
