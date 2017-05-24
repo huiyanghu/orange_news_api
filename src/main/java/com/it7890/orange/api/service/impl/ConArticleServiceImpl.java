@@ -1,7 +1,9 @@
 package com.it7890.orange.api.service.impl;
 import com.it7890.orange.api.dao.ConArticleDao;
 import com.it7890.orange.api.dto.ConArticleDTO;
+import com.it7890.orange.api.dto.ConArticleDetailDTO;
 import com.it7890.orange.api.entity.ConArticle;
+import com.it7890.orange.api.entity.ConArticlesContent;
 import com.it7890.orange.api.service.IConArticleService;
 
 import java.util.ArrayList;
@@ -33,6 +35,12 @@ public class ConArticleServiceImpl implements IConArticleService {
 		return buildDtoList(ls);
 	}
 
+	@Override
+	public List<ConArticleDetailDTO> getArtContentById(String articleid) {
+		List<ConArticlesContent> ls = new ConArticleDao().getArtContentById(articleid);
+		return buildContentDtoList(ls);
+	}
+
 	private static List<ConArticleDTO> buildDtoList(List<ConArticle> tmp) {
 		ConArticleDTO conArticleDTO;
 		List<ConArticleDTO> DTOList = new ArrayList<ConArticleDTO>();
@@ -40,6 +48,18 @@ public class ConArticleServiceImpl implements IConArticleService {
 			conArticleDTO = ConArticleDTO.objectToDto(conArticle);
 			if (null != conArticleDTO) {
 				DTOList.add(conArticleDTO);
+			}
+		}
+		return DTOList;
+	}
+
+	private static List<ConArticleDetailDTO> buildContentDtoList(List<ConArticlesContent> tmp) {
+		ConArticleDetailDTO conArticleDetailDTO;
+		List<ConArticleDetailDTO> DTOList = new ArrayList<ConArticleDetailDTO>();
+		for(ConArticlesContent conArticlesContent : tmp) {
+			conArticleDetailDTO = ConArticleDetailDTO.objectToDto(conArticlesContent);
+			if (null != conArticleDetailDTO) {
+				DTOList.add(conArticleDetailDTO);
 			}
 		}
 		return DTOList;

@@ -117,4 +117,33 @@ public class ConArtilesCloud {
 
 	}
 
+
+//	@EngineFunction("getArticlesList")
+//	public static String queryTopicsArticlesList(@EngineFunctionParam("topicID") String topicID,
+//												 @EngineFunctionParam("createTime") String createTime,
+//												 @EngineFunctionParam("direct") int direct) throws AVException, ParseException {
+//		int resultCode = Constants.CODE_SUCCESS;
+//		String resultMsg = "成功";
+//		Map<String, Object> resultMap = new HashMap<String, Object>();
+//		List<ConArticleDTO> resArtDTOList = new ArrayList<ConArticleDTO>();
+//
+//		if (StringUtils.isNotEmpty(topicID)){
+//			resArtDTOList = new ConArticleServiceImpl().getTopicsArticlesList(topicID,createTime,direct);
+//			if(resArtDTOList!=null){
+//				resultMap.put("artsList", resArtDTOList);
+//			}else {
+//				resultMsg = "文章已是最新";
+//			}
+//		}else {
+//			resultCode = Constants.CODE_PARAMS_FAIL;
+//			resultMsg = "参数错误,topicID不能为空";
+//		}
+//
+//		resultMap.put("code", resultCode);
+//		resultMap.put("msg", resultMsg);
+//
+//		return JSON.toJSONString(resultMap);
+//
+//	}
+
 }
