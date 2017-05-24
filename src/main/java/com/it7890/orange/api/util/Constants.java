@@ -20,4 +20,16 @@ public class Constants {
 	public final static int CODE_AUTHORIZE_OVERDUE = 101;
 	/** 无效授权 **/
 	public final static int CODE_AUTHORIZE_FAIL = 102;
+
+	/**-------------------- Leancloud错误码 --------------------**/
+	/** 用户名为空 **/
+	public final static int CODE_USERNAME_EMPTY = 200;
+	/** 密码为空 **/
+	public final static int CODE_PASSWORD_EMPTY = 201;
+	/** 用户名已经被占用 **/
+	public final static int CODE_USERNAME_EXIST = 202;
+	/** 电子邮箱地址已经被占用 **/
+	public final static int CODE_EMAIL_EXIST = 203;
+	/** 没有提供电子邮箱地址 **/
+	public final static int CODE_EMAIL_EMPTY = 204;
 }

@@ -6,9 +6,7 @@ import javax.servlet.annotation.WebListener;
 
 import cn.leancloud.demo.todo.Todo;
 import com.avos.avoscloud.AVOSCloud;
-import com.it7890.orange.api.cloud.AppAdvertCloud;
-import com.it7890.orange.api.cloud.AppTopicsCloud;
-import com.it7890.orange.api.cloud.ConArtilesCloud;
+import com.it7890.orange.api.cloud.*;
 import com.it7890.orange.api.entity.AppAdvert;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -42,9 +40,11 @@ public class AppInitListener implements ServletContextListener {
     // 打开 debug 日志
      AVOSCloud.setDebugLogEnabled(true);
     // 向云引擎注册云函数
+    LeanEngine.register(TestCloud.class);
     LeanEngine.register(AppAdvertCloud.class);
     LeanEngine.register(AppTopicsCloud.class);
     LeanEngine.register(ConArtilesCloud.class);
+    LeanEngine.register(UserCloud.class);
     if (System.getenv("LEANCLOUD_APP_ENV").equals("development")) {
       // 如果是开发环境，则设置 AVCloud.callFunction 和 AVCloud.rpcFunction 调用本地云函数实现
       // 如果需要本地开发时调用云端云函数实现，则注释掉下面语句。

@@ -1,9 +1,8 @@
 package com.it7890.orange.api.service.impl;
 
-import com.it7890.orange.api.cloud.AppAdvertCloud;
 import com.it7890.orange.api.dao.AppAdvertDao;
 import com.it7890.orange.api.entity.AppAdvert;
-import com.it7890.orange.api.service.AppAdvertService;
+import com.it7890.orange.api.service.IAppAdvertService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -13,7 +12,7 @@ import java.util.List;
 /**
  * Created by Astro on 17/5/11.
  */
-public class AppAdvertServiceImpl implements AppAdvertService {
+public class AppAdvertServiceImpl implements IAppAdvertService {
 
 	@Resource
 	public AppAdvertDao appAdvertDao;

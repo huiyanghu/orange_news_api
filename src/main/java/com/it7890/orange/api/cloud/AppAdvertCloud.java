@@ -7,7 +7,7 @@ import com.avos.avoscloud.AVException;
 import com.it7890.orange.api.dao.AppAdvertDao;
 import com.it7890.orange.api.dto.AppAdvertDto;
 import com.it7890.orange.api.entity.AppAdvert;
-import com.it7890.orange.api.service.AppAdvertService;
+import com.it7890.orange.api.service.IAppAdvertService;
 import com.it7890.orange.api.service.impl.AppAdvertServiceImpl;
 import com.it7890.orange.api.util.Constants;
 import com.it7890.orange.api.util.StringUtil;
@@ -26,7 +26,7 @@ import java.util.Map;
 public class AppAdvertCloud {
 
 	@Resource
-	private AppAdvertService appAdvertService;
+	private IAppAdvertService appAdvertService;
 	@Resource
 	private AppAdvertDao appAdvertDao;
 

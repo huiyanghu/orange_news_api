@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by Astro on 17/5/11.
  */
-public interface AppAdvertService {
+public interface IAppAdvertService {
 
 	List<AppAdvert> findAppAdverListByCountryCode(String countryCode);
 }
