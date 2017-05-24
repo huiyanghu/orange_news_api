@@ -21,6 +21,7 @@ public class ConArticleDetailDTO {
 	private String copyright;//来源
 	private String keywords;//检索词
 	private String category;//目录
+	private String categoryId;//话题Id
 	private String contentBody;//文章内容
 	private String pubTime;//发布时间
 	private List titlePicList;//顶图
@@ -96,6 +97,13 @@ public class ConArticleDetailDTO {
 	public void setTitlePicList(List titlePicList) {
 		this.titlePicList = titlePicList;
 	}
+	public String getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(String categoryId) {
+		this.categoryId = categoryId;
+	}
 
 	public static ConArticleDetailDTO objectToDto(ConArticlesContent tmp) throws IOException {
 		ConArticleDetailDTO conArticleDetailDTO = null;
@@ -115,6 +123,7 @@ public class ConArticleDetailDTO {
 
 			conArticleDetailDTO.setContentBody(encoder.encode(tmp.getContent().getBytes()));
 			conArticleDetailDTO.setCategory(tmp.getTopicObj().getString("topicName"));
+			conArticleDetailDTO.setCategoryId(tmp.getTopicObj().getObjectId());
 			conArticleDetailDTO.setCountry(tmp.getArticleObj().getString("countrycode"));
 			conArticleDetailDTO.setPubTime(DateUtil.formatFromDate(DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS,tmp.getArticleObj().getCreatedAt()));
 			conArticleDetailDTO.setCopyright(tmp.getPubicationObj().getString("name"));
