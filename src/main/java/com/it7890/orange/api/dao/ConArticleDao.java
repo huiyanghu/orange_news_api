@@ -3,6 +3,7 @@ package com.it7890.orange.api.dao;
 import com.avos.avoscloud.AVCloudQueryResult;
 import com.avos.avoscloud.AVQuery;
 import com.it7890.orange.api.entity.ConArticle;
+import com.it7890.orange.api.entity.ConArticlesContent;
 import com.it7890.orange.api.util.DateUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -18,7 +19,7 @@ public class ConArticleDao {
     public List<ConArticle> getArticlesList(String time,int direct) {
         List<ConArticle> articlesList = new ArrayList<ConArticle>();
         StringBuffer cql = new StringBuffer();
-        cql.append("select include titlePicObj, * from conarticle where status = ?");
+        cql.append("select include titlePicObj,include topicObj, * from conarticle where status = ?");
         String timeAt = "";
         long ltime = 0;
         if(StringUtils.isNotEmpty(time)){
@@ -56,7 +57,7 @@ public class ConArticleDao {
 
     public List<ConArticle> getArticleById(String articleid){
         List<ConArticle> articlesList = new ArrayList<ConArticle>();
-        String cql = " select * from conarticle where status = ? and objectId = ?";
+        String cql = " select include titlePicObj,* from conarticle where status = ? and objectId = ?";
         ConArticle art = new ConArticle();
         try {
 //            AVCloudQueryResult avCloudQueryResult = AVQuery.doCloudQuery(cql, ConArticle.class, Arrays.asList(0,articleid));
@@ -72,7 +73,7 @@ public class ConArticleDao {
     public List<ConArticle> getTopicsArticlesList(String tid,String time,int direct) {//direct 0下拉 1上拉,默认0
         List<ConArticle> articlesList = new ArrayList<ConArticle>();
         StringBuffer cql = new StringBuffer();
-        cql.append("select include titlePicObj,* from conarticle where status = ? and topicObj = pointer('AppTopics', ?)") ;
+        cql.append("select include titlePicObj, include titlePicObjArr, * from conarticle where status = ? and topicObj = pointer('AppTopics', ?)") ;
         String timeAt = "";
         long ltime = 0;
         if(StringUtils.isNotEmpty(time)){
@@ -104,6 +105,19 @@ public class ConArticleDao {
             } catch (Exception e) {
                 logger.info(e.getMessage());
             }
+        }
+        return articlesList;
+    }
+
+    public List<ConArticlesContent> getArtContentById(String articleid){
+        List<ConArticlesContent> articlesList = new ArrayList<ConArticlesContent>();
+        String cql = " select include articleObj,include articleObj.topicObj,* from con_articles_content where articleObj = pointer('conarticle', ?)";
+        try {
+            AVCloudQueryResult avCloudQueryResult = AVQuery.doCloudQuery(cql, ConArticlesContent.class,articleid);
+            articlesList = (List<ConArticlesContent>)avCloudQueryResult.getResults();
+        } catch (Exception e) {
+            e.getMessage();
+            e.printStackTrace();
         }
         return articlesList;
     }

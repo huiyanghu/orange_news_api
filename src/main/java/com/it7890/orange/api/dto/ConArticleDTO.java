@@ -1,6 +1,8 @@
 package com.it7890.orange.api.dto;
 
 
+import com.avos.avoscloud.AVFile;
+import com.avos.avoscloud.AVObject;
 import com.it7890.orange.api.cloud.ConArtilesCloud;
 import com.it7890.orange.api.entity.ConArticle;
 import com.it7890.orange.api.util.DateUtil;
@@ -8,6 +10,7 @@ import com.it7890.orange.api.util.StringUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ConArticleDTO {
@@ -386,7 +389,7 @@ public class ConArticleDTO {
             conArticleDTO.setMediaLink(tmp.getMedialink());
             conArticleDTO.setWriter(tmp.getWriter());
             conArticleDTO.setTopicsId(tmp.getTopicObj().getObjectId());
-            conArticleDTO.setTitlePic(tmp.getTitlepic());
+//            conArticleDTO.setTitlePic(tmp.getTitlepic());
             conArticleDTO.setTitle(tmp.getTitle());
             conArticleDTO.setSubuid(tmp.getSubuid());
             conArticleDTO.setStatus(tmp.getStatus());
@@ -397,9 +400,16 @@ public class ConArticleDTO {
             conArticleDTO.setPublicationId(tmp.getPublicationid());
             conArticleDTO.setPlogo(tmp.getPlogo());
             conArticleDTO.setCreatTime(DateUtil.formatFromDate(DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS,tmp.getCreatedAt()));
-            conArticleDTO.setTitlePic(null != tmp.getTitlePicObj() ? tmp.getTitlePicObj().getUrl() : "");
-            conArticleDTO.setTitlePicId(null != tmp.getTitlePicObj() ? tmp.getTitlePicObj().getObjectId() : "");
-            conArticleDTO.setTitlePicList(tmp.getTitlePicList());
+//            conArticleDTO.setTitlePic(null != tmp.getTitlePicObj() ? tmp.getTitlePicObj().getUrl() : "");
+//            conArticleDTO.setTitlePicId(null != tmp.getTitlePicObj() ? tmp.getTitlePicObj().getObjectId() : "");
+            List<String> titlePicUrls = new ArrayList<>();
+            List<AVFile> titlePics = tmp.getTitlePicList();
+            if(titlePics!=null){
+                for (AVFile titlePic : titlePics) {
+                    titlePicUrls.add(titlePic.getUrl());
+                }
+            }
+            conArticleDTO.setTitlePicList(titlePicUrls);
             conArticleDTO.setContentPicObjArr(tmp.getContentPicObjArr());
         }
         return conArticleDTO;
