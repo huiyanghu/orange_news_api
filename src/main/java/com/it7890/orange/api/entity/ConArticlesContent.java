@@ -48,4 +48,11 @@ public class ConArticlesContent extends AVObject {
 		this.put("topicObj",topicObj);
 	}
 
+	public AVObject getPubicationObj(){
+		return getAVObject("articleObj").getAVObject("publicationObj");
+	}
+	public void  setPublication(AVObject publicationObj){
+		this.put("publicationObj",publicationObj);
+	}
+
 }

@@ -127,7 +127,7 @@ public class ConArticleDao {
 
     public List<ConArticlesContent> getArtContentById(String articleid){
         List<ConArticlesContent> articlesList = new ArrayList<ConArticlesContent>();
-        String cql = " select include articleObj,include articleObj.topicObj,* from con_articles_content where articleObj = pointer('conarticle', ?)";
+        String cql = " select include articleObj,include articleObj.topicObj,include articleObj.publicationObj,* from con_articles_content where articleObj = pointer('conarticle', ?)";
         try {
             AVCloudQueryResult avCloudQueryResult = AVQuery.doCloudQuery(cql, ConArticlesContent.class,articleid);
             articlesList = (List<ConArticlesContent>)avCloudQueryResult.getResults();

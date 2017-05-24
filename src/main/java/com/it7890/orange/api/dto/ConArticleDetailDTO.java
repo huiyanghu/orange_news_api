@@ -105,6 +105,7 @@ public class ConArticleDetailDTO {
 			conArticleDetailDTO.setCategory(tmp.getTopicObj().getString("topicName"));
 			conArticleDetailDTO.setCountry(tmp.getArticleObj().getString("countrycode"));
 			conArticleDetailDTO.setPubTime(DateUtil.formatFromDate(DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS,tmp.getArticleObj().getCreatedAt()));
+			conArticleDetailDTO.setCopyright(tmp.getPubicationObj().getString("name"));
 		}
 		return conArticleDetailDTO;
 	}
