@@ -12,4 +12,9 @@ public class UserServiceImpl implements IUserService {
 	public boolean getIsExistUsername(String username) {
 		return new UserDao().getIsExistUsername(username);
 	}
+
+	@Override
+	public boolean getIsExistEmail(String email) {
+		return new UserDao().getIsExistEmail(email);
+	}
 }

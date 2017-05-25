@@ -6,4 +6,6 @@ package com.it7890.orange.api.service;
 public interface IUserService {
 
 	boolean getIsExistUsername(String username);
+
+	boolean getIsExistEmail(String email);
 }

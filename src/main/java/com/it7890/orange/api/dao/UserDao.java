@@ -30,4 +30,26 @@ public class UserDao {
 		}
 		return isExist;
 	}
+
+	/**
+	 * 邮箱是否存在
+	 * @param email
+	 * @return
+	 */
+	public boolean getIsExistEmail(String email) {
+		boolean isExist = true;
+		if (StringUtil.isNotEmpty(email)) {
+			String cql = "select count(*) from _User where email = ?";
+			AVCloudQueryResult result = null;
+			try {
+				result = AVQuery.doCloudQuery(cql, email);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			if (null != result && result.getCount() == 0) {
+				isExist = false;
+			}
+		}
+		return isExist;
+	}
 }
