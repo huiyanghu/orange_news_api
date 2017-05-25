@@ -25,6 +25,8 @@ public class ConArticleDetailDTO {
 	private String contentBody;//文章内容
 	private String pubTime;//发布时间
 	private List titlePicList;//顶图
+	private int likeCount;
+	private int noLikeCount;
 
 	public String getTitle() {
 		return title;
@@ -105,6 +107,22 @@ public class ConArticleDetailDTO {
 		this.categoryId = categoryId;
 	}
 
+	public int getLikeCount() {
+		return likeCount;
+	}
+
+	public void setLikeCount(int likeCount) {
+		this.likeCount = likeCount;
+	}
+
+	public int getNoLikeCount() {
+		return noLikeCount;
+	}
+
+	public void setNoLikeCount(int noLikeCount) {
+		this.noLikeCount = noLikeCount;
+	}
+
 	public static ConArticleDetailDTO objectToDto(ConArticlesContent tmp) throws IOException {
 		ConArticleDetailDTO conArticleDetailDTO = null;
 		if(null != tmp) {
@@ -136,6 +154,8 @@ public class ConArticleDetailDTO {
 				}
 			}
 			conArticleDetailDTO.setTitlePicList(titlePicUrls);
+			conArticleDetailDTO.setLikeCount(tmp.getInt("likeCount"));
+			conArticleDetailDTO.setNoLikeCount(tmp.getInt("noLikeCount"));
 		}
 		return conArticleDetailDTO;
 
