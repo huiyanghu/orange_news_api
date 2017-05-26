@@ -332,11 +332,7 @@ public class AppTopDTO {
 			appTopDTO.setRank(tmp.getInt("rank"));
 			appTopDTO.setAbstracts(tmp.getAVObject("articleObj").getString("abstracts"));
 			appTopDTO.setArticleId(tmp.getAVObject("articleObj").getObjectId());
-			logger.info("<><>><><><><><><><><id>"+tmp.getAVObject("articleObj").getObjectId());
 			appTopDTO.setAttr(tmp.getAVObject("articleObj").getInt("attr"));
-			logger.info("<><>><><><><><><><><>"+tmp.getAVObject("articleObj").getInt("attr"));
-			logger.info("<><>><><><><><><><><title>"+tmp.getAVObject("articleObj").getString("title"));
-
 			appTopDTO.setAuthor(tmp.getAVObject("articleObj").getString("author"));
 			appTopDTO.setChannelId(tmp.getAVObject("channelObj").getObjectId());
 			appTopDTO.setCommentNum(tmp.getAVObject("articleObj").getInt("commentNum"));
