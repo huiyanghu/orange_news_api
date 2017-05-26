@@ -1,5 +1,6 @@
 package com.it7890.orange.api.dto;
 
+import com.avos.avoscloud.AVObject;
 import com.it7890.orange.api.entity.AppTop;
 import com.it7890.orange.api.entity.AppTopics;
 import com.it7890.orange.api.util.DateUtil;
@@ -20,7 +21,7 @@ public class AppTopDTO {
 
 	private String titlePic;
 	
-	private int topicsId;
+	private String topicsId;
 
 	private String langId;
 	
@@ -30,9 +31,8 @@ public class AppTopDTO {
 
 	private String author;
 
-	private int channelId;
+	private String channelId;
 
-	private int createuId;
 
 	private int cType;
 
@@ -46,7 +46,7 @@ public class AppTopDTO {
 
 	private String mediaLink;
 	
-	private int publicationId;
+	private String publicationId;
 
 	private int rank;
 
@@ -68,6 +68,8 @@ public class AppTopDTO {
 
 	private int iType; // 类型 1文章 2 竞猜 3广告
 	private String createTime;
+	private long createDate;
+	private String createrId;
 
 	public int getiType() {
 		return iType;
@@ -133,11 +135,11 @@ public class AppTopDTO {
 		this.titlePic = titlePic;
 	}
 
-	public int getTopicsId() {
+	public String getTopicsId() {
 		return topicsId;
 	}
 
-	public void setTopicsId(int topicsId) {
+	public void setTopicsId(String topicsId) {
 		this.topicsId = topicsId;
 	}
 
@@ -173,20 +175,12 @@ public class AppTopDTO {
 		this.author = author;
 	}
 
-	public int getChannelId() {
+	public String getChannelId() {
 		return channelId;
 	}
 
-	public void setChannelId(int channelId) {
+	public void setChannelId(String channelId) {
 		this.channelId = channelId;
-	}
-
-	public int getCreateuId() {
-		return createuId;
-	}
-
-	public void setCreateuId(int createuId) {
-		this.createuId = createuId;
 	}
 
 	public int getcType() {
@@ -237,11 +231,11 @@ public class AppTopDTO {
 		this.mediaLink = mediaLink;
 	}
 
-	public int getPublicationId() {
+	public String getPublicationId() {
 		return publicationId;
 	}
 
-	public void setPublicationId(int publicationId) {
+	public void setPublicationId(String publicationId) {
 		this.publicationId = publicationId;
 	}
 
@@ -317,39 +311,53 @@ public class AppTopDTO {
 		this.commentNum = commentNum;
 	}
 
-	public static AppTopDTO objectToDto(AppTop tmp) {
+	public long getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(long createDate) {
+		this.createDate = createDate;
+	}
+
+	public String getCreaterId() {
+		return createrId;
+	}
+
+	public void setCreaterId(String createrId) {
+		this.createrId = createrId;
+	}
+
+	public static AppTopDTO avoobjectToDto(AVObject tmp) {
 		AppTopDTO appTopDTO = null;
 		if(null != tmp) {
 			appTopDTO = new AppTopDTO();
-			appTopDTO.setKeyWords(tmp.getKeyWords());
-			appTopDTO.setCreateuId(tmp.getCreateuId());
-			appTopDTO.setRank(tmp.getRank());
-			appTopDTO.setAbstracts(tmp.getAbstracts());
-			appTopDTO.setArticleId(tmp.getArticleId());
-			appTopDTO.setAttr(tmp.getAttr());
-			appTopDTO.setAuthor(tmp.getAuthor());
-			appTopDTO.setChannelId(tmp.getChannelId());
-			appTopDTO.setCommentNum(tmp.getCommentNum());
-			appTopDTO.setCountryCode(tmp.getCountryCode());
-			appTopDTO.setcType(tmp.getcType());
-			appTopDTO.setImgCount(tmp.getImgCount());
-			appTopDTO.setLangId(tmp.getLangId());
-			appTopDTO.setLatitude(tmp.getLatitude());
-			appTopDTO.setLongitude(tmp.getLongitude());
-			appTopDTO.setLinkUrl(tmp.getLinkUrl());
-			appTopDTO.setMediaLink(tmp.getMediaLink());
-			appTopDTO.setObjId(tmp.getObjId());
-			appTopDTO.setWriter(tmp.getWriter());
-			appTopDTO.setTopicsId(tmp.getTopicsId());
-			appTopDTO.setTitlePic(tmp.getTitlePic());
-			appTopDTO.setSubuid(tmp.getSubuid());
-			appTopDTO.setStatus(tmp.getStatus());
-			appTopDTO.setSourceUrl(tmp.getSourceUrl());
-			appTopDTO.setSourceTitilePic(tmp.getSourceTitilePic());
-			appTopDTO.setPushNum(tmp.getPushNum());
-			appTopDTO.setPublicationId(tmp.getPublicationId());
+			appTopDTO.setKeyWords(tmp.getAVObject("aricleObj").getString("keyWords"));
+			appTopDTO.setCreaterId(tmp.getAVObject("sysUserObj").getObjectId());
+			appTopDTO.setRank(tmp.getInt("rank"));
+			appTopDTO.setAbstracts(tmp.getAVObject("articleObj").getString("abstracts"));
+			appTopDTO.setArticleId(tmp.getAVObject("articleObj").getObjectId());
+			appTopDTO.setAttr(tmp.getAVObject("articleObj").getInt("attr"));
+			appTopDTO.setAuthor(tmp.getAVObject("articleObj").getString("author"));
+			appTopDTO.setChannelId(tmp.getAVObject("channelObj").getObjectId());
+			appTopDTO.setCommentNum(tmp.getAVObject("articleObj").getInt("commentNum"));
+			appTopDTO.setCountryCode(tmp.getString("countryCode"));
+			appTopDTO.setcType(tmp.getInt("cType"));
+			appTopDTO.setImgCount(tmp.getAVObject("articleObj").getInt("imgCount"));
+			appTopDTO.setLangId(tmp.getAVObject("languagesObj").getObjectId());
+			appTopDTO.setLatitude(tmp.getInt("latitude"));
+			appTopDTO.setLongitude(tmp.getInt("longitude"));
+			appTopDTO.setLinkUrl(tmp.getAVObject("articleObj").getString("linkUrl"));
+			appTopDTO.setMediaLink(tmp.getAVObject("articleObj").getString("mediaLink"));
+			appTopDTO.setWriter(tmp.getAVObject("articleObj").getString("writer"));
+			appTopDTO.setTopicsId(tmp.getAVObject("topicsObj").getObjectId());
+			appTopDTO.setTitlePic(tmp.getAVObject("articleObj").getString("titlePic"));
+			appTopDTO.setStatus(tmp.getInt("status"));
+			appTopDTO.setSourceUrl(tmp.getAVObject("articleObj").getString("souceUrl"));
+			appTopDTO.setSourceTitilePic(tmp.getAVObject("articleObj").getString("sourceTitlePic"));
+			appTopDTO.setPushNum(tmp.getInt("pushNum"));
+			appTopDTO.setPublicationId(tmp.getAVObject("publicationObj").getObjectId());
 			appTopDTO.setCreateTime(DateUtil.formatFromDate(DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS,tmp.getCreatedAt()));
-			appTopDTO.setiType(tmp.getiType());
+			appTopDTO.setiType(tmp.getInt("iType"));
 		}
 		return appTopDTO;
 	}
