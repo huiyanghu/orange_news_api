@@ -1,8 +1,8 @@
 package com.it7890.orange.api.dao;
 
 import com.avos.avoscloud.AVCloudQueryResult;
+import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
-import com.it7890.orange.api.entity.AppAdvert;
 import com.it7890.orange.api.entity.HbCountrys;
 
 import java.util.ArrayList;
@@ -23,5 +23,16 @@ public class HbCountrysDao {
             }
         }
         return cList;
+    }
+
+    public List<AVObject> findCountryList() {
+        List<AVObject> countryList = new ArrayList<>();
+        try {
+            AVCloudQueryResult queryResult = AVQuery.doCloudQuery("select include iconFileObj, * from hb_countrys where status = 1 order by orderCode asc limit 1000");
+            countryList = (List<AVObject>) queryResult.getResults();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return countryList;
     }
 }

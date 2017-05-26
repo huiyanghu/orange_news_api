@@ -1,5 +1,6 @@
 package com.it7890.orange.api.service.impl;
 
+import com.avos.avoscloud.AVObject;
 import com.it7890.orange.api.dao.HbCountrysDao;
 import com.it7890.orange.api.entity.HbCountrys;
 import com.it7890.orange.api.service.IHbCountrysService;
@@ -12,5 +13,10 @@ public class HbCountrysServiceImpl implements IHbCountrysService {
 	@Override
 	public List<HbCountrys> getcsByCode(String Code) {
 		return new HbCountrysDao().getCountryByCountryCode(Code);
+	}
+
+	@Override
+	public List<AVObject> findCountryList() {
+		return new HbCountrysDao().findCountryList();
 	}
 }
