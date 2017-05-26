@@ -17,22 +17,22 @@ public class AppTopServiceImpl implements IAppTopService {
 	public List<AppTopDTO> getAppTopsList(String countryCode,String topCreateTime) throws ParseException {
 		List<AppTop> ls =  new AppTopDao().getAppTopsList(countryCode,topCreateTime);
 		if (ls.size()>0){
-			return buildDtoList(ls);
+//			return buildDtoList(ls);
 		}else {
 			return null;
 		}
-//		return null;
+		return null;
 	}
 
-	private static List<AppTopDTO> buildDtoList(List<AppTop> tmp) {
-		AppTopDTO appTopDTO;
-		List<AppTopDTO> appTopsDTOList = new ArrayList<AppTopDTO>();
-		for(AppTop appTop : tmp) {
-			appTopDTO = AppTopDTO.objectToDto(appTop);
-			if (null != appTopDTO) {
-				appTopsDTOList.add(appTopDTO);
-			}
-		}
-		return appTopsDTOList;
-	}
+//	private static List<AppTopDTO> buildDtoList(List<AppTop> tmp) {
+//		AppTopDTO appTopDTO;
+//		List<AppTopDTO> appTopsDTOList = new ArrayList<AppTopDTO>();
+//		for(AppTop appTop : tmp) {
+//			appTopDTO = AppTopDTO.objectToDto(appTop);
+//			if (null != appTopDTO) {
+//				appTopsDTOList.add(appTopDTO);
+//			}
+//		}
+//		return appTopsDTOList;
+//	}
 }

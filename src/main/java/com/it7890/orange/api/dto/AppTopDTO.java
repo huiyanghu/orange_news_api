@@ -1,13 +1,17 @@
 package com.it7890.orange.api.dto;
 
 import com.avos.avoscloud.AVObject;
+import com.it7890.orange.api.cloud.AppTopCloud;
 import com.it7890.orange.api.entity.AppTop;
 import com.it7890.orange.api.entity.AppTopics;
 import com.it7890.orange.api.util.DateUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Date;
 
 public class AppTopDTO {
+	private static Logger logger = LogManager.getLogger(AppTopDTO.class);
 
 	private String objId;//对象ID 文章类型 为文章ID  竞猜类型为竞猜ID  广告类型 为广告ID
 
@@ -67,7 +71,6 @@ public class AppTopDTO {
 	private int commentNum;
 
 	private int iType; // 类型 1文章 2 竞猜 3广告
-	private String createTime;
 	private long createDate;
 	private String createrId;
 
@@ -75,13 +78,6 @@ public class AppTopDTO {
 		return iType;
 	}
 
-	public String getCreateTime() {
-		return createTime;
-	}
-
-	public void setCreateTime(String createTime) {
-		this.createTime = createTime;
-	}
 
 	public void setiType(int iType) {
 		this.iType = iType;
@@ -331,12 +327,16 @@ public class AppTopDTO {
 		AppTopDTO appTopDTO = null;
 		if(null != tmp) {
 			appTopDTO = new AppTopDTO();
-			appTopDTO.setKeyWords(tmp.getAVObject("aricleObj").getString("keyWords"));
-			appTopDTO.setCreaterId(tmp.getAVObject("sysUserObj").getObjectId());
+			appTopDTO.setKeyWords(tmp.getAVObject("articleObj").getString("keyWords"));
+//			appTopDTO.setCreaterId(tmp.getAVObject("sysUserObj").getObjectId());
 			appTopDTO.setRank(tmp.getInt("rank"));
 			appTopDTO.setAbstracts(tmp.getAVObject("articleObj").getString("abstracts"));
 			appTopDTO.setArticleId(tmp.getAVObject("articleObj").getObjectId());
+			logger.info("<><>><><><><><><><><id>"+tmp.getAVObject("articleObj").getObjectId());
 			appTopDTO.setAttr(tmp.getAVObject("articleObj").getInt("attr"));
+			logger.info("<><>><><><><><><><><>"+tmp.getAVObject("articleObj").getInt("attr"));
+			logger.info("<><>><><><><><><><><title>"+tmp.getAVObject("articleObj").getString("title"));
+
 			appTopDTO.setAuthor(tmp.getAVObject("articleObj").getString("author"));
 			appTopDTO.setChannelId(tmp.getAVObject("channelObj").getObjectId());
 			appTopDTO.setCommentNum(tmp.getAVObject("articleObj").getInt("commentNum"));
@@ -352,11 +352,11 @@ public class AppTopDTO {
 			appTopDTO.setTopicsId(tmp.getAVObject("topicsObj").getObjectId());
 			appTopDTO.setTitlePic(tmp.getAVObject("articleObj").getString("titlePic"));
 			appTopDTO.setStatus(tmp.getInt("status"));
-			appTopDTO.setSourceUrl(tmp.getAVObject("articleObj").getString("souceUrl"));
+			appTopDTO.setSourceUrl(tmp.getAVObject("articleObj").getString("sourceurl"));
 			appTopDTO.setSourceTitilePic(tmp.getAVObject("articleObj").getString("sourceTitlePic"));
 			appTopDTO.setPushNum(tmp.getInt("pushNum"));
 			appTopDTO.setPublicationId(tmp.getAVObject("publicationObj").getObjectId());
-			appTopDTO.setCreateTime(DateUtil.formatFromDate(DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS,tmp.getCreatedAt()));
+			appTopDTO.setCreateDate(tmp.getCreatedAt().getTime());
 			appTopDTO.setiType(tmp.getInt("iType"));
 		}
 		return appTopDTO;

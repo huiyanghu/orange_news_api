@@ -49,15 +49,17 @@ public class AppTopCloud {
 		AVQuery<AVObject> query = new AVQuery<>("AppTop");
 		query.whereEqualTo("countryCode", countryCode);
 		query.limit(10);
-		if(topCreateTime!=0){
-			String createdAt =  DateUtil.Long2StringUTC(topCreateTime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS_0);
-			query.whereGreaterThan("createdAt",createdAt);
-		}
+//		if(topCreateTime!=0){
+//			String createdAt =  DateUtil.Long2StringUTC(topCreateTime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS_0);
+//			query.whereGreaterThan("createdAt",createdAt);
+//		}
 		List<AVObject> ls = query.find();
+		logger.info(">>>>>>>>>>>>>>>>"+ls.size());
 		if(ls.size()>0){
 			for (AVObject avo:ls){
 				resTopDTOList.add(AppTopDTO.avoobjectToDto(avo));
 			}
+			resultMap.put("appTopList",resTopDTOList);
 		}else {
 			resultMsg = "置顶大图已最新";
 		}
