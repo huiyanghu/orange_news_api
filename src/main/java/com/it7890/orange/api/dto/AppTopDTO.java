@@ -5,6 +5,7 @@ import com.it7890.orange.api.cloud.AppTopCloud;
 import com.it7890.orange.api.entity.AppTop;
 import com.it7890.orange.api.entity.AppTopics;
 import com.it7890.orange.api.util.DateUtil;
+import com.it7890.orange.api.util.StringUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -72,6 +73,7 @@ public class AppTopDTO {
 
 	private int iType; // 类型 1文章 2 竞猜 3广告
 	private long createDate;
+	private String creatTime;
 	private String createrId;
 
 	public int getiType() {
@@ -323,37 +325,50 @@ public class AppTopDTO {
 		this.createrId = createrId;
 	}
 
+	public String getCreatTime() {
+		return creatTime;
+	}
+
+	public void setCreatTime(String creatTime) {
+		this.creatTime = creatTime;
+	}
+
 	public static AppTopDTO avoobjectToDto(AVObject tmp) {
 		AppTopDTO appTopDTO = null;
 		if(null != tmp) {
 			appTopDTO = new AppTopDTO();
-			appTopDTO.setKeyWords(tmp.getAVObject("articleObj").getString("keyWords"));
-//			appTopDTO.setCreaterId(tmp.getAVObject("sysUserObj").getObjectId());
 			appTopDTO.setRank(tmp.getInt("rank"));
+			appTopDTO.setiType(tmp.getInt("iType"));
+			appTopDTO.setLatitude(tmp.getInt("latitude"));
+			appTopDTO.setLongitude(tmp.getInt("longitude"));
+			appTopDTO.setCountryCode(tmp.getString("countryCode"));
+			appTopDTO.setcType(tmp.getInt("cType"));
+			appTopDTO.setStatus(tmp.getInt("status"));
+			appTopDTO.setPushNum(tmp.getInt("pushNum"));
+			appTopDTO.setChannelId(tmp.getAVObject("channelObj").getObjectId());
+			appTopDTO.setLangId(tmp.getAVObject("languagesObj").getObjectId());
+			appTopDTO.setTopicsId(tmp.getAVObject("topicsObj").getObjectId());
+			appTopDTO.setPublicationId(tmp.getAVObject("publicationObj").getObjectId());
+			appTopDTO.setCreateDate(tmp.getCreatedAt().getTime());
+			appTopDTO.setCreatTime(DateUtil.formatFromDate(DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS,tmp.getCreatedAt()));
+
+//			appTopDTO.setCreaterId(tmp.getAVObject("sysUserObj").getObjectId());
+			appTopDTO.setKeyWords(tmp.getAVObject("articleObj").getString("keyWords"));
 			appTopDTO.setAbstracts(tmp.getAVObject("articleObj").getString("abstracts"));
 			appTopDTO.setArticleId(tmp.getAVObject("articleObj").getObjectId());
 			appTopDTO.setAttr(tmp.getAVObject("articleObj").getInt("attr"));
 			appTopDTO.setAuthor(tmp.getAVObject("articleObj").getString("author"));
-			appTopDTO.setChannelId(tmp.getAVObject("channelObj").getObjectId());
 			appTopDTO.setCommentNum(tmp.getAVObject("articleObj").getInt("commentNum"));
-			appTopDTO.setCountryCode(tmp.getString("countryCode"));
-			appTopDTO.setcType(tmp.getInt("cType"));
 			appTopDTO.setImgCount(tmp.getAVObject("articleObj").getInt("imgCount"));
-			appTopDTO.setLangId(tmp.getAVObject("languagesObj").getObjectId());
-			appTopDTO.setLatitude(tmp.getInt("latitude"));
-			appTopDTO.setLongitude(tmp.getInt("longitude"));
 			appTopDTO.setLinkUrl(tmp.getAVObject("articleObj").getString("linkUrl"));
 			appTopDTO.setMediaLink(tmp.getAVObject("articleObj").getString("mediaLink"));
 			appTopDTO.setWriter(tmp.getAVObject("articleObj").getString("writer"));
-			appTopDTO.setTopicsId(tmp.getAVObject("topicsObj").getObjectId());
 			appTopDTO.setTitlePic(tmp.getAVObject("articleObj").getString("titlePic"));
-			appTopDTO.setStatus(tmp.getInt("status"));
 			appTopDTO.setSourceUrl(tmp.getAVObject("articleObj").getString("sourceurl"));
 			appTopDTO.setSourceTitilePic(tmp.getAVObject("articleObj").getString("sourceTitlePic"));
-			appTopDTO.setPushNum(tmp.getInt("pushNum"));
-			appTopDTO.setPublicationId(tmp.getAVObject("publicationObj").getObjectId());
-			appTopDTO.setCreateDate(tmp.getCreatedAt().getTime());
-			appTopDTO.setiType(tmp.getInt("iType"));
+
+			appTopDTO.setCreaterId(null != tmp.getAVUser("createUserObj") ? tmp.getAVUser("createUserObj").getObjectId() : "");
+			appTopDTO.setTitle(tmp.getAVObject("articleObj").getString("title"));
 		}
 		return appTopDTO;
 	}
