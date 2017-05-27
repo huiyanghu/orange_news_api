@@ -1,5 +1,6 @@
 package com.it7890.orange.api.dto;
 
+import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVObject;
 import com.it7890.orange.api.cloud.AppTopCloud;
 import com.it7890.orange.api.entity.AppTop;
@@ -9,7 +10,9 @@ import com.it7890.orange.api.util.StringUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class AppTopDTO {
 	private static Logger logger = LogManager.getLogger(AppTopDTO.class);
@@ -25,6 +28,7 @@ public class AppTopDTO {
 	private String title;
 
 	private String titlePic;
+	private List<String> titlePicList;
 	
 	private String topicsId;
 
@@ -333,6 +337,14 @@ public class AppTopDTO {
 		this.creatTime = creatTime;
 	}
 
+	public List<String> getTitlePicList() {
+		return titlePicList;
+	}
+
+	public void setTitlePicList(List<String> titlePicList) {
+		this.titlePicList = titlePicList;
+	}
+
 	public static AppTopDTO avoobjectToDto(AVObject tmp) {
 		AppTopDTO appTopDTO = null;
 		if(null != tmp) {
@@ -363,7 +375,15 @@ public class AppTopDTO {
 			appTopDTO.setLinkUrl(tmp.getAVObject("articleObj").getString("linkUrl"));
 			appTopDTO.setMediaLink(tmp.getAVObject("articleObj").getString("mediaLink"));
 			appTopDTO.setWriter(tmp.getAVObject("articleObj").getString("writer"));
-			appTopDTO.setTitlePic(tmp.getAVObject("articleObj").getString("titlePic"));
+
+			List<String> titlePicUrls = new ArrayList<>();
+			List<AVFile> titlePicObjList = (List<AVFile>) tmp.getAVObject("articleObj").get("titlePicObjArr");
+			if(null != titlePicObjList && titlePicObjList.size() > 0){
+				for (AVFile titlePic : titlePicObjList) {
+					titlePicUrls.add(titlePic.getUrl());
+				}
+			}
+			appTopDTO.setTitlePicList(titlePicUrls);
 			appTopDTO.setSourceUrl(tmp.getAVObject("articleObj").getString("sourceurl"));
 			appTopDTO.setSourceTitilePic(tmp.getAVObject("articleObj").getString("sourceTitlePic"));
 

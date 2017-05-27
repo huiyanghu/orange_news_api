@@ -48,6 +48,7 @@ public class AppTopCloud {
 
 		AVQuery<AVObject> query = new AVQuery<>("AppTop");
 		query.include("articleObj");
+		query.include("articleObj.titlePicObjArr");
 		query.whereEqualTo("countryCode", countryCode);
 		query.orderByDescending("createdAt");
 		query.limit(10);
