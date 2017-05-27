@@ -38,7 +38,7 @@ public class ConArtilesCloud {
 
 	@EngineFunction("queryIndexAndRecommendList")
 	public static String queryIndexAndRecommendList(@EngineFunctionParam("countryCode") String countryCode,
-													@EngineFunctionParam("artCreateTime") String artCreateTime,
+													@EngineFunctionParam("artCreateTime") long artCreateTime,
 													@EngineFunctionParam("topCreateTime") long topCreateTime,
 													@EngineFunctionParam("direct") int direct) throws AVException, ParseException {
 		int resultCode = Constants.CODE_SUCCESS;
@@ -51,9 +51,13 @@ public class ConArtilesCloud {
 		if(topCreateTime!=0){
 			topUpdateTmp = getTopTmpByTime(countryCode,topCreateTime);
 		}
+		String artCreateTimeStr = "";
+		if (artCreateTime != 0) {
+			artCreateTimeStr = String.valueOf(artCreateTime);
+		}
 
 		//开始文章查询
-		resArtDTOList = new ConArticleServiceImpl().getArticlesList(artCreateTime,direct);
+		resArtDTOList = new ConArticleServiceImpl().getArticlesList(artCreateTimeStr, direct);
 		if(resArtDTOList==null){
 			resultMsg = "文章已最新";
 		}else {
@@ -71,7 +75,7 @@ public class ConArtilesCloud {
 	@EngineFunction("queryTopicsArticlesList")
 	public static String queryTopicsArticlesList(@EngineFunctionParam("topicID") String topicID,
 												 @EngineFunctionParam("countryCode") String countryCode,
-												 @EngineFunctionParam("createTime") String createTime,
+												 @EngineFunctionParam("createTime") long createTime,
 												 @EngineFunctionParam("topCreateTime") long topCreateTime,
 												 @EngineFunctionParam("direct") int direct) throws AVException, ParseException {
 		int resultCode = Constants.CODE_SUCCESS;
@@ -84,9 +88,13 @@ public class ConArtilesCloud {
 		if(topCreateTime!=0){
 			topUpdateTmp = getTopTmpByTime(countryCode,topCreateTime);
 		}
+		String createTimeStr = "";
+		if (createTime != 0) {
+			createTimeStr = String.valueOf(createTime);
+		}
 
 		if (StringUtils.isNotEmpty(topicID)){
-			resArtDTOList = new ConArticleServiceImpl().getTopicsArticlesList(topicID,createTime,direct);
+			resArtDTOList = new ConArticleServiceImpl().getTopicsArticlesList(topicID, createTimeStr,direct);
 			if(resArtDTOList!=null){
 				resultMap.put("artsList", resArtDTOList);
 			}else {
