@@ -9,5 +9,5 @@ import java.util.List;
 
 
 public interface IAppTopService {
-	public List<AppTopDTO> getAppTopsList(String countryCode,String topCreateTime) throws ParseException;
+	public List<AppTopDTO> getAppTopsList(String countryCode, long topCreateTime) throws ParseException;
 }

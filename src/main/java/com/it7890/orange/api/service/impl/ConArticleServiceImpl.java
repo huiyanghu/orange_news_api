@@ -15,8 +15,8 @@ public class ConArticleServiceImpl implements IConArticleService {
 
 
 	@Override
-	public List<ConArticleDTO> getArticlesList(String time,int direct) {
-		List<ConArticle> ls = new ConArticleDao().getArticlesList(time,direct);
+	public List<ConArticleDTO> getArticlesList(long ltime,int direct) {
+		List<ConArticle> ls = new ConArticleDao().getArticlesList(ltime,direct);
 		return buildDtoList(ls);
 	}
 
@@ -31,8 +31,8 @@ public class ConArticleServiceImpl implements IConArticleService {
 	}
 
 	@Override
-	public List<ConArticleDTO> getTopicsArticlesList(String id, String time,int direct) {
-		List<ConArticle> ls = new ConArticleDao().getTopicsArticlesList(id,time,direct);
+	public List<ConArticleDTO> getTopicsArticlesList(String id, long ltime, int direct) {
+		List<ConArticle> ls = new ConArticleDao().getTopicsArticlesList(id, ltime, direct);
 		return buildDtoList(ls);
 	}
 

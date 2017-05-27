@@ -20,12 +20,10 @@ import java.util.List;
 public class AppTopDao {
     private static Logger logger = LogManager.getLogger(AppTopDao.class);
 
-    public List<AppTop> getAppTopsList(String countryCode,String topCreateTime) throws ParseException {
+    public List<AppTop> getAppTopsList(String countryCode, long topCreateTime) throws ParseException {
         List<AppTop> appTopsList = new ArrayList<AppTop>();
-        if(StringUtils.isNotEmpty(topCreateTime)){
-            long ltime = DateUtil.stringToLong(topCreateTime,DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS);
-//            String createdAt = DateUtil.befor8HoursLong2StringUTC(ltime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS);
-            String createdAt = DateUtil.Long2StringUTC(ltime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS_0);
+        if(topCreateTime != 0){
+            String createdAt = DateUtil.Long2StringUTC(topCreateTime, DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS_0);
             String cql = " select * from AppTop where status = ? and countryCode = ? and createdAt > date(?) order by createdAt desc";
             try {
                 AVCloudQueryResult avCloudQueryResult = AVQuery.doCloudQuery(cql, AppTop.class, 0,countryCode,createdAt);
@@ -37,7 +35,7 @@ public class AppTopDao {
             String  cql = " select * from AppTop where status = ? and countryCode = ? order by createdAt desc";
             try {
 //                AVCloudQueryResult avCloudQueryResult = AVQuery.doCloudQuery(cql, AppTop.class, Arrays.asList(0,countryCode));
-                AVCloudQueryResult avCloudQueryResult = AVQuery.doCloudQuery(cql, AppTop.class, 0,countryCode);
+                AVCloudQueryResult avCloudQueryResult = AVQuery.doCloudQuery(cql, AppTop.class, 0, countryCode);
                 appTopsList = (List<AppTop>) avCloudQueryResult.getResults();
             } catch (Exception e) {
                 e.getMessage();

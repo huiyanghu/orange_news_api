@@ -354,7 +354,7 @@ public class DateUtil {
 	}
 	public  static String Long2StringUTC(long tmp,String type){
 		DateFormat df = new SimpleDateFormat(type);
-		return  df.format(tmp);
+		return  df.format(tmp * 1000);
 	}
 	
 	public static void main(String[] args) {
@@ -382,6 +382,12 @@ public class DateUtil {
 		try {
 			long l = DateUtil.stringToLong("2017-05-19 10:02:00",DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS);
 			System.out.println(l);
+
+			long l2 = 1495658654l;
+			System.out.println(DateUtil.Long2StringUTC(l, DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS_1));
+			System.out.println(DateUtil.Long2StringUTC(l2, DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS_1));
+			System.out.println(DateUtil.Long2StringUTC(l2 * 1000, DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS_1));
+
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

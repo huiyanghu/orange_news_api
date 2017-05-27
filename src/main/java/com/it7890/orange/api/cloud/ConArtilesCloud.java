@@ -51,13 +51,9 @@ public class ConArtilesCloud {
 		if(topCreateTime!=0){
 			topUpdateTmp = getTopTmpByTime(countryCode,topCreateTime);
 		}
-		String artCreateTimeStr = "";
-		if (artCreateTime != 0) {
-			artCreateTimeStr = String.valueOf(artCreateTime);
-		}
 
 		//开始文章查询
-		resArtDTOList = new ConArticleServiceImpl().getArticlesList(artCreateTimeStr, direct);
+		resArtDTOList = new ConArticleServiceImpl().getArticlesList(artCreateTime, direct);
 		if(resArtDTOList==null){
 			resultMsg = "文章已最新";
 		}else {
@@ -88,13 +84,9 @@ public class ConArtilesCloud {
 		if(topCreateTime!=0){
 			topUpdateTmp = getTopTmpByTime(countryCode,topCreateTime);
 		}
-		String createTimeStr = "";
-		if (createTime != 0) {
-			createTimeStr = String.valueOf(createTime);
-		}
 
 		if (StringUtils.isNotEmpty(topicID)){
-			resArtDTOList = new ConArticleServiceImpl().getTopicsArticlesList(topicID, createTimeStr,direct);
+			resArtDTOList = new ConArticleServiceImpl().getTopicsArticlesList(topicID, createTime,direct);
 			if(resArtDTOList!=null){
 				resultMap.put("artsList", resArtDTOList);
 			}else {

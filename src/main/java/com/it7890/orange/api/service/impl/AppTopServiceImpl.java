@@ -14,7 +14,7 @@ import java.util.List;
 public class AppTopServiceImpl implements IAppTopService {
 
 	@Override
-	public List<AppTopDTO> getAppTopsList(String countryCode,String topCreateTime) throws ParseException {
+	public List<AppTopDTO> getAppTopsList(String countryCode,long topCreateTime) throws ParseException {
 		List<AppTop> ls =  new AppTopDao().getAppTopsList(countryCode,topCreateTime);
 		if (ls.size()>0){
 //			return buildDtoList(ls);

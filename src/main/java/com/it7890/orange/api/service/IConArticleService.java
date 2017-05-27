@@ -9,11 +9,11 @@ import java.util.List;
 
 
 public interface IConArticleService {
-	public List<ConArticleDTO> getArticlesList(String time,int direct);
+	public List<ConArticleDTO> getArticlesList(long ltime,int direct);
 
 	public List<ConArticleDTO> getArticleById(String articleid);
 
-	public List<ConArticleDTO> getTopicsArticlesList(String id,String time,int direct);
+	public List<ConArticleDTO> getTopicsArticlesList(String id,long ltime,int direct);
 
 	public  ConArticleDetailDTO getArtContentById(String articleid) throws IOException;
 }

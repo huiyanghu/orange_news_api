@@ -16,37 +16,22 @@ import java.util.List;
 public class ConArticleDao {
     private static Logger logger = LogManager.getLogger(ConArticleDao.class);
 
-    public List<ConArticle> getArticlesList(String time,int direct) {
+    public List<ConArticle> getArticlesList(long ltime, int direct) {
         List<ConArticle> articlesList = new ArrayList<ConArticle>();
         StringBuffer cql = new StringBuffer();
-        cql.append("select include titlePicObj,include topicObj, include titlePicObjArr,* from conarticle where status = ?");
+        cql.append("select include titlePicObj,include topicObj, include titlePicObjArr,* from conarticle where objectId is exists");
         String timeAt = "";
-        long ltime = 0;
-        if(StringUtils.isNotEmpty(time)){
 
+        if(ltime != 0){
             if (direct == 0){
-                try {
-                    ltime = DateUtil.stringToLong(time,DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS);
-//                timeAt = DateUtil.befor8HoursLong2StringUTC(ltime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS);
-                    timeAt = DateUtil.Long2StringUTC(ltime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS_0);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                logger.info("RECOMMtimeAt00000000000000000::::"+timeAt);
+                timeAt = DateUtil.Long2StringUTC(ltime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS_1);
                 cql.append(" and createdAt > date(?) limit ? order by createdAt desc");
             } else if (direct == 1) {
-                try {
-                    ltime = DateUtil.stringToLong(time,DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS);
-//                timeAt = DateUtil.befor8HoursLong2StringUTC(ltime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS);
-                    timeAt = DateUtil.Long2StringUTC(ltime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS_1);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                logger.info("RECOMMtimeAt11111111111111111111::::"+timeAt);
+                timeAt = DateUtil.Long2StringUTC(ltime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS_1);
                 cql.append(" and createdAt < date(?) limit ? order by createdAt desc");
             }
             try {
-                AVCloudQueryResult avCloudQueryResult = AVQuery.doCloudQuery(cql.toString(), ConArticle.class,0,timeAt,10);
+                AVCloudQueryResult avCloudQueryResult = AVQuery.doCloudQuery(cql.toString(), ConArticle.class,timeAt,10);
                 articlesList = (List<ConArticle>) avCloudQueryResult.getResults();
             } catch (Exception e) {
                 logger.info(e.getMessage());
@@ -54,7 +39,7 @@ public class ConArticleDao {
         } else {//首次刷新
             cql.append(" limit ? order by createdAt desc");
             try {
-                AVCloudQueryResult avCloudQueryResult = AVQuery.doCloudQuery(cql.toString(), ConArticle.class,0,10);
+                AVCloudQueryResult avCloudQueryResult = AVQuery.doCloudQuery(cql.toString(), ConArticle.class,10);
                 articlesList = (List<ConArticle>) avCloudQueryResult.getResults();
             } catch (Exception e) {
                 logger.info(e.getMessage());
@@ -78,45 +63,30 @@ public class ConArticleDao {
         return articlesList;
     }
 
-    public List<ConArticle> getTopicsArticlesList(String tid,String time,int direct) {//direct 0下拉 1上拉,默认0
+    public List<ConArticle> getTopicsArticlesList(String tid,long ltime, int direct) {//direct 0下拉 1上拉,默认0
         List<ConArticle> articlesList = new ArrayList<ConArticle>();
         StringBuffer cql = new StringBuffer();
         cql.append("select include titlePicObj, include titlePicObjArr, * from conarticle where status = ? and topicObj = pointer('AppTopics', ?)") ;
         String timeAt = "";
-        long ltime = 0;
-        if(StringUtils.isNotEmpty(time)){
-
+        if(ltime != 0){
             if(direct == 0){
-                try {
-                    ltime = DateUtil.stringToLong(time,DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS);
-//                timeAt = DateUtil.befor8HoursLong2StringUTC(ltime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS);
-                    timeAt = DateUtil.Long2StringUTC(ltime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS_0);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                logger.info("TOPICtimeAt00000000000000000::::"+timeAt);
+                timeAt = DateUtil.Long2StringUTC(ltime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS_0);
                 cql.append(" and createdAt > date(?) limit ? order by createdAt desc");
             } else if (direct == 1) {
-                try {
-                    ltime = DateUtil.stringToLong(time,DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS);
-//                timeAt = DateUtil.befor8HoursLong2StringUTC(ltime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS);
-                    timeAt = DateUtil.Long2StringUTC(ltime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS_1);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                logger.info("TOPICtimeAt11111111111111111111::::"+timeAt);
+                timeAt = DateUtil.Long2StringUTC(ltime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS_1);
                 cql.append(" and createdAt < date(?) limit ? order by createdAt desc");
             }
             try {
-                AVCloudQueryResult avCloudQueryResult = AVQuery.doCloudQuery(cql.toString(), ConArticle.class, 0,tid,timeAt,10);
+                AVCloudQueryResult avCloudQueryResult = AVQuery.doCloudQuery(cql.toString(), ConArticle.class, 0, tid, timeAt, 10);
                 articlesList = (List<ConArticle>) avCloudQueryResult.getResults();
             } catch (Exception e) {
+                e.printStackTrace();
                 logger.info(e.getMessage());
             }
         }else {//首次刷新
             cql.append(" limit ? order by createdAt desc");
             try {
-                AVCloudQueryResult avCloudQueryResult = AVQuery.doCloudQuery(cql.toString(), ConArticle.class, 0,tid,10);
+                AVCloudQueryResult avCloudQueryResult = AVQuery.doCloudQuery(cql.toString(), ConArticle.class, 0, tid, 10);
                 articlesList = (List<ConArticle>) avCloudQueryResult.getResults();
             } catch (Exception e) {
                 logger.info(e.getMessage());

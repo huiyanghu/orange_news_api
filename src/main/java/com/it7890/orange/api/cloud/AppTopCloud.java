@@ -52,7 +52,7 @@ public class AppTopCloud {
 		query.whereEqualTo("countryCode", countryCode);
 		query.orderByDescending("createdAt");
 		query.limit(10);
-		if(topCreateTime!=0){
+		if(topCreateTime != 0){
 			String createdAt =  DateUtil.Long2StringUTC(topCreateTime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS_0);
 			query.whereGreaterThan("createdAt",createdAt);
 		}
