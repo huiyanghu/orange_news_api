@@ -93,6 +93,10 @@ public class ConArticleDTO {
 
     private String authorheadimg;
 
+    private String creatTime;
+
+    private Long createDate;
+
     public String getCreatTime() {
         return creatTime;
     }
@@ -101,7 +105,13 @@ public class ConArticleDTO {
         this.creatTime = creatTime;
     }
 
-    private String creatTime;
+    public Long getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Long createDate) {
+        this.createDate = createDate;
+    }
 
     public String getAbstracts() {
         return abstracts;
@@ -400,6 +410,7 @@ public class ConArticleDTO {
             conArticleDTO.setPublicationId(tmp.getPublicationid());
             conArticleDTO.setPlogo(tmp.getPlogo());
             conArticleDTO.setCreatTime(DateUtil.formatFromDate(DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS,tmp.getCreatedAt()));
+            conArticleDTO.setCreateDate(tmp.getCreatedAt().getTime());
 //            conArticleDTO.setTitlePic(null != tmp.getTitlePicObj() ? tmp.getTitlePicObj().getUrl() : "");
 //            conArticleDTO.setTitlePicId(null != tmp.getTitlePicObj() ? tmp.getTitlePicObj().getObjectId() : "");
             List<String> titlePicUrls = new ArrayList<>();
