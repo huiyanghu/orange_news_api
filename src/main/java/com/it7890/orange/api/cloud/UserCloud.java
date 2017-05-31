@@ -218,6 +218,26 @@ public class UserCloud {
 		return JSON.toJSONString(resultMap);
 	}
 
+	@EngineFunction("updateBrowseSign")
+	public static String updateBrowseSign(@EngineFunctionParam("loadSign") int loadSign) {
+		int resultCode = Constants.CODE_SUCCESS;
+		String resultMsg = "成功";
+
+		AVUser currentUser = AVUser.getCurrentUser();
+		if (null != currentUser) {
+			loadSign = loadSign != 0 ? 1 : 0;
+			currentUser.put("loadSign", loadSign);
+			new UserServiceImpl().updateUserInfo(currentUser);
+		} else {
+			resultCode = Constants.CODE_AUTHORIZE_OVERDUE;
+			resultMsg = "用户未登录";
+		}
+		Map<String, Object> resultMap = new HashMap<>();
+		resultMap.put("code", resultCode);
+		resultMap.put("msg", resultMsg);
+		return JSON.toJSONString(resultMap);
+	}
+
 	private static String getRegisterMsg(int errorCode) {
 		String resultMsg = "服务异常，请稍后再试";
 		switch (errorCode) {

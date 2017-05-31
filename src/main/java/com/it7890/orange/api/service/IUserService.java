@@ -13,6 +13,8 @@ public interface IUserService {
 
 	boolean getIsExistEmail(String email);
 
+	AVUser updateUserInfo(AVUser userInfo);
+
 	Map<String, Object> updateUserAvatar(AVUser userInfo, String fileId);
 
 	Map<String, Object> updateUserInfo(AVUser userInfo, String fileId, String nickName, int sex);

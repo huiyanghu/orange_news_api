@@ -26,6 +26,11 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
+	public AVUser updateUserInfo(AVUser userInfo) {
+		return new UserDao().updateUserInfo(userInfo);
+	}
+
+	@Override
 	public Map<String, Object> updateUserAvatar(AVUser userInfo, String fileId) {
 		int resultCode = Constants.CODE_SUCCESS;
 		String resultMsg = "成功";
