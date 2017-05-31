@@ -171,7 +171,7 @@ public class UserCloud {
 		return JSON.toJSONString(resultMap);
 	}
 
-	@EngineFunction("updateUserInfoAvatar")
+	@EngineFunction("updateUserAvatar")
 	public static String updateUserAvatar(@EngineFunctionParam("fileId") String fileId) {
 		int resultCode = Constants.CODE_SUCCESS;
 		String resultMsg = "成功";
@@ -185,6 +185,27 @@ public class UserCloud {
 				resultCode = Constants.CODE_PARAMS_FAIL;
 				resultMsg = "参数错误";
 			}
+		} else {
+			resultCode = Constants.CODE_AUTHORIZE_OVERDUE;
+			resultMsg = "用户未登录";
+		}
+		if (null == resultMap) {
+			resultMap = new HashMap<>();
+			resultMap.put("code", resultCode);
+			resultMap.put("msg", resultMsg);
+		}
+		return JSON.toJSONString(resultMap);
+	}
+
+	@EngineFunction("updateUserInfo")
+	public static String updateUserInfo(@EngineFunctionParam("fileId") String fileId, @EngineFunctionParam("nickName") String nickName, @EngineFunctionParam("sex") int sex) {
+		int resultCode = Constants.CODE_SUCCESS;
+		String resultMsg = "成功";
+		Map<String, Object> resultMap = null;
+
+		AVUser currentUser = AVUser.getCurrentUser();
+		if (null != currentUser) {
+			resultMap = new UserServiceImpl().updateUserInfo(currentUser, fileId, nickName, sex);
 		} else {
 			resultCode = Constants.CODE_AUTHORIZE_OVERDUE;
 			resultMsg = "用户未登录";
