@@ -1,5 +1,6 @@
 package com.it7890.orange.api.service.impl;
 
+import com.avos.avoscloud.AVUser;
 import com.it7890.orange.api.dao.UserDao;
 import com.it7890.orange.api.service.IUserService;
 

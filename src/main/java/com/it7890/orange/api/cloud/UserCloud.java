@@ -4,12 +4,16 @@ import cn.leancloud.EngineFunction;
 import cn.leancloud.EngineFunctionParam;
 import com.alibaba.fastjson.JSON;
 import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVFile;
+import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVUser;
+import com.it7890.orange.api.dto.UserDTO;
 import com.it7890.orange.api.service.impl.UserServiceImpl;
 import com.it7890.orange.api.util.Constants;
 import com.it7890.orange.api.util.StringUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.context.support.ResourceBundleMessageSource;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -141,6 +145,31 @@ public class UserCloud {
 		return JSON.toJSONString(resultMap);
 	}
 
+	@EngineFunction("getUserInfo")
+	public static String getUserInfo() {
+		int resultCode = Constants.CODE_SUCCESS;
+		String resultMsg = "成功";
+
+		AVUser currentUser = AVUser.getCurrentUser();
+		if (null == currentUser) {
+			resultCode = Constants.CODE_AUTHORIZE_OVERDUE;
+			resultMsg = "用户未登录";
+		} else {
+			AVObject headFileObj = currentUser.getAVObject("headFileObj");
+			try {
+				headFileObj.fetch();
+			} catch (AVException e) {
+				e.printStackTrace();
+			}
+		}
+
+		Map<String, Object> resultMap = new HashMap<>();
+		resultMap.put("code", resultCode);
+		resultMap.put("msg", resultMsg);
+		resultMap.put("userInfo", buildUserDto(currentUser));
+		return JSON.toJSONString(resultMap);
+	}
+
 	private static String getRegisterMsg(int errorCode) {
 		String resultMsg = "服务异常，请稍后再试";
 		switch (errorCode) {
@@ -163,5 +192,21 @@ public class UserCloud {
 				break;
 		}
 		return resultMsg;
+	}
+
+	private static UserDTO buildUserDto(AVUser userInfo) {
+		UserDTO userDto = null;
+		if (null != userInfo) {
+			userDto = new UserDTO();
+			userDto.setObjectId(userInfo.getObjectId());
+			userDto.setUsername(userInfo.getString("username"));
+			userDto.setEmail(userInfo.getString("email"));
+
+			userDto.setHeadUrl(null != userInfo.getAVObject("headFileObj") ? userInfo.getAVObject("headFileObj").getString("url") : "");
+			userDto.setNickName(StringUtil.isNotEmpty(userInfo.getString("nickName")) ? userInfo.getString("nickNam") : "");
+			userDto.setSex(null != userInfo.get("sex") ? userInfo.getInt("sex") : -1);
+			userDto.setLoadSign(null != userInfo.get("loadSign") ? userInfo.getInt("loadSign") : -1);
+		}
+		return userDto;
 	}
 }

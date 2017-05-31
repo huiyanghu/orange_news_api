@@ -14,7 +14,7 @@ public class Constants {
 	public final static int CODE_SERVER_FAIL = 2;
 	/** 重复操作提示 **/
 	public final static int CODE_REPEAT = 3;
-	/** 目标未找到，如帖子未存在  **/
+	/** 目标未找到，如用户不存在  **/
 	public final static int CODE_CANNOT_FIND = 4;
 	/** 授权过期 **/
 	public final static int CODE_AUTHORIZE_OVERDUE = 101;
@@ -32,6 +32,6 @@ public class Constants {
 	public final static int CODE_EMAIL_EXIST = 203;
 	/** 没有提供电子邮箱地址 **/
 	public final static int CODE_EMAIL_EMPTY = 204;
-	/**  用户名和密码不匹配 **/
+	/**  用户名或密码不匹配 **/
 	public final static int CODE_USER_UNMATCH = 210;
 }

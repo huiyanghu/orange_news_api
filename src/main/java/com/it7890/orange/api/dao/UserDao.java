@@ -2,7 +2,10 @@ package com.it7890.orange.api.dao;
 
 import com.avos.avoscloud.AVCloudQueryResult;
 import com.avos.avoscloud.AVQuery;
+import com.avos.avoscloud.AVUser;
 import com.it7890.orange.api.util.StringUtil;
+
+import java.util.List;
 
 /**
  * Created by Astro on 17/5/24.

@@ -5,6 +5,7 @@ import com.it7890.orange.api.dto.ConArticleDetailDTO;
 import com.it7890.orange.api.entity.ConArticle;
 import com.it7890.orange.api.entity.ConArticlesContent;
 import com.it7890.orange.api.service.IConArticleService;
+import com.it7890.orange.api.util.StringUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,9 +38,15 @@ public class ConArticleServiceImpl implements IConArticleService {
 	}
 
 	@Override
-	public ConArticleDetailDTO getArtContentById(String articleid) throws IOException {
-		List<ConArticlesContent> ls = new ConArticleDao().getArtContentById(articleid);
-		return buildContentDtoList(ls.get(0));
+	public ConArticleDetailDTO getArtContentById(String articleId) throws IOException {
+		ConArticleDetailDTO conArticleDetailDTO = null;
+		if (StringUtil.isNotEmpty(articleId)) {
+			List<ConArticlesContent> ls = new ConArticleDao().getArtContentById(articleId);
+			if (null != ls && ls.size() > 0) {
+				conArticleDetailDTO = buildContentDtoList(ls.get(0));
+			}
+		}
+		return conArticleDetailDTO;
 	}
 
 	private static List<ConArticleDTO> buildDtoList(List<ConArticle> tmp) {
