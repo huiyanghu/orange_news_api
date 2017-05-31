@@ -1,6 +1,7 @@
 package com.it7890.orange.api.dao;
 
 import com.avos.avoscloud.AVCloudQueryResult;
+import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.AVUser;
 import com.it7890.orange.api.util.StringUtil;
@@ -54,5 +55,22 @@ public class UserDao {
 			}
 		}
 		return isExist;
+	}
+
+	/**
+	 * 修改用户信息
+	 * @param userInfo 用户对象
+	 * @return
+	 */
+	public AVUser updateUserInfo(AVUser userInfo) {
+		if (null != userInfo && StringUtil.isNotEmpty(userInfo.getObjectId())) {
+			try {
+				userInfo.save();
+			} catch (AVException e) {
+				e.printStackTrace();
+				userInfo = null;
+			}
+		}
+		return userInfo;
 	}
 }

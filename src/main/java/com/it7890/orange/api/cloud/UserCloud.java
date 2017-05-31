@@ -4,16 +4,15 @@ import cn.leancloud.EngineFunction;
 import cn.leancloud.EngineFunctionParam;
 import com.alibaba.fastjson.JSON;
 import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVUser;
 import com.it7890.orange.api.dto.UserDTO;
+import com.it7890.orange.api.service.impl.FileServiceImpl;
 import com.it7890.orange.api.service.impl.UserServiceImpl;
 import com.it7890.orange.api.util.Constants;
 import com.it7890.orange.api.util.StringUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.context.support.ResourceBundleMessageSource;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -155,11 +154,13 @@ public class UserCloud {
 			resultCode = Constants.CODE_AUTHORIZE_OVERDUE;
 			resultMsg = "用户未登录";
 		} else {
-			AVObject headFileObj = currentUser.getAVObject("headFileObj");
-			try {
-				headFileObj.fetch();
-			} catch (AVException e) {
-				e.printStackTrace();
+			AVObject avatarObj = currentUser.getAVObject("avatarObj");
+			if (null != avatarObj) {
+				try {
+					avatarObj.fetch();
+				} catch (AVException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 
@@ -167,6 +168,32 @@ public class UserCloud {
 		resultMap.put("code", resultCode);
 		resultMap.put("msg", resultMsg);
 		resultMap.put("userInfo", buildUserDto(currentUser));
+		return JSON.toJSONString(resultMap);
+	}
+
+	@EngineFunction("updateUserInfoAvatar")
+	public static String updateUserAvatar(@EngineFunctionParam("fileId") String fileId) {
+		int resultCode = Constants.CODE_SUCCESS;
+		String resultMsg = "成功";
+		Map<String, Object> resultMap = null;
+
+		AVUser currentUser = AVUser.getCurrentUser();
+		if (null != currentUser) {
+			if (StringUtil.isNotEmpty(fileId)) {
+				resultMap = new UserServiceImpl().updateUserAvatar(currentUser, fileId);
+			} else {
+				resultCode = Constants.CODE_PARAMS_FAIL;
+				resultMsg = "参数错误";
+			}
+		} else {
+			resultCode = Constants.CODE_AUTHORIZE_OVERDUE;
+			resultMsg = "用户未登录";
+		}
+		if (null == resultMap) {
+			resultMap = new HashMap<>();
+			resultMap.put("code", resultCode);
+			resultMap.put("msg", resultMsg);
+		}
 		return JSON.toJSONString(resultMap);
 	}
 
@@ -202,10 +229,10 @@ public class UserCloud {
 			userDto.setUsername(userInfo.getString("username"));
 			userDto.setEmail(userInfo.getString("email"));
 
-			userDto.setHeadUrl(null != userInfo.getAVObject("headFileObj") ? userInfo.getAVObject("headFileObj").getString("url") : "");
+			userDto.setAvatarUrl(null != userInfo.getAVObject("avatarObj") ? userInfo.getAVObject("avatarObj").getString("url") : "");
 			userDto.setNickName(StringUtil.isNotEmpty(userInfo.getString("nickName")) ? userInfo.getString("nickNam") : "");
 			userDto.setSex(null != userInfo.get("sex") ? userInfo.getInt("sex") : -1);
-			userDto.setLoadSign(null != userInfo.get("loadSign") ? userInfo.getInt("loadSign") : -1);
+			userDto.setLoadSign(null != userInfo.get("loadSign") ? userInfo.getInt("loadSign") : 0);
 		}
 		return userDto;
 	}

@@ -8,7 +8,7 @@ public class UserDTO {
 	private String objectId;
 	private String username;
 	private String email;
-	private String headUrl;
+	private String avatarUrl;
 	private String nickName;
 	private int sex;
 	private int loadSign;
@@ -37,12 +37,12 @@ public class UserDTO {
 		this.email = email;
 	}
 
-	public String getHeadUrl() {
-		return headUrl;
+	public String getAvatarUrl() {
+		return avatarUrl;
 	}
 
-	public void setHeadUrl(String headUrl) {
-		this.headUrl = headUrl;
+	public void setAvatarUrl(String avatarUrl) {
+		this.avatarUrl = avatarUrl;
 	}
 
 	public String getNickName() {
