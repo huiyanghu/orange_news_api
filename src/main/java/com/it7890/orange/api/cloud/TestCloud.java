@@ -84,13 +84,15 @@ public class TestCloud {
 		return "success";
 	}
 
-	private static Map<String, Integer> getImageWidthHeight(String ImageUrl) {
+	private static Map<String, Integer> getImageWidthHeight(String imageUrl) {
 		BufferedImage bufferedImage = null;
 		try {
-			URL url = new URL(ImageUrl);
+			URL url = new URL(imageUrl);
 			bufferedImage = ImageIO.read(url);
 		} catch (IOException e) {
 			e.printStackTrace();
+		} catch (IllegalArgumentException e2) {
+			e2.printStackTrace();
 		}
 
 		if (null != bufferedImage) {
