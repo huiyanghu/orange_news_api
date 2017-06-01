@@ -42,12 +42,15 @@ public class TestCloud {
 
 		List<AVObject> medias = new ArrayList<>();
 		AVObject mediaInfo;
+		int index = 0;
 		for (AVObject avFile : fileList) {
+			index += 1;
 			String imageUrl = avFile.getString("url");
 			if (StringUtil.isNotEmpty(imageUrl)) {
+				logger.info("imageUrl: {}, =====>｛｝", imageUrl, index);
 				Map<String, Integer> map = getImageWidthHeight(imageUrl);
 				if (null != map) {
-					logger.info("Image url:{}, widht:{}, height:{}", imageUrl, map.get("width"), map.get("height"));
+//					logger.info("Image url:{}, widht:{}, height:{}", imageUrl, map.get("width"), map.get("height"));
 					mediaInfo = new AVObject("MediaInfo");
 					mediaInfo.put("fileObj", AVObject.createWithoutData("_File", avFile.getObjectId()));
 					mediaInfo.put("width", map.get("width"));
