@@ -16,5 +16,5 @@ public interface IConArticleService {
 
 	public List<ConArticleDTO> getTopicsArticlesList(String id,long ltime,int direct) throws AVException;
 
-	public  ConArticleDetailDTO getArtContentById(String articleid) throws IOException;
+	public  ConArticleDetailDTO getArtContentById(String articleid) throws IOException, AVException;
 }

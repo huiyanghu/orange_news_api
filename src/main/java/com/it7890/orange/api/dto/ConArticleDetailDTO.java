@@ -1,6 +1,9 @@
 package com.it7890.orange.api.dto;
 
+import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVFile;
+import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.AVQuery;
 import com.it7890.orange.api.entity.ConArticlesContent;
 import com.it7890.orange.api.util.DateUtil;
 import org.apache.logging.log4j.LogManager;
@@ -123,7 +126,7 @@ public class ConArticleDetailDTO {
 		this.noLikeCount = noLikeCount;
 	}
 
-	public static ConArticleDetailDTO objectToDto(ConArticlesContent tmp) throws IOException {
+	public static ConArticleDetailDTO objectToDto(ConArticlesContent tmp) throws IOException, AVException {
 		ConArticleDetailDTO conArticleDetailDTO = null;
 		if(null != tmp) {
 			conArticleDetailDTO = new ConArticleDetailDTO();
@@ -146,14 +149,22 @@ public class ConArticleDetailDTO {
 			conArticleDetailDTO.setPubTime(DateUtil.formatFromDate(DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS,tmp.getArticleObj().getCreatedAt()));
 			conArticleDetailDTO.setCopyright(tmp.getPubicationObj().getString("name"));
 
-			List<String> titlePicUrls = new ArrayList<>();
+			List<ImageInfoDTO> titlePicInfo = new ArrayList<>();
 			List<AVFile> titlePics = tmp.getArticleObj().getList("titlePicObjArr");
 			if(titlePics!=null){
+				ImageInfoDTO imageInfoDTO = new ImageInfoDTO();
 				for (AVFile titlePic : titlePics) {
-					titlePicUrls.add(titlePic.getUrl());
+					AVQuery<AVObject> query = new AVQuery<AVObject>("MediaInfo");
+					query.whereEqualTo("fileObj",AVObject.createWithoutData("_File",titlePic.getObjectId()));
+					List<AVObject> l = query.find();
+					imageInfoDTO.setImageUrl(titlePic.getUrl());
+					imageInfoDTO.setImageWidth(l.get(0).getInt("width"));
+					imageInfoDTO.setImageHeight(l.get(0).getInt("height"));
+					titlePicInfo.add(imageInfoDTO);
+//					titlePicUrls.add(titlePic.getUrl());
 				}
 			}
-			conArticleDetailDTO.setTitlePicList(titlePicUrls);
+			conArticleDetailDTO.setTitlePicList(titlePicInfo);
 			conArticleDetailDTO.setLikeCount(tmp.getInt("likeCount"));
 			conArticleDetailDTO.setNoLikeCount(tmp.getInt("noLikeCount"));
 		}

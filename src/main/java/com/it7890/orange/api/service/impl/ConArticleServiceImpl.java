@@ -35,7 +35,7 @@ public class ConArticleServiceImpl implements IConArticleService {
 	}
 
 	@Override
-	public ConArticleDetailDTO getArtContentById(String articleId) throws IOException {
+	public ConArticleDetailDTO getArtContentById(String articleId) throws IOException, AVException {
 		ConArticleDetailDTO conArticleDetailDTO = null;
 		if (StringUtil.isNotEmpty(articleId)) {
 			List<ConArticlesContent> ls = new ConArticleDao().getArtContentById(articleId);
@@ -58,7 +58,7 @@ public class ConArticleServiceImpl implements IConArticleService {
 		return DTOList;
 	}
 
-	private static ConArticleDetailDTO buildContentDtoList(ConArticlesContent tmp) throws IOException {
+	private static ConArticleDetailDTO buildContentDtoList(ConArticlesContent tmp) throws IOException, AVException {
 		return ConArticleDetailDTO.objectToDto(tmp);
 	}
 
