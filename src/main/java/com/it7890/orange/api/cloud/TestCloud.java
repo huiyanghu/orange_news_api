@@ -47,7 +47,7 @@ public class TestCloud {
 			index += 1;
 			String imageUrl = avFile.getString("url");
 			if (StringUtil.isNotEmpty(imageUrl)) {
-				logger.info("imageUrl: {}, =====>｛｝", imageUrl, index);
+				logger.info("imageUrl: {}, =====>{}", imageUrl, index);
 				Map<String, Integer> map = getImageWidthHeight(imageUrl);
 				if (null != map) {
 //					logger.info("Image url:{}, widht:{}, height:{}", imageUrl, map.get("width"), map.get("height"));
