@@ -2,6 +2,7 @@ package com.it7890.orange.api.dao;
 
 import com.avos.avoscloud.AVCloudQueryResult;
 import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.it7890.orange.api.entity.AppTopics;
 import com.it7890.orange.api.entity.UserLikeFavorite;
@@ -31,6 +32,15 @@ public class UserLikeFavoriteDao {
 	public void saveObj(UserLikeFavorite obj){
 		try {
 			obj.save();
+		} catch (AVException e) {
+			logger.info(e.getMessage());
+			e.printStackTrace();
+		}
+	}
+
+	public void saveAVObj(AVObject avObject){
+		try {
+			avObject.save();
 		} catch (AVException e) {
 			logger.info(e.getMessage());
 			e.printStackTrace();

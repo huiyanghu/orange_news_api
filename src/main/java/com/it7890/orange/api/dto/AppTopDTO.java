@@ -1,17 +1,14 @@
 package com.it7890.orange.api.dto;
 
+import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVObject;
-import com.it7890.orange.api.cloud.AppTopCloud;
-import com.it7890.orange.api.entity.AppTop;
-import com.it7890.orange.api.entity.AppTopics;
+import com.avos.avoscloud.AVQuery;
 import com.it7890.orange.api.util.DateUtil;
-import com.it7890.orange.api.util.StringUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class AppTopDTO {
@@ -28,7 +25,7 @@ public class AppTopDTO {
 	private String title;
 
 	private String titlePic;
-	private List<String> titlePicList;
+	private List titlePicList;
 	
 	private String topicsId;
 
@@ -337,15 +334,15 @@ public class AppTopDTO {
 		this.creatTime = creatTime;
 	}
 
-	public List<String> getTitlePicList() {
+	public List getTitlePicList() {
 		return titlePicList;
 	}
 
-	public void setTitlePicList(List<String> titlePicList) {
+	public void setTitlePicList(List titlePicList) {
 		this.titlePicList = titlePicList;
 	}
 
-	public static AppTopDTO avoobjectToDto(AVObject tmp) {
+	public static AppTopDTO avoobjectToDto(AVObject tmp) throws AVException {
 		AppTopDTO appTopDTO = null;
 		if(null != tmp) {
 			appTopDTO = new AppTopDTO();
@@ -376,14 +373,22 @@ public class AppTopDTO {
 			appTopDTO.setMediaLink(tmp.getAVObject("articleObj").getString("mediaLink"));
 			appTopDTO.setWriter(tmp.getAVObject("articleObj").getString("writer"));
 
-			List<String> titlePicUrls = new ArrayList<>();
+			List<ImageInfoDTO> titlePicInfo = new ArrayList<ImageInfoDTO>();
 			List<AVFile> titlePicObjList = (List<AVFile>) tmp.getAVObject("articleObj").get("titlePicObjArr");
 			if(null != titlePicObjList && titlePicObjList.size() > 0){
+				ImageInfoDTO imageInfoDTO = new ImageInfoDTO();
 				for (AVFile titlePic : titlePicObjList) {
-					titlePicUrls.add(titlePic.getUrl());
+					AVQuery<AVObject> query = new AVQuery<AVObject>("MediaInfo");
+					query.whereEqualTo("fileObj",AVObject.createWithoutData("_File",titlePic.getObjectId()));
+					List<AVObject> l = query.find();
+					imageInfoDTO.setImageUrl(titlePic.getUrl());
+					imageInfoDTO.setImageWidth(l.get(0).getInt("width"));
+					imageInfoDTO.setImageHeight(l.get(0).getInt("height"));
+//                    titlePicUrls.add(titlePic.getUrl());
+					titlePicInfo.add(imageInfoDTO);
 				}
 			}
-			appTopDTO.setTitlePicList(titlePicUrls);
+			appTopDTO.setTitlePicList(titlePicInfo);
 			appTopDTO.setSourceUrl(tmp.getAVObject("articleObj").getString("sourceurl"));
 			appTopDTO.setSourceTitilePic(tmp.getAVObject("articleObj").getString("sourceTitlePic"));
 

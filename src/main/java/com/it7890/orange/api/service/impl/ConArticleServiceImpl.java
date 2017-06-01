@@ -1,4 +1,5 @@
 package com.it7890.orange.api.service.impl;
+import com.avos.avoscloud.AVException;
 import com.it7890.orange.api.dao.ConArticleDao;
 import com.it7890.orange.api.dto.ConArticleDTO;
 import com.it7890.orange.api.dto.ConArticleDetailDTO;
@@ -16,23 +17,19 @@ public class ConArticleServiceImpl implements IConArticleService {
 
 
 	@Override
-	public List<ConArticleDTO> getArticlesList(long ltime,int direct) {
+	public List<ConArticleDTO> getArticlesList(long ltime,int direct) throws AVException {
 		List<ConArticle> ls = new ConArticleDao().getArticlesList(ltime,direct);
 		return buildDtoList(ls);
 	}
 
 	@Override
-	public List<ConArticleDTO> getArticleById(String articleid) {
+	public List<ConArticleDTO> getArticleById(String articleid) throws AVException {
 		List<ConArticle> ls = new ConArticleDao().getArticleById(articleid);
-		if(ls.size()>0){
 			return buildDtoList(ls);
-		}else {
-			return null;
-		}
 	}
 
 	@Override
-	public List<ConArticleDTO> getTopicsArticlesList(String id, long ltime, int direct) {
+	public List<ConArticleDTO> getTopicsArticlesList(String id, long ltime, int direct) throws AVException {
 		List<ConArticle> ls = new ConArticleDao().getTopicsArticlesList(id, ltime, direct);
 		return buildDtoList(ls);
 	}
@@ -49,7 +46,7 @@ public class ConArticleServiceImpl implements IConArticleService {
 		return conArticleDetailDTO;
 	}
 
-	private static List<ConArticleDTO> buildDtoList(List<ConArticle> tmp) {
+	private static List<ConArticleDTO> buildDtoList(List<ConArticle> tmp) throws AVException {
 		ConArticleDTO conArticleDTO;
 		List<ConArticleDTO> DTOList = new ArrayList<ConArticleDTO>();
 		for(ConArticle conArticle : tmp) {

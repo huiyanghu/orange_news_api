@@ -1,8 +1,10 @@
 package com.it7890.orange.api.dto;
 
 
+import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.AVQuery;
 import com.it7890.orange.api.cloud.ConArtilesCloud;
 import com.it7890.orange.api.entity.ConArticle;
 import com.it7890.orange.api.util.DateUtil;
@@ -376,7 +378,7 @@ public class ConArticleDTO {
         this.contentPicObjArr = contentPicObjArr;
     }
 
-    public static ConArticleDTO objectToDto(ConArticle tmp) {
+    public static ConArticleDTO objectToDto(ConArticle tmp) throws AVException {
         ConArticleDTO conArticleDTO = null;
         if(null != tmp) {
             conArticleDTO = new ConArticleDTO();
@@ -413,14 +415,22 @@ public class ConArticleDTO {
             conArticleDTO.setCreateDate(tmp.getCreatedAt().getTime());
 //            conArticleDTO.setTitlePic(null != tmp.getTitlePicObj() ? tmp.getTitlePicObj().getUrl() : "");
 //            conArticleDTO.setTitlePicId(null != tmp.getTitlePicObj() ? tmp.getTitlePicObj().getObjectId() : "");
-            List<String> titlePicUrls = new ArrayList<>();
+            List<ImageInfoDTO> titlePicInfo = new ArrayList<ImageInfoDTO>();
             List<AVFile> titlePics = tmp.getTitlePicList();
             if(titlePics!=null){
+                ImageInfoDTO imageInfoDTO = new ImageInfoDTO();
                 for (AVFile titlePic : titlePics) {
-                    titlePicUrls.add(titlePic.getUrl());
+                    AVQuery<AVObject> query = new AVQuery<AVObject>("MediaInfo");
+                    query.whereEqualTo("fileObj",AVObject.createWithoutData("_File",titlePic.getObjectId()));
+                    List<AVObject> l = query.find();
+                    imageInfoDTO.setImageUrl(titlePic.getUrl());
+                    imageInfoDTO.setImageWidth(l.get(0).getInt("width"));
+                    imageInfoDTO.setImageHeight(l.get(0).getInt("height"));
+//                    titlePicUrls.add(titlePic.getUrl());
+                    titlePicInfo.add(imageInfoDTO);
                 }
             }
-            conArticleDTO.setTitlePicList(titlePicUrls);
+            conArticleDTO.setTitlePicList(titlePicInfo);
             conArticleDTO.setContentPicObjArr(tmp.getContentPicObjArr());
         }
         return conArticleDTO;

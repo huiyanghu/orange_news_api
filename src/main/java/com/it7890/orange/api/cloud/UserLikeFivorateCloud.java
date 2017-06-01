@@ -18,6 +18,7 @@ import com.it7890.orange.api.entity.ConArticlesContent;
 import com.it7890.orange.api.entity.UserLikeFavorite;
 import com.it7890.orange.api.service.impl.UserLikeFavariteServiceImpl;
 import com.it7890.orange.api.util.Constants;
+import com.it7890.orange.api.util.DateUtil;
 import com.it7890.orange.api.util.StringUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -33,36 +34,126 @@ import java.util.Map;
 public class UserLikeFivorateCloud {
 	private static Logger logger = LogManager.getLogger(UserLikeFivorateCloud.class);
 
+//	/**
+//	 * 点赞收藏 istatus 0 添加  -1 取消
+//	 * lType  1  点赞  2   收藏
+//	 */
+//	@EngineFunction("userLikeFivorate")
+//	public static String queryIndexAndRecommendList(@EngineFunctionParam("objId") String objId,
+//											 		@EngineFunctionParam("lType") int lType,
+//													@EngineFunctionParam("userId") String userId,
+//													@EngineFunctionParam("istatus") int istatus) throws AVException {
+//		int resultCode = Constants.CODE_SUCCESS;
+//		String resultMsg = "成功";
+//		Map<String, Object> resultMap = new HashMap<String, Object>();
+//		if(StringUtils.isNotBlank(objId)|| StringUtils.isNotBlank(userId)){
+//			if(objId.indexOf(",")!=-1){
+//				String[] objIds=objId.split(",");
+//				for (int i = 0; i < objIds.length; i++) {
+//					if(objIds[i]!=null&&!"".equals(objIds[i])){
+//						UserLikeFavorite avoObj=new UserLikeFavorite();
+//						avoObj.put("articleObj", AVObject.createWithoutData("conarticle", objIds[i]));
+//						avoObj.put("userObj",AVObject.createWithoutData("_User", userId));
+//						avoObj.setLType(lType);
+//						avoObj.setStatus(istatus);
+//						doUserLF(avoObj,lType,objIds[i],userId,istatus);
+//					}
+//				}
+//			}else{
+//				if(lType==1){//点赞,对文章喜欢|不喜欢数操作
+//					List<UserLikeFavoriteDTO> list= new UserLikeFavariteServiceImpl().getUserLFList(lType,objId,userId);
+//					if(list.size()==0){
+//						List<ConArticlesContent> ls = new ConArticleDao().getArtContentById(objId);
+//						int likeCount = ls.get(0).getInt("likeCount");
+//						int noLikeCount = ls.get(0).getInt("noLikeCount");
+//						String avobjId = ls.get(0).getObjectId();
+//						if(istatus==0){
+//							likeCount+=1;
+//						}else{
+//							noLikeCount+=1;
+//						}
+//						AVObject avo = new AVObject("con_articles_content");
+//						avo.setObjectId(avobjId);
+//						avo.put("likeCount",likeCount);
+//						avo.put("noLikeCount",noLikeCount);
+//						avo.save();
+//					}else {
+//						resultCode = Constants.CODE_PARAMS_FAIL;
+//						resultMsg = "您已操作过,不能重复操作";
+//						resultMap.put("code", resultCode);
+//						resultMap.put("msg", resultMsg);
+//						return JSON.toJSONString(resultMap);
+//					}
+//				}
+//				UserLikeFavorite avoObj=new UserLikeFavorite();
+//				avoObj.put("articleObj", AVObject.createWithoutData("conarticle", objId));
+//				avoObj.put("userObj",AVObject.createWithoutData("_User", userId));
+//				avoObj.setLType(lType);
+//				avoObj.setStatus(istatus);
+//				doUserLF(avoObj,lType,objId,userId,istatus);
+//			}
+//		}else {
+//			resultCode = Constants.CODE_PARAMS_FAIL;
+//			resultMsg = "objId userId不能为空";
+//		}
+//
+//		resultMap.put("code", resultCode);
+//		resultMap.put("msg", resultMsg);
+//
+//		return JSON.toJSONString(resultMap);
+//	}
+//
+//	public static void doUserLF(UserLikeFavorite avoObj,int lType,String artId,String userId,int istatus){
+//		List<UserLikeFavoriteDTO> list= new UserLikeFavariteServiceImpl().getUserLFList(lType,artId,userId);
+//		if(list.size()>0){
+//			avoObj.setObjectId(list.get(0).getId());
+//			if(list.get(0).getStatus()!=istatus){
+//				new UserLikeFavoriteDao().saveObj(avoObj);
+//			}
+//		}else{
+//			if(lType==1){
+//				new UserLikeFavoriteDao().saveObj(avoObj);
+//			}else {
+//				if(istatus!=-1){
+//					new UserLikeFavoriteDao().saveObj(avoObj);
+//				}
+//			}
+//		}
+//	}
+
 	/**
 	 * 点赞收藏 istatus 0 添加  -1 取消
 	 * lType  1  点赞  2   收藏
 	 */
 	@EngineFunction("userLikeFivorate")
-	public static String queryIndexAndRecommendList(@EngineFunctionParam("objId") String objId,
-											 		@EngineFunctionParam("lType") int lType,
-													@EngineFunctionParam("userId") String userId,
+	public static String userLikeFivorate(@EngineFunctionParam("objId") String objId,
+													@EngineFunctionParam("lType") int lType,
+													@EngineFunctionParam("imei") String imei,
 													@EngineFunctionParam("istatus") int istatus) throws AVException {
 		int resultCode = Constants.CODE_SUCCESS;
 		String resultMsg = "成功";
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-		if(StringUtils.isNotBlank(objId)|| StringUtils.isNotBlank(userId)){
-			if(objId.indexOf(",")!=-1){
-				String[] objIds=objId.split(",");
-				for (int i = 0; i < objIds.length; i++) {
-					if(objIds[i]!=null&&!"".equals(objIds[i])){
-						UserLikeFavorite avoObj=new UserLikeFavorite();
-						avoObj.put("articleObj", AVObject.createWithoutData("conarticle", objIds[i]));
-						avoObj.put("userObj",AVObject.createWithoutData("_User", userId));
-						avoObj.setLType(lType);
-						avoObj.setStatus(istatus);
-						doUserLF(avoObj,lType,objIds[i],userId,istatus);
-					}
-				}
-			}else{
+
+		AVQuery<AVObject> queryConArticleContent = new AVQuery<AVObject>("con_articles_content");
+
+		AVObject avObjectConArticleContent = new AVObject("con_articles_content");
+		AVObject avObjectUserLikeFavorite = new AVObject("UserLikeFavorite");
+		String userId = "";
+		AVUser user  = AVUser.getCurrentUser();
+		if(user!=null){
+			userId = user.getObjectId();
+			logger.info("登录用户id==>"+user.getObjectId());
+		}else {
+			logger.info("未登录用户");
+		}
+		if(StringUtils.isNotBlank(objId)){
+			if(StringUtils.isNotBlank(imei)){
+
 				if(lType==1){//点赞,对文章喜欢|不喜欢数操作
-					List<UserLikeFavoriteDTO> list= new UserLikeFavariteServiceImpl().getUserLFList(lType,objId,userId);
+					List<AVObject> list = getUserFLSize(lType,objId,imei);
 					if(list.size()==0){
-						List<ConArticlesContent> ls = new ConArticleDao().getArtContentById(objId);
+						queryConArticleContent.whereEqualTo("articleObj",AVObject.createWithoutData("conarticle",objId));
+						List<AVObject> ls = queryConArticleContent.find();
 						int likeCount = ls.get(0).getInt("likeCount");
 						int noLikeCount = ls.get(0).getInt("noLikeCount");
 						String avobjId = ls.get(0).getObjectId();
@@ -71,11 +162,19 @@ public class UserLikeFivorateCloud {
 						}else{
 							noLikeCount+=1;
 						}
-						AVObject avo = new AVObject("con_articles_content");
-						avo.setObjectId(avobjId);
-						avo.put("likeCount",likeCount);
-						avo.put("noLikeCount",noLikeCount);
-						avo.save();
+						avObjectConArticleContent.setObjectId(avobjId);
+						avObjectConArticleContent.put("likeCount",likeCount);
+						avObjectConArticleContent.put("noLikeCount",noLikeCount);
+						avObjectConArticleContent.save();
+
+						avObjectUserLikeFavorite.put("articleObj", AVObject.createWithoutData("conarticle", objId));
+						if(StringUtils.isNotBlank(userId)){
+							avObjectUserLikeFavorite.put("userObj",AVObject.createWithoutData("_User", userId));
+						}
+						avObjectUserLikeFavorite.put("lType",lType);
+						avObjectUserLikeFavorite.put("status",istatus);
+						avObjectUserLikeFavorite.put("imei",imei);
+						new UserLikeFavoriteDao().saveAVObj(avObjectUserLikeFavorite);
 					}else {
 						resultCode = Constants.CODE_PARAMS_FAIL;
 						resultMsg = "您已操作过,不能重复操作";
@@ -83,43 +182,81 @@ public class UserLikeFivorateCloud {
 						resultMap.put("msg", resultMsg);
 						return JSON.toJSONString(resultMap);
 					}
+				}else {//收藏
+
+					if(objId.indexOf(",")!=-1){
+						String[] objIds=objId.split(",");
+						for (int i = 0; i < objIds.length; i++) {
+							if(objIds[i]!=null&&!"".equals(objIds[i])){
+								avObjectUserLikeFavorite.put("articleObj", AVObject.createWithoutData("conarticle", objIds[i]));
+								if(StringUtils.isNotBlank(userId)){
+									avObjectUserLikeFavorite.put("userObj",AVObject.createWithoutData("_User", userId));
+									avObjectUserLikeFavorite.put("synTmp",1);
+								}else {
+									avObjectUserLikeFavorite.put("synTmp",0);
+								}
+								avObjectUserLikeFavorite.put("lType",lType);
+								avObjectUserLikeFavorite.put("status",istatus);
+								avObjectUserLikeFavorite.put("imei",imei);
+								List<AVObject> list = getUserFLSize(lType,objIds[i],imei);
+								if(list.size()>0){
+									avObjectUserLikeFavorite.setObjectId(list.get(0).getObjectId());
+									new UserLikeFavoriteDao().saveAVObj(avObjectUserLikeFavorite);
+								}else{
+									if(istatus!=-1){
+										new UserLikeFavoriteDao().saveAVObj(avObjectUserLikeFavorite);
+									}
+								}
+							}
+						}
+					}else {
+						avObjectUserLikeFavorite.put("articleObj", AVObject.createWithoutData("conarticle", objId));
+						if(StringUtils.isNotBlank(userId)){
+							avObjectUserLikeFavorite.put("userObj",AVObject.createWithoutData("_User", userId));
+							avObjectUserLikeFavorite.put("synTmp",1);
+						}else {
+							avObjectUserLikeFavorite.put("synTmp",0);
+						}
+						avObjectUserLikeFavorite.put("lType",lType);
+						avObjectUserLikeFavorite.put("status",istatus);
+						avObjectUserLikeFavorite.put("imei",imei);
+						List<AVObject> list = getUserFLSize(lType,objId,imei);
+						if(list.size()>0){
+							avObjectUserLikeFavorite.setObjectId(list.get(0).getObjectId());
+							new UserLikeFavoriteDao().saveAVObj(avObjectUserLikeFavorite);
+						}else{
+							if(istatus!=-1){
+								new UserLikeFavoriteDao().saveAVObj(avObjectUserLikeFavorite);
+							}
+						}
+					}
 				}
-				UserLikeFavorite avoObj=new UserLikeFavorite();
-				avoObj.put("articleObj", AVObject.createWithoutData("conarticle", objId));
-				avoObj.put("userObj",AVObject.createWithoutData("_User", userId));
-				avoObj.setLType(lType);
-				avoObj.setStatus(istatus);
-				doUserLF(avoObj,lType,objId,userId,istatus);
+			}else {
+				resultCode = Constants.CODE_PARAMS_FAIL;
+				resultMsg = "imei不能为空";
+				resultMap.put("code", resultCode);
+				resultMap.put("msg", resultMsg);
+				return JSON.toJSONString(resultMap);
 			}
 		}else {
 			resultCode = Constants.CODE_PARAMS_FAIL;
-			resultMsg = "objId userId不能为空";
+			resultMsg = "objId不能为空";
+			resultMap.put("code", resultCode);
+			resultMap.put("msg", resultMsg);
+			return JSON.toJSONString(resultMap);
 		}
-
 		resultMap.put("code", resultCode);
 		resultMap.put("msg", resultMsg);
-
 		return JSON.toJSONString(resultMap);
 	}
 
-	public static void doUserLF(UserLikeFavorite avoObj,int lType,String artId,String userId,int istatus){
-		List<UserLikeFavoriteDTO> list= new UserLikeFavariteServiceImpl().getUserLFList(lType,artId,userId);
-		if(list.size()>0){
-			avoObj.setObjectId(list.get(0).getId());
-			if(list.get(0).getStatus()!=istatus){
-				new UserLikeFavoriteDao().saveObj(avoObj);
-			}
-		}else{
-			if(lType==1){
-				new UserLikeFavoriteDao().saveObj(avoObj);
-			}else {
-				if(istatus!=-1){
-					new UserLikeFavoriteDao().saveObj(avoObj);
-				}
-			}
-		}
+	public static List<AVObject> getUserFLSize(int lType,String artId,String imei) throws AVException {
+		AVQuery<AVObject> queryUserLikeFavorite = new AVQuery<AVObject>("UserLikeFavorite");
+		queryUserLikeFavorite.whereEqualTo("lType",lType);
+		queryUserLikeFavorite.whereEqualTo("articleObj",AVObject.createWithoutData("conarticle", artId));
+		queryUserLikeFavorite.whereEqualTo("imei",imei);
+		return queryUserLikeFavorite.find();
 	}
-
 
 	/**
 	 * 提交/删除评论
@@ -217,25 +354,47 @@ public class UserLikeFivorateCloud {
 	}
 
 	@EngineFunction("userFavoriteList")
-	public static String userFavoriteList(@EngineFunctionParam("createTime") long createTime) throws AVException {
+	public static String userFavoriteList(@EngineFunctionParam("createTime") long createTime,
+										  @EngineFunctionParam("imei") String imei) throws AVException {
 
 		AVUser user  = AVUser.getCurrentUser();
 		int resultCode = Constants.CODE_SUCCESS;
 		String resultMsg = "成功";
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 
-
-//		user.setObjectId(user.get);
-//		AVQuery<AVObject> query = new AVQuery<>("UserLikeFavorite");
-//		query.whereEqualTo("userObj", AVObject.createWithoutData("_User", userId));
-//		query.whereLessThan("createdAt", 2);
-//		// 如果这样写，第二个条件将覆盖第一个条件，查询只会返回 priority = 1 的结果
-//		List<AVObject> todos = query.find();
+		AVQuery avQueryUserLikeFavorite = new AVQuery("UserLikeFavorite");
+		avQueryUserLikeFavorite.whereEqualTo("status",0);
+		if (user!=null) {
+			avQueryUserLikeFavorite.whereEqualTo("userObj",AVObject.createWithoutData("_User",user.getObjectId()));
+		}
+		avQueryUserLikeFavorite.whereEqualTo("imei",imei);
+		avQueryUserLikeFavorite.whereEqualTo("lType",2);
+		if(createTime!=0){
+			avQueryUserLikeFavorite.whereLessThan("createdAt", DateUtil.Long2StringUTC(createTime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS_1));
+		}
+		avQueryUserLikeFavorite.addDescendingOrder("createdAt");
+		avQueryUserLikeFavorite.limit(20);
+		List<AVObject> list = avQueryUserLikeFavorite.find();
+		List<UserLikeFavoriteDTO> resList = buildUserLikeFavoriteDtoList(list);
 
 		resultMap.put("code", resultCode);
 		resultMap.put("msg", resultMsg);
+		resultMap.put("favoriteList",resList);
+
 		return JSON.toJSONString(resultMap);
 
+	}
+
+	private static List<UserLikeFavoriteDTO> buildUserLikeFavoriteDtoList(List<AVObject> tmp) {
+		UserLikeFavoriteDTO userLikeFavoriteDTO;
+		List<UserLikeFavoriteDTO> DTOList = new ArrayList<UserLikeFavoriteDTO>();
+		for(AVObject avObject : tmp) {
+			userLikeFavoriteDTO = UserLikeFavoriteDTO.avobjectToDto(avObject);
+			if (null != userLikeFavoriteDTO) {
+				DTOList.add(userLikeFavoriteDTO);
+			}
+		}
+		return DTOList;
 	}
 
 }

@@ -15,6 +15,8 @@ public class UserLikeFavoriteDTO{
 	private String createTime;
 	private int status;//0:正常 -1:删除
 	private long createDate;
+	private String imei;
+	private int synTmp;
 
 	public String getId() {
 		return id;
@@ -72,6 +74,22 @@ public class UserLikeFavoriteDTO{
 		this.status = status;
 	}
 
+	public String getImei() {
+		return imei;
+	}
+
+	public void setImei(String imei) {
+		this.imei = imei;
+	}
+
+	public int getSynTmp() {
+		return synTmp;
+	}
+
+	public void setSynTmp(int synTmp) {
+		this.synTmp = synTmp;
+	}
+
 	public static UserLikeFavoriteDTO objectToDto(UserLikeFavorite tmp) {
 		UserLikeFavoriteDTO userLikeFavoriteDTO = null;
 		if(null != tmp) {
@@ -96,6 +114,8 @@ public class UserLikeFavoriteDTO{
 			userLikeFavoriteDTO.setStatus(tmp.getInt("status"));
 			userLikeFavoriteDTO.setObjId(tmp.getAVObject("articleObj").getObjectId());
 			userLikeFavoriteDTO.setUserId(tmp.getAVObject("userObj").getObjectId());
+			userLikeFavoriteDTO.setImei(tmp.getString("imei"));
+			userLikeFavoriteDTO.setSynTmp(tmp.getInt("synTmp"));
 		}
 		return userLikeFavoriteDTO;
 	}
