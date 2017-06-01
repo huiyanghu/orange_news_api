@@ -225,7 +225,7 @@ public class UserCloud {
 
 		AVUser currentUser = AVUser.getCurrentUser();
 		if (null != currentUser) {
-			loadSign = loadSign != 0 ? 1 : 0;
+			loadSign = loadSign != 0 ? 1 : 0;  // 1源链接模式 0快捷模式
 			currentUser.put("loadSign", loadSign);
 			new UserServiceImpl().updateUserInfo(currentUser);
 		} else {
