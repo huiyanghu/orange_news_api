@@ -354,7 +354,8 @@ public class DateUtil {
 	}
 	public  static String Long2StringUTC(long tmp,String type){
 		DateFormat df = new SimpleDateFormat(type);
-		return  df.format(tmp * 1000);
+//		return  df.format(tmp * 1000);
+		return  df.format(tmp);
 	}
 	
 	public static void main(String[] args) {
