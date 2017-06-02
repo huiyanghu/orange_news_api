@@ -152,8 +152,9 @@ public class ConArticleDetailDTO {
 			List<ImageInfoDTO> titlePicInfo = new ArrayList<>();
 			List<AVFile> titlePics = tmp.getArticleObj().getList("titlePicObjArr");
 			if(titlePics!=null){
-				ImageInfoDTO imageInfoDTO = new ImageInfoDTO();
+				ImageInfoDTO imageInfoDTO = null;
 				for (AVFile titlePic : titlePics) {
+					imageInfoDTO = new ImageInfoDTO();
 					AVQuery<AVObject> query = new AVQuery<AVObject>("MediaInfo");
 					query.whereEqualTo("fileObj",AVObject.createWithoutData("_File",titlePic.getObjectId()));
 					List<AVObject> l = query.find();

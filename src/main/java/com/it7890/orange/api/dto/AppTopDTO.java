@@ -376,8 +376,9 @@ public class AppTopDTO {
 			List<ImageInfoDTO> titlePicInfo = new ArrayList<ImageInfoDTO>();
 			List<AVFile> titlePicObjList = (List<AVFile>) tmp.getAVObject("articleObj").get("titlePicObjArr");
 			if(null != titlePicObjList && titlePicObjList.size() > 0){
-				ImageInfoDTO imageInfoDTO = new ImageInfoDTO();
+				ImageInfoDTO imageInfoDTO = null;
 				for (AVFile titlePic : titlePicObjList) {
+					imageInfoDTO = new ImageInfoDTO();
 					AVQuery<AVObject> query = new AVQuery<AVObject>("MediaInfo");
 					query.whereEqualTo("fileObj",AVObject.createWithoutData("_File",titlePic.getObjectId()));
 					List<AVObject> l = query.find();

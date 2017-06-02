@@ -349,6 +349,7 @@ public class UserLikeFivorateCloud {
             avQueryUserLikeFavorite.whereLessThan("createdAt", DateUtil.Long2StringUTC(createTime, DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS_1));
         }
         avQueryUserLikeFavorite.addDescendingOrder("createdAt");
+        avQueryUserLikeFavorite.include("articleObj");
         avQueryUserLikeFavorite.limit(20);
         List<AVObject> list = avQueryUserLikeFavorite.find();
         List<UserLikeFavoriteDTO> resList = buildUserLikeFavoriteDtoList(list);

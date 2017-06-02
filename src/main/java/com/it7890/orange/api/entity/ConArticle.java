@@ -283,4 +283,12 @@ public class ConArticle extends AVObject {
 		this.put("topicObj",topicObj);
 	}
 
+	public int getViewCount() {
+		return getInt("viewCount");
+	}
+
+	public void setViewCount(int viewCount) {
+		this.put("viewCount",viewCount);
+	}
+
 }
