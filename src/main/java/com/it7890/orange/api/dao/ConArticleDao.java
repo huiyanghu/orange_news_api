@@ -24,10 +24,11 @@ public class ConArticleDao {
 
         if(ltime != 0){
             if (direct == 0){
-                timeAt = DateUtil.Long2StringUTC(ltime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS_1);
+                timeAt = DateUtil.Long2StringUTC(ltime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS_0);
                 cql.append(" and createdAt > date(?) limit ? order by createdAt desc");
             } else if (direct == 1) {
                 timeAt = DateUtil.Long2StringUTC(ltime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS_1);
+                logger.info("recommed timeAt utc1====>>"+timeAt);
                 cql.append(" and createdAt < date(?) limit ? order by createdAt desc");
             }
             try {
@@ -74,6 +75,7 @@ public class ConArticleDao {
                 cql.append(" and createdAt > date(?) limit ? order by createdAt desc");
             } else if (direct == 1) {
                 timeAt = DateUtil.Long2StringUTC(ltime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS_1);
+                logger.info("topic timeAt utc1====>>"+timeAt);
                 cql.append(" and createdAt < date(?) limit ? order by createdAt desc");
             }
             try {
