@@ -15,6 +15,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -114,7 +115,7 @@ public class UserRssPublicationCloud {
      */
     @EngineFunction("userRssPublicationList")
     public static String userRssPublicationList(@EngineFunctionParam("createTime") long createTime,
-                                                @EngineFunctionParam("imei") String imei) throws AVException {
+                                                @EngineFunctionParam("imei") String imei) throws AVException, ParseException {
 
         AVUser user = AVUser.getCurrentUser();
         int resultCode = Constants.CODE_SUCCESS;
@@ -127,7 +128,8 @@ public class UserRssPublicationCloud {
         }
         avQueryUserRssPublication.whereEqualTo("imei", imei);
         if (createTime != 0) {
-            avQueryUserRssPublication.whereLessThan("createdAt", DateUtil.Long2StringUTC(createTime, DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS_1));
+//            avQueryUserRssPublication.whereLessThan("createdAt", DateUtil.Long2StringUTC(createTime, DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS_1));
+            avQueryUserRssPublication.whereLessThan("createdAt",DateUtil.long2Date(createTime-1000));
         }
         avQueryUserRssPublication.addDescendingOrder("createdAt");
         avQueryUserRssPublication.include("publicationObj");

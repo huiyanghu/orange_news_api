@@ -53,8 +53,8 @@ public class AppTopCloud {
 		query.orderByDescending("createdAt");
 		query.limit(10);
 		if(topCreateTime != 0){
-			String createdAt =  DateUtil.Long2StringUTC(topCreateTime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS_0);
-			query.whereGreaterThan("createdAt",createdAt);
+//			String createdAt =  DateUtil.Long2StringUTC(topCreateTime,DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS_0);
+			query.whereGreaterThan("createdAt",DateUtil.long2Date(topCreateTime+1000));
 		}
 		List<AVObject> ls = query.find();
 		if(ls.size()>0){
