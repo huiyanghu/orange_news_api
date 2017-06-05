@@ -19,17 +19,18 @@ public class AppTopicsDTO {
     private int topicType;
     private String keyWords;
     private int rank;
-    private int channelId;
-    private int createuId;
-    private Date createTime;
+    private String channelId;
+    private String createuId;
+//    private Date createTime;
+    private long createTime;
 
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
+//    public Date getCreateTime() {
+//        return createTime;
+//    }
+//
+//    public void setCreateTime(Date createTime) {
+//        this.createTime = createTime;
+//    }
 
     public String getObjectId() {
         return objectId;
@@ -103,19 +104,27 @@ public class AppTopicsDTO {
         this.rank = rank;
     }
 
-    public int getChannelId() {
+    public String getChannelId() {
         return channelId;
     }
 
-    public void setChannelId(int channelId) {
+    public void setChannelId(String channelId) {
         this.channelId = channelId;
     }
 
-    public int getCreateuId() {
+    public long getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(long createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getCreateuId() {
         return createuId;
     }
 
-    public void setCreateuId(int createuId) {
+    public void setCreateuId(String createuId) {
         this.createuId = createuId;
     }
 
@@ -124,9 +133,9 @@ public class AppTopicsDTO {
         if(null != tmp) {
             appTopicsDTO = new AppTopicsDTO();
 //            appTopicsDTO.setObjectId(tmp.getObjectId());
-            appTopicsDTO.setChannelId(tmp.getChannelId());
+//            appTopicsDTO.setChannelId(tmp.getChannelId());
             appTopicsDTO.setCountryId(tmp.getCountryId());
-            appTopicsDTO.setCreateuId(tmp.getCreateuId());
+//            appTopicsDTO.setCreateuId(tmp.getCreateuId());
             appTopicsDTO.setHubiId(tmp.getHubiId());
             appTopicsDTO.setKeyWords(tmp.getKeyWords());
             appTopicsDTO.setRank(tmp.getRank());
@@ -134,7 +143,26 @@ public class AppTopicsDTO {
             appTopicsDTO.setTopicId(tmp.getObjectId());
             appTopicsDTO.setTopicName(tmp.getTopicName());
             appTopicsDTO.setTopicType(tmp.getTopicType());
-            appTopicsDTO.setCreateTime(tmp.getCreatedAt());
+//            appTopicsDTO.setCreateTime(tmp.getCreatedAt());
+        }
+        return appTopicsDTO;
+    }
+
+    public static AppTopicsDTO avobjectToDto(AVObject tmp) {
+        AppTopicsDTO appTopicsDTO = null;
+        if(null != tmp) {
+            appTopicsDTO = new AppTopicsDTO();
+//            appTopicsDTO.setChannelId(tmp.getAVObject("channelObj").getObjectId());
+            appTopicsDTO.setCountryId(tmp.getAVObject("countryObj").getObjectId());
+//            appTopicsDTO.setCreateuId(tmp.getAVObject("createUserObj").getObjectId());
+            appTopicsDTO.setKeyWords(tmp.getString("keyWords"));
+            appTopicsDTO.setRank(tmp.getInt("rank"));
+//            appTopicsDTO.setTopicIcon(tmp.getAVFile("topicIconFile").getUrl());
+//            appTopicsDTO.setTopicId(tmp.getObjectId());
+            appTopicsDTO.setObjectId(tmp.getObjectId());
+            appTopicsDTO.setTopicName(tmp.getString("topicName"));
+            appTopicsDTO.setTopicType(tmp.getInt("topicType"));
+            appTopicsDTO.setCreateTime(tmp.getCreatedAt().getTime());
         }
         return appTopicsDTO;
     }
