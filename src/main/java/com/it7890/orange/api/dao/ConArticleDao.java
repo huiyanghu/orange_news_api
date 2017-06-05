@@ -1,6 +1,7 @@
 package com.it7890.orange.api.dao;
 
 import com.avos.avoscloud.AVCloudQueryResult;
+import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.it7890.orange.api.entity.ConArticle;
 import com.it7890.orange.api.entity.ConArticlesContent;
@@ -10,7 +11,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
 
 
 public class ConArticleDao {
@@ -98,6 +102,50 @@ public class ConArticleDao {
         }
         return articlesList;
     }
+
+    public List<AVObject> getTopicsArticlesList1(String tid,long ltime, int direct) throws ParseException {//direct 0下拉 1上拉,默认0
+        List<AVObject> articlesList = new ArrayList<AVObject>();
+        AVQuery queryConarticles = new AVQuery("conarticle");
+        queryConarticles.include("titlePicObj");
+        queryConarticles.include("titlePicObjArr");
+        queryConarticles.whereEqualTo("status",0);
+        queryConarticles.whereEqualTo("topicObj", AVObject.createWithoutData("AppTopics",tid));
+        queryConarticles.addDescendingOrder("createdAt");
+        queryConarticles.limit(10);
+        String timeAt = "";
+        if(ltime != 0){
+//            Date date = DateUtil.long2Date(ltime);
+            logger.info("long time====>"+ltime);
+
+            if(direct == 0){
+                logger.info("Topics 下拉刷新");
+                Date date = DateUtil.long2Date(ltime+1000);
+//                Date date = DateUtil.long2Befor8HoursDate(ltime+1000);
+                logger.info("date time====>"+date);
+                queryConarticles.whereGreaterThan("createdAt",date);
+            } else if (direct == 1) {
+                logger.info("Topics 上拉加载");
+                Date date = DateUtil.long2Date(ltime-1000);
+//                Date date = DateUtil.long2Befor8HoursDate(ltime-1000);
+                logger.info("date time====>"+date);
+                queryConarticles.whereLessThan("createdAt",date);
+            }
+            try {
+                articlesList = queryConarticles.find();
+            } catch (Exception e) {
+                e.printStackTrace();
+                logger.info(e.getMessage());
+            }
+        }else {//首次刷新
+            try {
+                articlesList = queryConarticles.find();
+            } catch (Exception e) {
+                logger.info(e.getMessage());
+            }
+        }
+        return articlesList;
+    }
+
 
     public List<ConArticlesContent> getArtContentById(String articleid){
         List<ConArticlesContent> articlesList = new ArrayList<ConArticlesContent>();

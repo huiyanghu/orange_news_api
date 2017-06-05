@@ -346,6 +346,16 @@ public class DateUtil {
 		date = formatter.parse(strTime);
 		return date;
 	}
+	public static Date long2Date(long time) throws ParseException {
+		String str  = formatFromDate(FORMATER_YYYY_MM_DD_HH_MM_SS, time);
+		return stringToDate(str,FORMATER_YYYY_MM_DD_HH_MM_SS);
+	}
+	public static Date long2Befor8HoursDate(long time) throws ParseException {
+		long tmp1 = time - 28800000L;
+		String str  = formatFromDate(FORMATER_YYYY_MM_DD_HH_MM_SS, tmp1);
+		return stringToDate(str,FORMATER_YYYY_MM_DD_HH_MM_SS);
+	}
+
 
 	public  static String befor8HoursLong2StringUTC(long tmp,String type){
 		long tmp1 = tmp - 28800000L;
