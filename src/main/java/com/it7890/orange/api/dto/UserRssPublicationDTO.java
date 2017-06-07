@@ -13,6 +13,7 @@ public class UserRssPublicationDTO {
     private long createDate;
     private String imei;
     private int synTmp;
+    private int userPubNum;
 
     public String getLid() {
 
@@ -79,6 +80,14 @@ public class UserRssPublicationDTO {
         this.pubLogoUrl = pubLogoUrl;
     }
 
+    public int getUserPubNum() {
+        return userPubNum;
+    }
+
+    public void setUserPubNum(int userPubNum) {
+        this.userPubNum = userPubNum;
+    }
+
     public static UserRssPublicationDTO avobjectToDto(AVObject tmp) {
         UserRssPublicationDTO userRssPublicationDTO = null;
         if(null != tmp) {
@@ -91,6 +100,7 @@ public class UserRssPublicationDTO {
             userRssPublicationDTO.setUserId(tmp.getAVObject("userObj").getObjectId());
             userRssPublicationDTO.setImei(tmp.getString("imei"));
             userRssPublicationDTO.setSynTmp(tmp.getInt("synTmp"));
+            userRssPublicationDTO.setUserPubNum(tmp.getAVObject("publicationObj").getInt("subCount"));
         }
         return userRssPublicationDTO;
     }

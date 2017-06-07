@@ -157,7 +157,7 @@ public class AppTopicsDTO {
 //            appTopicsDTO.setCreateuId(tmp.getAVObject("createUserObj").getObjectId());
             appTopicsDTO.setKeyWords(tmp.getString("keyWords"));
             appTopicsDTO.setRank(tmp.getInt("rank"));
-//            appTopicsDTO.setTopicIcon(tmp.getAVFile("topicIconFile").getUrl());
+            appTopicsDTO.setTopicIcon(tmp.getAVFile("topicIconFile").getUrl());
 //            appTopicsDTO.setTopicId(tmp.getObjectId());
             appTopicsDTO.setObjectId(tmp.getObjectId());
             appTopicsDTO.setTopicName(tmp.getString("topicName"));
