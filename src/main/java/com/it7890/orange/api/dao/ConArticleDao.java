@@ -108,23 +108,26 @@ public class ConArticleDao {
         AVQuery queryConarticles = new AVQuery("conarticle");
         queryConarticles.include("titlePicObj");
         queryConarticles.include("titlePicObjArr");
+        queryConarticles.include("publicationObj");
+        queryConarticles.include("topicObj");
         queryConarticles.whereEqualTo("status",0);
-        queryConarticles.whereEqualTo("topicObj", AVObject.createWithoutData("AppTopics",tid));
+        if(StringUtils.isNotBlank(tid)){
+            queryConarticles.whereEqualTo("topicObj", AVObject.createWithoutData("AppTopics",tid));
+        }
         queryConarticles.addDescendingOrder("createdAt");
         queryConarticles.limit(10);
-        String timeAt = "";
         if(ltime != 0){
 //            Date date = DateUtil.long2Date(ltime);
             logger.info("long time====>"+ltime);
 
             if(direct == 0){
-                logger.info("Topics 下拉刷新");
+                logger.info("下拉刷新");
                 Date date = DateUtil.long2Date(ltime+1000);
 //                Date date = DateUtil.long2Befor8HoursDate(ltime+1000);
                 logger.info("date time====>"+date);
                 queryConarticles.whereGreaterThan("createdAt",date);
             } else if (direct == 1) {
-                logger.info("Topics 上拉加载");
+                logger.info("上拉加载");
                 Date date = DateUtil.long2Date(ltime-1000);
 //                Date date = DateUtil.long2Befor8HoursDate(ltime-1000);
                 logger.info("date time====>"+date);

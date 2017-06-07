@@ -11,7 +11,7 @@ import java.util.List;
 
 
 public interface IConArticleService {
-	public List<ConArticleDTO> getArticlesList(long ltime,int direct) throws AVException;
+	public List<ConArticleDTO> getArticlesList(long ltime,int direct) throws AVException, ParseException;
 
 	public List<ConArticleDTO> getArticleById(String articleid) throws AVException;
 

@@ -19,9 +19,11 @@ public class ConArticleServiceImpl implements IConArticleService {
 
 
 	@Override
-	public List<ConArticleDTO> getArticlesList(long ltime,int direct) throws AVException {
-		List<ConArticle> ls = new ConArticleDao().getArticlesList(ltime,direct);
-		return buildDtoList(ls);
+	public List<ConArticleDTO> getArticlesList(long ltime,int direct) throws AVException, ParseException {
+//		List<ConArticle> ls = new ConArticleDao().getArticlesList(ltime,direct);
+//		return buildDtoList(ls);
+		List<AVObject> ls = new ConArticleDao().getTopicsArticlesList1(null, ltime, direct);
+		return buildavoDtoList(ls);
 	}
 
 	@Override
