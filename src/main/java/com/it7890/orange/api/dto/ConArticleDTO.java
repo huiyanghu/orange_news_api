@@ -68,7 +68,7 @@ public class ConArticleDTO {
 
     private String mediaLink;
 
-    private int publicationId;
+    private String publicationId;
 
     private int rank;
 
@@ -259,11 +259,11 @@ public class ConArticleDTO {
         this.mediaLink = mediaLink;
     }
 
-    public int getPublicationId() {
+    public String getPublicationId() {
         return publicationId;
     }
 
-    public void setPublicationId(int publicationId) {
+    public void setPublicationId(String publicationId) {
         this.publicationId = publicationId;
     }
 
@@ -418,7 +418,7 @@ public class ConArticleDTO {
             conArticleDTO.setSourceTitilePic(tmp.getSourcetitilepic());
             conArticleDTO.setRank(tmp.getRank());
             conArticleDTO.setPushNum(tmp.getPushnum());
-            conArticleDTO.setPublicationId(tmp.getPublicationid());
+//            conArticleDTO.setPublicationId(tmp.getPublicationid());
             conArticleDTO.setPlogo(tmp.getPlogo());
             conArticleDTO.setCreatTime(DateUtil.formatFromDate(DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS, tmp.getCreatedAt()));
             conArticleDTO.setCreateDate(tmp.getCreatedAt().getTime());
@@ -497,7 +497,7 @@ public class ConArticleDTO {
             conArticleDTO.setSourceTitilePic(tmp.getString("sourcetitilepic"));
             conArticleDTO.setRank(tmp.getInt("rank"));
             conArticleDTO.setPushNum(tmp.getInt("pushnum"));
-            conArticleDTO.setPublicationId(tmp.getInt("publicationid"));
+            conArticleDTO.setPublicationId(tmp.getAVObject("publicationObj").getObjectId());
             conArticleDTO.setPlogo(tmp.getString("plogo"));
             conArticleDTO.setCreatTime(DateUtil.formatFromDate(DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS, tmp.getCreatedAt()));
             conArticleDTO.setCreateDate(tmp.getCreatedAt().getTime());
