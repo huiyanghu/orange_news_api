@@ -23,7 +23,7 @@ public class ConArticleDao {
     public List<ConArticle> getArticlesList(long ltime, int direct) {
         List<ConArticle> articlesList = new ArrayList<ConArticle>();
         StringBuffer cql = new StringBuffer();
-        cql.append("select include titlePicObj,include topicObj, include titlePicObjArr,* from conarticle where objectId is exists");
+        cql.append("select include titlePicObj,include publicationObj,include topicObj, include titlePicObjArr,* from conarticle where objectId is exists");
         String timeAt = "";
 
         if(ltime != 0){
@@ -72,7 +72,7 @@ public class ConArticleDao {
     public List<ConArticle> getTopicsArticlesList(String tid,long ltime, int direct) {//direct 0下拉 1上拉,默认0
         List<ConArticle> articlesList = new ArrayList<ConArticle>();
         StringBuffer cql = new StringBuffer();
-        cql.append("select include titlePicObj, include titlePicObjArr, * from conarticle where status = ? and topicObj = pointer('AppTopics', ?)") ;
+        cql.append("select include titlePicObj,include publicationObj, include titlePicObjArr, * from conarticle where status = ? and topicObj = pointer('AppTopics', ?)") ;
         String timeAt = "";
         if(ltime != 0){
             if(direct == 0){
