@@ -1,6 +1,7 @@
 package com.it7890.orange.api.dao;
 
 import com.avos.avoscloud.AVCloudQueryResult;
+import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.it7890.orange.api.entity.HbCountrys;
@@ -35,4 +36,18 @@ public class HbCountrysDao {
         }
         return countryList;
     }
+
+    public AVObject findCodeByLangId(String langId){
+        AVObject avObject = new AVObject();
+        List<AVObject> ls = new ArrayList<>();
+        AVQuery avQuery = new AVQuery("hb_countrys");
+        avQuery.whereEqualTo("languageObj",AVObject.createWithoutData("hb_languages",langId));
+        try {
+            ls = avQuery.find();
+        } catch (AVException e) {
+            e.printStackTrace();
+        }
+        return ls.get(0);
+    }
+
 }

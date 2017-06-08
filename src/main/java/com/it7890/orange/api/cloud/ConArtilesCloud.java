@@ -7,6 +7,7 @@ import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.it7890.orange.api.dao.ConArticleDao;
+import com.it7890.orange.api.dao.HbCountrysDao;
 import com.it7890.orange.api.dto.AppTopDTO;
 import com.it7890.orange.api.dto.AppTopicsDTO;
 import com.it7890.orange.api.dto.ConArticleDTO;
@@ -36,6 +37,7 @@ public class ConArtilesCloud {
 
 	@EngineFunction("queryIndexAndRecommendList")
 	public static String queryIndexAndRecommendList(@EngineFunctionParam("countryCode") String countryCode,
+													@EngineFunctionParam("langId") String langId,
 													@EngineFunctionParam("artCreateTime") long artCreateTime,
 													@EngineFunctionParam("topCreateTime") long topCreateTime,
 													@EngineFunctionParam("direct") int direct) throws AVException, ParseException {
@@ -43,6 +45,11 @@ public class ConArtilesCloud {
 		String resultMsg = "成功";
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		List<ConArticleDTO> resArtDTOList = new ArrayList<ConArticleDTO>();
+		if(StringUtils.isNotBlank(langId)){
+			//根据langId获取国家code
+			AVObject avObjectC = new HbCountrysDao().findCodeByLangId(langId);
+			countryCode = avObjectC.getString("countryCode");
+		}
 
 		int topUpdateTmp = 0;
 		//根据时间戳判断置顶大图是否有更新
@@ -51,7 +58,7 @@ public class ConArtilesCloud {
 		}
 
 		//开始文章查询
-		resArtDTOList = new ConArticleServiceImpl().getArticlesList(artCreateTime, direct);
+		resArtDTOList = new ConArticleServiceImpl().getArticlesList(countryCode,artCreateTime, direct);
 		if(resArtDTOList==null){
 			resultMsg = "文章已最新";
 		}else {
@@ -69,6 +76,7 @@ public class ConArtilesCloud {
 	@EngineFunction("queryTopicsArticlesList")
 	public static String queryTopicsArticlesList(@EngineFunctionParam("topicID") String topicID,
 												 @EngineFunctionParam("countryCode") String countryCode,
+												 @EngineFunctionParam("langId") String langId,
 												 @EngineFunctionParam("createTime") long createTime,
 												 @EngineFunctionParam("topCreateTime") long topCreateTime,
 												 @EngineFunctionParam("direct") int direct) throws AVException, ParseException {
@@ -76,6 +84,11 @@ public class ConArtilesCloud {
 		String resultMsg = "成功";
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		List<ConArticleDTO> resArtDTOList = new ArrayList<ConArticleDTO>();
+		if(StringUtils.isNotBlank(langId)){
+			//根据langId获取国家code
+			AVObject avObjectC = new HbCountrysDao().findCodeByLangId(langId);
+			countryCode = avObjectC.getString("countryCode");
+		}
 
 		int topUpdateTmp = 0;
 		//根据时间戳判断置顶大图是否有更新
@@ -84,7 +97,7 @@ public class ConArtilesCloud {
 		}
 
 		if (StringUtils.isNotEmpty(topicID)){
-			resArtDTOList = new ConArticleServiceImpl().getTopicsArticlesList(topicID, createTime,direct);
+			resArtDTOList = new ConArticleServiceImpl().getTopicsArticlesList(countryCode,topicID, createTime,direct);
 			if(resArtDTOList!=null){
 				resultMap.put("artsList", resArtDTOList);
 			}else {

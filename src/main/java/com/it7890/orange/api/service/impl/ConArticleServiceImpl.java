@@ -20,10 +20,10 @@ public class ConArticleServiceImpl implements IConArticleService {
 
 
 	@Override
-	public List<ConArticleDTO> getArticlesList(long ltime,int direct) throws AVException, ParseException {
+	public List<ConArticleDTO> getArticlesList(String countryCode,long ltime,int direct) throws AVException, ParseException {
 //		List<ConArticle> ls = new ConArticleDao().getArticlesList(ltime,direct);
 //		return buildDtoList(ls);
-		List<AVObject> ls = new ConArticleDao().getTopicsArticlesList1(null, ltime, direct);
+		List<AVObject> ls = new ConArticleDao().getTopicsArticlesList1(countryCode,null, ltime, direct);
 		return buildavoDtoList(ls);
 	}
 
@@ -34,11 +34,11 @@ public class ConArticleServiceImpl implements IConArticleService {
 	}
 
 	@Override
-	public List<ConArticleDTO> getTopicsArticlesList(String id, long ltime, int direct) throws AVException, ParseException {
+	public List<ConArticleDTO> getTopicsArticlesList(String countryCode,String id, long ltime, int direct) throws AVException, ParseException {
 //		List<ConArticle> ls = new ConArticleDao().getTopicsArticlesList(id, ltime, direct);
 //		return buildDtoList(ls);
 
-		List<AVObject> ls = new ConArticleDao().getTopicsArticlesList1(id, ltime, direct);
+		List<AVObject> ls = new ConArticleDao().getTopicsArticlesList1(countryCode,id, ltime, direct);
 		return buildavoDtoList(ls);
 	}
 
