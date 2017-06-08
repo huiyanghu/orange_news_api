@@ -152,13 +152,16 @@ public class ConArtilesCloud {
 	public static String searchArticle(@EngineFunctionParam("keywords") String keywords,
 	                                   @EngineFunctionParam("divTime") long divTime,
 	                                   @EngineFunctionParam("direct") int direct) {
+
+		logger.info("keywords: {}, divTime: {}, direct: {}", keywords, divTime, direct);
+
 		int resultCode = Constants.CODE_SUCCESS;
 		String resultMsg = "成功";
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		List<ConArticleDTO> articleDtoList = new ArrayList<>();
 
 		if (StringUtil.isNotEmpty(keywords)) {
-			if (direct == 0) {  // 0下拉 1上拉
+			if (direct == 0) {  // 0下拉 1上拉，加减1秒，防止取到自己
 				divTime += 1000;
 			} else {
 				divTime -= 1000;
