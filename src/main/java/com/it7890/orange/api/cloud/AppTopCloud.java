@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSON;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
+import com.it7890.orange.api.dao.HbCountrysDao;
 import com.it7890.orange.api.dto.AppTopDTO;
 import com.it7890.orange.api.dto.ConArticleDTO;
 import com.it7890.orange.api.dto.ConArticleDetailDTO;
@@ -39,12 +40,18 @@ public class AppTopCloud {
      */
 	@EngineFunction("queryAppTopList")
 	public static String queryAppTopList(@EngineFunctionParam("countryCode") String countryCode,
+										 @EngineFunctionParam("langId") String langId,
 													@EngineFunctionParam("topCreateTime") long topCreateTime
 													) throws AVException, ParseException {
 		int resultCode = Constants.CODE_SUCCESS;
 		String resultMsg = "成功";
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		List<AppTopDTO> resTopDTOList = new ArrayList<AppTopDTO>();
+		if(StringUtils.isNotBlank(langId)){
+			//根据langId获取国家code
+			AVObject avObjectC = new HbCountrysDao().findCodeByLangId(langId);
+			countryCode = avObjectC.getString("countryCode");
+		}
 
 		AVQuery<AVObject> query = new AVQuery<>("AppTop");
 		query.include("articleObj");

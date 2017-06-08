@@ -16,6 +16,7 @@ import com.it7890.orange.api.service.impl.AppTopicsServiceImpl;
 import com.it7890.orange.api.service.impl.HbCountrysServiceImpl;
 import com.it7890.orange.api.util.Constants;
 import com.it7890.orange.api.util.StringUtil;
+import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -69,11 +70,18 @@ public class AppTopicsCloud {
 //	}
 
 	@EngineFunction("queryCountryTopics")
-	public  static String queryCountryTopics(@EngineFunctionParam("countryCode") String countryCode) throws AVException {
+	public  static String queryCountryTopics(@EngineFunctionParam("countryCode") String countryCode,
+											 @EngineFunctionParam("langId") String langId) throws AVException {
 		logger.info("queryCountryTopics===========>params:"+"countryCode="+countryCode);
 		int resultCode = Constants.CODE_SUCCESS;
 		String resultMsg = "成功";
 		List<AppTopicsDTO> resDTOList = new ArrayList<AppTopicsDTO>();
+		if(StringUtils.isNotBlank(langId)){
+			//根据langId获取国家code
+			AVObject avObjectC = new HbCountrysDao().findCodeByLangId(langId);
+			countryCode = avObjectC.getString("countryCode");
+		}
+
 		AVQuery queryCountry = new AVQuery("hb_countrys");
 		AVQuery queryAppTopics = new AVQuery("AppTopics");
 		if (StringUtil.isNotEmpty(countryCode)){
