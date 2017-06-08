@@ -11,8 +11,8 @@ import java.util.List;
 public class HbCountrysServiceImpl implements IHbCountrysService {
 
 	@Override
-	public List<HbCountrys> getcsByCode(String Code) {
-		return new HbCountrysDao().getCountryByCountryCode(Code);
+	public HbCountrys getCountryByCountryCode(String countryCode) {
+		return new HbCountrysDao().getCountryByCountryCode(countryCode);
 	}
 
 	@Override

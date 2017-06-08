@@ -5,6 +5,7 @@ import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.it7890.orange.api.entity.HbCountrys;
+import com.it7890.orange.api.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,18 +13,21 @@ import java.util.List;
 
 public class HbCountrysDao {
 
-    public List<HbCountrys> getCountryByCountryCode(String countryCode) {
-        List<HbCountrys> cList = new ArrayList<HbCountrys>();
-        if (countryCode != null && !"".equals(countryCode)) {
+    public HbCountrys getCountryByCountryCode(String countryCode) {
+       HbCountrys countryInfo = null;
+        if (StringUtil.isNotEmpty(countryCode)) {
             String cql = " select * from hb_countrys where countryCode = ?";
             try {
                 AVCloudQueryResult avCloudQueryResult = AVQuery.doCloudQuery(cql, HbCountrys.class, countryCode);
-                cList = (List<HbCountrys>) avCloudQueryResult.getResults();
+                List<HbCountrys> countryList = (List<HbCountrys>) avCloudQueryResult.getResults();
+                if (null != countryList && countryList.size() > 0) {
+                    countryInfo = countryList.get(0);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        return cList;
+        return countryInfo;
     }
 
     public List<AVObject> findCountryList() {

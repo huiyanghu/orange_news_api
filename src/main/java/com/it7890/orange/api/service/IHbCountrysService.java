@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface IHbCountrysService {
 
-	List<HbCountrys> getcsByCode(String Code);
+	HbCountrys getCountryByCountryCode(String countryCode);
 
 	List<AVObject> findCountryList();
 }

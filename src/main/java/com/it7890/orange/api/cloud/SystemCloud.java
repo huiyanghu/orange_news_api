@@ -66,7 +66,6 @@ public class SystemCloud {
 
 			countryLanguageId = countryDto.getLanguageId();
 			if (StringUtil.isNotEmpty(countryLanguageId)) {
-				logger.info("countryLanguageId: {}", countryLanguageId);
 				for (LanguageDTO languageDto : languageDtoList) {
 					if (countryLanguageId.equals(languageDto.getObjectId())) {
 						for (AVObject keywordItem : keywordList) {
