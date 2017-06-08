@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSON;
 import com.avos.avoscloud.AVCloudQueryResult;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
+import com.google.gson.Gson;
 import com.it7890.orange.api.dao.HbCountrysDao;
 import com.it7890.orange.api.dto.AppTopicsDTO;
 import com.it7890.orange.api.dto.CountryDTO;
@@ -65,6 +66,7 @@ public class SystemCloud {
 
 			countryLanguageId = countryDto.getLanguageId();
 			if (StringUtil.isNotEmpty(countryLanguageId)) {
+				logger.info("countryLanguageId: {}", countryLanguageId);
 				for (LanguageDTO languageDto : languageDtoList) {
 					if (countryLanguageId.equals(languageDto.getObjectId())) {
 						for (AVObject keywordItem : keywordList) {
@@ -90,8 +92,6 @@ public class SystemCloud {
 					countryDto.getTopicList().add(topicDto);
 				}
 			}
-
-
 		}
 
 		Map<String, Object> resultMap = new HashMap<>();
@@ -99,6 +99,7 @@ public class SystemCloud {
 		resultMap.put("msg", resultMsg);
 		resultMap.put("countryList", countryDtoList);
 		resultMap.put("languageList", languageDtoList);
-		return JSON.toJSONString(resultMap);
+		return new Gson().toJson(resultMap);
+//		return JSON.toJSONString(resultMap);
 	}
 }
