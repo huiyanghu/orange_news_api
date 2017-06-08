@@ -311,12 +311,14 @@ public class UserLikeFivorateCloud {
         String resultMsg = "成功";
         Map<String, Object> resultMap = new HashMap<String, Object>();
         if (StringUtils.isNotBlank(articleId)) {
-            List<AVObject> ls = new UserCommentDao().getArtCommentList(articleId, createTime);
+            List<AVObject> ls = new UserCommentDao().getArtCommentList1(articleId, createTime);
             List<UserCommentDTO> resList = buildCommentDTOList(ls);
             resultMap.put("commentList", resList);
         } else {
             resultCode = Constants.CODE_PARAMS_FAIL;
             resultMsg = "文章id不能为空";
+            resultMap.put("code", resultCode);
+            resultMap.put("msg", resultMsg);
             return JSON.toJSONString(resultMap);
         }
         resultMap.put("code", resultCode);

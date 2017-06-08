@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -31,6 +32,27 @@ public class UserCommentDao {
 				AVCloudQueryResult avCloudQueryResult = AVQuery.doCloudQuery(cql.toString(),AVObject.class,artId);
 				artCommentList = (List<AVObject>) avCloudQueryResult.getResults();
 			}
+		} catch (Exception e) {
+			logger.info(e.getMessage());
+		}
+		return artCommentList;
+	}
+
+	public List<AVObject> getArtCommentList1(String artId,long createTime) {
+		List<AVObject> artCommentList = new ArrayList<AVObject>();
+		AVQuery avQuery = new AVQuery("UserComment");
+		avQuery.include("userObj");
+		avQuery.whereEqualTo("articleObj",AVObject.createWithoutData("conarticle",artId));
+		avQuery.whereEqualTo("status",0);
+		avQuery.limit(20);
+		avQuery.addDescendingOrder("createdAt");
+		if (createTime!=0){
+			Date date = DateUtil.long2Date(createTime);
+			logger.info("date time====>"+date);
+			avQuery.whereLessThan("createdAt",date);
+		}
+		try {
+			artCommentList = avQuery.find();
 		} catch (Exception e) {
 			logger.info(e.getMessage());
 		}
