@@ -55,6 +55,7 @@ public class AppInitListener implements ServletContextListener {
     LeanEngine.register(CountryCloud.class);
     LeanEngine.register(AppTopCloud.class);
     LeanEngine.register(UserRssPublicationCloud.class);
+    LeanEngine.register(SystemCloud.class);
     if (System.getenv("LEANCLOUD_APP_ENV").equals("development")) {
       // 如果是开发环境，则设置 AVCloud.callFunction 和 AVCloud.rpcFunction 调用本地云函数实现
       // 如果需要本地开发时调用云端云函数实现，则注释掉下面语句。

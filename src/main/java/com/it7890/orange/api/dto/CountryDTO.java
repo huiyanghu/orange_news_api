@@ -1,5 +1,8 @@
 package com.it7890.orange.api.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Astro on 17/5/26.
  */
@@ -12,6 +15,8 @@ public class CountryDTO {
 	private String languageId;
 	private String countryCode;
 	private String shortName;
+	private List<String> keywords = new ArrayList<>();
+	private List<AppTopicsDTO> topicList = new ArrayList<>();
 
 	public String getObjectId() {
 		return objectId;
@@ -67,5 +72,21 @@ public class CountryDTO {
 
 	public void setShortName(String shortName) {
 		this.shortName = shortName;
+	}
+
+	public List<String> getKeywords() {
+		return keywords;
+	}
+
+	public void setKeywords(List<String> keywords) {
+		this.keywords = keywords;
+	}
+
+	public List<AppTopicsDTO> getTopicList() {
+		return topicList;
+	}
+
+	public void setTopicList(List<AppTopicsDTO> topicList) {
+		this.topicList = topicList;
 	}
 }

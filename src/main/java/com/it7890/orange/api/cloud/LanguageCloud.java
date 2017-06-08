@@ -38,7 +38,7 @@ public class LanguageCloud {
 		return JSON.toJSONString(resultMap);
 	}
 
-	private static List<LanguageDTO> builderLanguageDto(List<AVObject> languages) {
+	public static List<LanguageDTO> builderLanguageDto(List<AVObject> languages) {
 		List<LanguageDTO> languageDtos = new ArrayList<>();
 		if (null != languages && languages.size() > 0) {
 			LanguageDTO languageDTO;

@@ -11,13 +11,23 @@ import java.net.URL;
  */
 public class TestImageIO {
 
-	public static void main(String[] args) throws IOException {
-		InputStream is = new URL("https://s3.amazonaws.com/avos-cloud-vv7zert5utbf/rplL8OSssW6btXxqG0TH0RRDHsimF3a3r5EgjX4r.jpg").openStream();
-
-		BufferedImage sourceImg = ImageIO.read(is);
-		System.out.println(sourceImg.getWidth());
-		System.out.println(sourceImg.getHeight());
-
-		is.close();
+	public static void main(String[] args) {
+		InputStream is = null;
+		try {
+			is = new URL("https://s3.amazonaws.com/avos-cloud-vv7zert5utbf/ANbVM924mJUbAtzO8ycb5cO5JcrlJh6ntczf7Qch.jpg").openStream();
+			BufferedImage sourceImg = ImageIO.read(is);
+			System.out.println(sourceImg.getWidth());
+			System.out.println(sourceImg.getHeight());
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (is != null) {
+				try {
+					is.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 }

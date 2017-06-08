@@ -1,6 +1,7 @@
 package com.it7890.orange.api.dao;
 
 import com.avos.avoscloud.AVCloudQueryResult;
+import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.it7890.orange.api.entity.AppTopics;
 import java.util.ArrayList;
@@ -27,6 +28,18 @@ public class AppTopicsDao {
 
 		return topicsList;
 	}
-	
+
+	public List<AVObject> findAllTopicsList() {
+		List<AVObject> topicsList = new ArrayList<>();
+		String cql = "select include topicIconFile, * from AppTopics order by rank asc limit 1000";
+		try {
+			AVCloudQueryResult queryResult = AVQuery.doCloudQuery(cql);
+			topicsList = (List<AVObject>) queryResult.getResults();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return topicsList;
+	}
 	
 }

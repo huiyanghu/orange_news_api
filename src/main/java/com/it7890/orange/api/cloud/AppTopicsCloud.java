@@ -124,7 +124,7 @@ public class AppTopicsCloud {
 		return appTopicsDTOList;
 	}
 
-	private static List<AppTopicsDTO> buildavoDtoList(List<AVObject> tmp) {
+	public static List<AppTopicsDTO> buildavoDtoList(List<AVObject> tmp) {
 		AppTopicsDTO appTopicsDTO;
 		List<AppTopicsDTO> appTopicsDTOList = new ArrayList<>();
 		for(AVObject avObject : tmp) {

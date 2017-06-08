@@ -40,7 +40,7 @@ public class CountryCloud {
 		return JSON.toJSONString(resultMap);
 	}
 
-	private static List<CountryDTO> builderCountryDto(List<AVObject> countryInfoList) {
+	public static List<CountryDTO> builderCountryDto(List<AVObject> countryInfoList) {
 		List<CountryDTO> countryDtoList = new ArrayList<>();
 		if (null != countryInfoList) {
 			CountryDTO countryDto;
@@ -52,19 +52,8 @@ public class CountryCloud {
 				countryDto.setEnName(countryInfo.getString("enName"));
 				countryDto.setShortName(countryInfo.getString("shortName"));
 				countryDto.setCountryCode(countryInfo.getString("countryCode"));
-				String languageId = "";
-				if (null != countryInfo.get("languageObj")) {
-					AVObject languageObj = (AVObject) countryInfo.get("languageObj");
-					languageId = languageObj.getObjectId();
-				}
-				countryDto.setLanguageId(languageId);
-
-				String iconUrl = "";
-				if (null != countryInfo.get("iconFileObj")) {
-					AVFile iconFileObj = (AVFile) countryInfo.get("iconFileObj");
-					iconUrl = iconFileObj.getUrl();
-				}
-				countryDto.setIconUrl(iconUrl);
+				countryDto.setLanguageId(null != countryInfo.get("languageObj") ?((AVObject) countryInfo.get("languageObj")).getObjectId() : "");
+				countryDto.setIconUrl(null != countryInfo.get("iconFileObj") ? ((AVFile) countryInfo.get("iconFileObj")).getUrl() : "");
 				countryDtoList.add(countryDto);
 			}
 		}
