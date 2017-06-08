@@ -238,7 +238,6 @@ public class UserLikeFivorateCloud {
      * 提交/删除评论
      *
      * @param articleId 文章id
-     * @param userId    用户id
      * @param commentId 评论id
      * @param content   评论内容
      * @param status    0 添加  -1删除
@@ -247,13 +246,20 @@ public class UserLikeFivorateCloud {
      */
     @EngineFunction("userPostComment")
     public static String userPostComment(@EngineFunctionParam("articleId") String articleId,
-                                         @EngineFunctionParam("userId") String userId,
                                          @EngineFunctionParam("commentId") String commentId,
                                          @EngineFunctionParam("content") String content,
                                          @EngineFunctionParam("status") int status) throws AVException {
         int resultCode = Constants.CODE_SUCCESS;
         String resultMsg = "成功";
         Map<String, Object> resultMap = new HashMap<String, Object>();
+        String userId = "";
+        AVUser user = AVUser.getCurrentUser();
+        if (user != null) {
+            userId = user.getObjectId();
+            logger.info("登录用户id==>" + user.getObjectId());
+        } else {
+            logger.info("未登录用户");
+        }
         if (StringUtils.isNotBlank(articleId)) {
             if (StringUtils.isNotBlank(userId)) {
                 AVObject avoobj = new AVObject("UserComment");
@@ -288,7 +294,7 @@ public class UserLikeFivorateCloud {
             }
         } else {
             resultCode = Constants.CODE_PARAMS_FAIL;
-            resultMsg = "objId不能为空";
+            resultMsg = "articleId不能为空";
         }
 
         resultMap.put("code", resultCode);
