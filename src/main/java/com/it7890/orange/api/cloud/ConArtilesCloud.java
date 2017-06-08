@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSON;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
+import com.it7890.orange.api.dao.ConArticleDao;
 import com.it7890.orange.api.dto.AppTopDTO;
 import com.it7890.orange.api.dto.AppTopicsDTO;
 import com.it7890.orange.api.dto.ConArticleDTO;
@@ -27,10 +28,7 @@ import org.springframework.beans.BeanUtils;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class ConArtilesCloud {
@@ -130,6 +128,46 @@ public class ConArtilesCloud {
 
 		return JSON.toJSONString(resultMap);
 
+	}
+
+	/**
+	 * 关键字搜索
+	 * @param keywords 关键字
+	 * @return
+	 */
+	@EngineFunction("searchArticle")
+	public static String searchArticle(@EngineFunctionParam("keywords") String keywords,
+	                                   @EngineFunctionParam("divTime") long divTime,
+	                                   @EngineFunctionParam("direct") int direct) {
+		int resultCode = Constants.CODE_SUCCESS;
+		String resultMsg = "成功";
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		List<ConArticleDTO> articleDtoList = new ArrayList<>();
+
+		if (StringUtil.isNotEmpty(keywords)) {
+			if (direct == 0) {  // 0下拉 1上拉
+				divTime += 1000;
+			} else {
+				divTime -= 1000;
+			}
+			Date divDate = DateUtil.long2Date(divTime);
+			List<AVObject> articleList = new ConArticleDao().findArticleListByKeywords(keywords, divDate, direct);
+			logger.info("articleList length: {}", articleList.size());
+			try {
+				articleDtoList = ConArticleServiceImpl.buildavoDtoList(articleList);
+			} catch (AVException e) {
+				e.printStackTrace();
+				logger.warn("搜索关键字结果转换异常，cause: {}", e);
+			}
+		} else {
+			resultCode = Constants.CODE_PARAMS_FAIL;
+			resultMsg = "参数错误，请输入关键字";
+		}
+
+		resultMap.put("code", resultCode);
+		resultMap.put("msg", resultMsg);
+		resultMap.put("articleList", articleDtoList);
+		return JSON.toJSONString(resultMap);
 	}
 
 	public static int getTopTmpByTime(String countryCode,long topCreateTime) throws AVException{

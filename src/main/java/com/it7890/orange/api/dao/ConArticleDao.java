@@ -1,11 +1,13 @@
 package com.it7890.orange.api.dao;
 
 import com.avos.avoscloud.AVCloudQueryResult;
+import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.it7890.orange.api.entity.ConArticle;
 import com.it7890.orange.api.entity.ConArticlesContent;
 import com.it7890.orange.api.util.DateUtil;
+import com.it7890.orange.api.util.StringUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -163,5 +165,34 @@ public class ConArticleDao {
         return articlesList;
     }
 
+    /**
+     * 按标题模糊查询
+     * @param keywords 关键字
+     * @param date 查询时间
+     * @param direct 0下拉 1上拉, 默认0
+     * @return
+     */
+    public List<AVObject> findArticleListByKeywords(String keywords, Date date, int direct) {
+        List<AVObject> articleList = null;
+        if (StringUtil.isNotEmpty(keywords)) {
+            AVQuery query = new AVQuery("conarticle");
+            query.include("titlePicObjArr");
+            query.include("publicationObj");
+            query.whereContains("title", keywords);
+            query.addDescendingOrder("createdAt");
+            query.limit(10);
 
+            if (direct == 0) {
+                query.whereGreaterThan("createdAt", date);
+            } else {
+                query.whereLessThan("createdAt", date);
+            }
+            try {
+                articleList = query.find();
+            } catch (AVException e) {
+                e.printStackTrace();
+            }
+        }
+        return articleList;
+    }
 }

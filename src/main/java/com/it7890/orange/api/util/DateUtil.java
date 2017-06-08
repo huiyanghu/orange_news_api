@@ -257,6 +257,19 @@ public class DateUtil {
     	calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) + day);
     	return calendar.getTimeInMillis();
     }
+
+	/**
+	 * date加second秒
+	 * @param date
+	 * @param second
+	 * @return
+	 */
+	public static Long DatePlusSecond(Date date, int second) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		calendar.set(Calendar.MINUTE, calendar.get(Calendar.SECOND) + second);
+		return calendar.getTimeInMillis();
+	}
     
     /**
      * date加minute分钟
@@ -270,7 +283,7 @@ public class DateUtil {
     	calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE)+minute);
     	return calendar.getTimeInMillis();
     }
-    
+
     /**
      * time加minute分钟
      * @param time
@@ -326,9 +339,8 @@ public class DateUtil {
         return bigDay.intValue();
     }
 
-	public static long stringToLong(String strTime, String formatType)
-			throws ParseException {
-		Date date = stringToDate(strTime, formatType); // String类型转成date类型
+	public static long stringToLong(String strTime, String formatType) {
+		Date date = stringToDate(strTime, formatType);  // String类型转成date类型
 		if (date == null) {
 			return 0;
 		} else {
@@ -339,14 +351,17 @@ public class DateUtil {
 	public static long dateToLong(Date date) {
 		return date.getTime();
 	}
-	public static Date stringToDate(String strTime, String formatType)
-			throws ParseException {
+	public static Date stringToDate(String strTime, String formatType) {
 		SimpleDateFormat formatter = new SimpleDateFormat(formatType);
 		Date date = null;
-		date = formatter.parse(strTime);
+		try {
+			date = formatter.parse(strTime);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		return date;
 	}
-	public static Date long2Date(long time) throws ParseException {
+	public static Date long2Date(long time) {
 		String str  = formatFromDate(FORMATER_YYYY_MM_DD_HH_MM_SS, time);
 		return stringToDate(str,FORMATER_YYYY_MM_DD_HH_MM_SS);
 	}
@@ -390,17 +405,14 @@ public class DateUtil {
 //		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'.000Z'");
 //		String s =  df.format(time);
 //		System.out.println(s);
-		try {
-			long l = DateUtil.stringToLong("2017-05-19 10:02:00",DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS);
-			System.out.println(l);
+		long l = DateUtil.stringToLong("2017-05-19 10:02:00",DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS);
+		System.out.println(l);
 
-			long l2 = 1495658654l;
-			System.out.println(DateUtil.Long2StringUTC(l, DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS_1));
-			System.out.println(DateUtil.Long2StringUTC(l2, DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS_1));
-			System.out.println(DateUtil.Long2StringUTC(l2 * 1000, DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS_1));
+		long l2 = 1495658654l;
+		System.out.println(DateUtil.Long2StringUTC(l, DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS_1));
+		System.out.println(DateUtil.Long2StringUTC(l2, DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS_1));
+		System.out.println(DateUtil.Long2StringUTC(l2 * 1000, DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS_1));
 
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+		System.out.println(long2Date(0));
 	}
 }

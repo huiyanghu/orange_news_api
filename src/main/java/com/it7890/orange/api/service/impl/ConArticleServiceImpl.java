@@ -12,6 +12,7 @@ import com.it7890.orange.api.util.StringUtil;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -53,6 +54,11 @@ public class ConArticleServiceImpl implements IConArticleService {
 		return conArticleDetailDTO;
 	}
 
+	@Override
+	public List<AVObject> findArticleListByKeywords(String keywords, Date date, int direct) {
+		return new ConArticleDao().findArticleListByKeywords(keywords, date, direct);
+	}
+
 	private static List<ConArticleDTO> buildDtoList(List<ConArticle> tmp) throws AVException {
 		ConArticleDTO conArticleDTO;
 		List<ConArticleDTO> DTOList = new ArrayList<ConArticleDTO>();
@@ -65,7 +71,7 @@ public class ConArticleServiceImpl implements IConArticleService {
 		return DTOList;
 	}
 
-	private static List<ConArticleDTO> buildavoDtoList(List<AVObject> tmp) throws AVException {
+	public static List<ConArticleDTO> buildavoDtoList(List<AVObject> tmp) throws AVException {
 		ConArticleDTO conArticleDTO;
 		List<ConArticleDTO> DTOList = new ArrayList<ConArticleDTO>();
 		for(AVObject aVObject : tmp) {

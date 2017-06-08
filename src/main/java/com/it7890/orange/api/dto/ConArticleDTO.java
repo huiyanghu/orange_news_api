@@ -69,6 +69,7 @@ public class ConArticleDTO {
     private String mediaLink;
 
     private String publicationId;
+    private String publicationName;
 
     private int rank;
 
@@ -98,6 +99,14 @@ public class ConArticleDTO {
 
     private Long createDate;
     private int viewCount;
+
+    public String getPublicationName() {
+        return publicationName;
+    }
+
+    public void setPublicationName(String publicationName) {
+        this.publicationName = publicationName;
+    }
 
     public String getCreatTime() {
         return creatTime;
@@ -498,6 +507,7 @@ public class ConArticleDTO {
             conArticleDTO.setRank(tmp.getInt("rank"));
             conArticleDTO.setPushNum(tmp.getInt("pushnum"));
             conArticleDTO.setPublicationId(tmp.getAVObject("publicationObj").getObjectId());
+            conArticleDTO.setPublicationName(tmp.getAVObject("publicationObj").getString("name"));
             conArticleDTO.setPlogo(tmp.getString("plogo"));
             conArticleDTO.setCreatTime(DateUtil.formatFromDate(DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS, tmp.getCreatedAt()));
             conArticleDTO.setCreateDate(tmp.getCreatedAt().getTime());
