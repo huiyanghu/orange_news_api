@@ -113,7 +113,7 @@ public class ConArticleDao {
         queryConarticles.include("publicationObj");
         queryConarticles.include("topicObj");
         queryConarticles.whereEqualTo("status",0);
-        queryConarticles.whereEqualTo("countryCode",countryCode);
+        queryConarticles.whereEqualTo("countrycode",countryCode);
         if(StringUtils.isNotBlank(tid)){
             queryConarticles.whereEqualTo("topicObj", AVObject.createWithoutData("AppTopics",tid));
         }
