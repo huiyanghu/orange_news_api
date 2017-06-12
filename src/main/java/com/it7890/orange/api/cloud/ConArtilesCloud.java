@@ -15,10 +15,7 @@ import com.it7890.orange.api.dto.ConArticleDetailDTO;
 import com.it7890.orange.api.entity.AppTopics;
 import com.it7890.orange.api.entity.ConArticle;
 import com.it7890.orange.api.entity.HbCountrys;
-import com.it7890.orange.api.service.impl.AppTopServiceImpl;
-import com.it7890.orange.api.service.impl.AppTopicsServiceImpl;
-import com.it7890.orange.api.service.impl.ConArticleServiceImpl;
-import com.it7890.orange.api.service.impl.HbCountrysServiceImpl;
+import com.it7890.orange.api.service.impl.*;
 import com.it7890.orange.api.util.Constants;
 import com.it7890.orange.api.util.DateUtil;
 import com.it7890.orange.api.util.StringUtil;
@@ -118,8 +115,11 @@ public class ConArtilesCloud {
 
 
 	@EngineFunction("getArtContentById")
-	public static String getArtContent(@EngineFunctionParam("articleId") String articleId) throws AVException, IOException {
+	public static String getArtContent(@EngineFunctionParam("articleId") String articleId,
+									   @EngineFunctionParam("imei") String imei) throws AVException, IOException {
 		int resultCode = Constants.CODE_SUCCESS;
+		int tmpLike = 0;
+		int tmpFav = 0;
 		String resultMsg = "成功";
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		ConArticleDetailDTO resArtContentDTO = new ConArticleDetailDTO();
@@ -131,10 +131,25 @@ public class ConArtilesCloud {
 			}else {
 				resultMsg = "文章内容不存在";
 			}
+			if(StringUtils.isNotBlank(imei)){
+				List<AVObject> lsLike = new UserLikeFavariteServiceImpl().getLikeList(1,articleId,imei);
+				if (lsLike.size()>0){
+					tmpLike = 1;
+				}
+				List<AVObject> lsFav = new UserLikeFavariteServiceImpl().getLikeList(2,articleId,imei);
+				if (lsFav.size()>0){
+					tmpFav = 1;
+				}
+			}else {
+				resultCode = Constants.CODE_SUCCESS;
+				resultMsg = "获取点赞收藏状态失败,未传imei";
+			}
 		}else {
 			resultCode = Constants.CODE_PARAMS_FAIL;
 			resultMsg = "参数错误,articleId不能为空";
 		}
+		resultMap.put("tmpLike", tmpLike);
+		resultMap.put("tmpFav", tmpFav);
 
 		resultMap.put("code", resultCode);
 		resultMap.put("msg", resultMsg);

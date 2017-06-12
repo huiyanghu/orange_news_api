@@ -30,6 +30,8 @@ public class ConArticleDetailDTO {
 	private List titlePicList;//顶图
 	private int likeCount;
 	private int noLikeCount;
+	private int tmpLike;//点赞标识0未
+	private int tmpFav;//收藏标识  0未
 
 	public String getTitle() {
 		return title;

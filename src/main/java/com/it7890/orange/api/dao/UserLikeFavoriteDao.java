@@ -1,11 +1,9 @@
 package com.it7890.orange.api.dao;
 
-import com.avos.avoscloud.AVCloudQueryResult;
-import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVObject;
-import com.avos.avoscloud.AVQuery;
+import com.avos.avoscloud.*;
 import com.it7890.orange.api.entity.AppTopics;
 import com.it7890.orange.api.entity.UserLikeFavorite;
+import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -46,5 +44,30 @@ public class UserLikeFavoriteDao {
 			e.printStackTrace();
 		}
 	}
-	
+
+	public List<AVObject> getLikeStatusByArtIdAndImei(int lType,String artId,String imei){
+		AVUser avUser = AVUser.getCurrentUser();
+		String userId = "";
+		List<AVObject> ls = new ArrayList<>();
+		int tmpLikeOrFav = 0;//0默认未收藏或点赞操作
+		if(avUser.getObjectId()!=null){
+			userId=avUser.getObjectId();
+		}
+		AVQuery avQuery = new AVQuery("UserLikeFavorite");
+		if(StringUtils.isNotBlank(imei)){
+			avQuery.whereEqualTo("imei",imei);
+		}
+		if (StringUtils.isNotBlank(userId)){
+			avQuery.whereEqualTo("userObj",AVObject.createWithoutData("_User",userId));
+		}
+		avQuery.whereEqualTo("lType",lType);
+		avQuery.whereEqualTo("articleObj",AVObject.createWithoutData("conarticle",artId));
+
+		try {
+			ls = avQuery.find();
+		} catch (AVException e) {
+			e.printStackTrace();
+		}
+		return ls;
+	}
 }

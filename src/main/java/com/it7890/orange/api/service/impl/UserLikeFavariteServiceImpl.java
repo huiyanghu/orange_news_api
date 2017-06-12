@@ -1,5 +1,6 @@
 package com.it7890.orange.api.service.impl;
 
+import com.avos.avoscloud.AVObject;
 import com.it7890.orange.api.dao.UserLikeFavoriteDao;
 import com.it7890.orange.api.dto.UserLikeFavoriteDTO;
 import com.it7890.orange.api.entity.UserLikeFavorite;
@@ -15,6 +16,11 @@ public class UserLikeFavariteServiceImpl implements IUserLikeFavoriteService {
 	public List<UserLikeFavoriteDTO> getUserLFList(int lType,String artId,String userId) {
 		List<UserLikeFavorite> ls = new UserLikeFavoriteDao().getUserLFListByCountryId(lType,artId,userId);
 		return buildDtoList(ls);
+	}
+
+	@Override
+	public List<AVObject> getLikeList(int lType, String artId, String imei) {
+		return new UserLikeFavoriteDao().getLikeStatusByArtIdAndImei(lType,artId,imei);
 	}
 
 	private static List<UserLikeFavoriteDTO> buildDtoList(List<UserLikeFavorite> tmp) {
