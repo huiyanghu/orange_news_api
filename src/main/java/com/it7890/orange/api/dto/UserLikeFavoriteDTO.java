@@ -161,7 +161,7 @@ public class UserLikeFavoriteDTO{
 				userLikeFavoriteDTO.setSourceUrl(tmp.getAVObject("articleObj").getString("sourceUrl"));
 
 				List<ImageInfoDTO> titlePicInfo = new ArrayList<ImageInfoDTO>();
-				List<AVFile> titlePics = tmp.getList("titlePicObjArr");
+				List<AVFile> titlePics = tmp.getAVObject("articleObj").getList("titlePicObjArr");
 				if (titlePics != null) {
 					ImageInfoDTO imageInfoDTO = null;
 					for (AVFile titlePic : titlePics) {

@@ -364,6 +364,8 @@ public class UserLikeFivorateCloud {
         }
         avQueryUserLikeFavorite.addDescendingOrder("createdAt");
         avQueryUserLikeFavorite.include("articleObj");
+        avQueryUserLikeFavorite.include("articleObj.titlePicObjArr");
+        avQueryUserLikeFavorite.include("articleObj.publicationObj");
         avQueryUserLikeFavorite.limit(20);
         List<AVObject> list = avQueryUserLikeFavorite.find();
         List<UserLikeFavoriteDTO> resList = buildUserLikeFavoriteDtoList(list);
