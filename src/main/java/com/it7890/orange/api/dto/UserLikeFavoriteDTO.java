@@ -4,6 +4,7 @@ import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
+import com.it7890.orange.api.dao.MediaInfoDao;
 import com.it7890.orange.api.entity.AppTopics;
 import com.it7890.orange.api.entity.UserLikeFavorite;
 import com.it7890.orange.api.util.DateUtil;
@@ -27,6 +28,7 @@ public class UserLikeFavoriteDTO{
 	private List titlePicList;
 	private String sourceUrl;
 	private String publicationName;
+	private String publicationId;
 	private int viewCount;
 
 
@@ -142,6 +144,14 @@ public class UserLikeFavoriteDTO{
 		this.viewCount = viewCount;
 	}
 
+	public String getPublicationId() {
+		return publicationId;
+	}
+
+	public void setPublicationId(String publicationId) {
+		this.publicationId = publicationId;
+	}
+
 	public static UserLikeFavoriteDTO objectToDto(UserLikeFavorite tmp) {
 		UserLikeFavoriteDTO userLikeFavoriteDTO = null;
 		if(null != tmp) {
@@ -167,31 +177,16 @@ public class UserLikeFavoriteDTO{
 			if(tmp.getAVObject("articleObj")!=null){
 				userLikeFavoriteDTO.setObjId(tmp.getAVObject("articleObj").getObjectId());
 				userLikeFavoriteDTO.setTitle(tmp.getAVObject("articleObj").getString("title"));
-				userLikeFavoriteDTO.setSourceUrl(tmp.getAVObject("articleObj").getString("sourceUrl"));
+				userLikeFavoriteDTO.setSourceUrl(tmp.getAVObject("articleObj").getString("sourceurl"));
 
-				List<ImageInfoDTO> titlePicInfo = new ArrayList<ImageInfoDTO>();
 				List<AVFile> titlePics = tmp.getAVObject("articleObj").getList("titlePicObjArr");
 				if (titlePics != null) {
-					ImageInfoDTO imageInfoDTO = null;
-					for (AVFile titlePic : titlePics) {
-						imageInfoDTO = new ImageInfoDTO();
-						AVQuery<AVObject> query = new AVQuery<AVObject>("MediaInfo");
-						query.whereEqualTo("fileObj", AVObject.createWithoutData("_File", titlePic.getObjectId()));
-						List<AVObject> l = null;
-						try {
-							l = query.find();
-						} catch (AVException e) {
-							e.printStackTrace();
-						}
-						imageInfoDTO.setImageUrl(titlePic.getUrl());
-						imageInfoDTO.setImageWidth(l.get(0).getInt("width"));
-						imageInfoDTO.setImageHeight(l.get(0).getInt("height"));
-						titlePicInfo.add(imageInfoDTO);
-					}
+					userLikeFavoriteDTO.setTitlePicList(ImageInfoDTO.buildImageInfoDTO(titlePics));
 				}
-				userLikeFavoriteDTO.setTitlePicList(titlePicInfo);
+
 				if(tmp.getAVObject("articleObj").getAVObject("publicationObj")!=null){
 					userLikeFavoriteDTO.setPublicationName(tmp.getAVObject("articleObj").getAVObject("publicationObj").getString("name"));
+					userLikeFavoriteDTO.setPublicationId(tmp.getAVObject("articleObj").getAVObject("publicationObj").getObjectId());
 				}
 				userLikeFavoriteDTO.setViewCount(tmp.getAVObject("articleObj").getInt("viewCount"));
 			}

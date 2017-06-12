@@ -511,42 +511,10 @@ public class ConArticleDTO {
             conArticleDTO.setPlogo(tmp.getString("plogo"));
             conArticleDTO.setCreatTime(DateUtil.formatFromDate(DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS, tmp.getCreatedAt()));
             conArticleDTO.setCreateDate(tmp.getCreatedAt().getTime());
-            List<ImageInfoDTO> titlePicInfo = new ArrayList<ImageInfoDTO>();
             List<AVFile> titlePics = tmp.getList("titlePicObjArr");
             if (titlePics != null) {
-                ImageInfoDTO imageInfoDTO = null;
-                for (AVFile titlePic : titlePics) {
-                    imageInfoDTO = new ImageInfoDTO();
-                    AVQuery<AVObject> query = new AVQuery<AVObject>("MediaInfo");
-                    query.whereEqualTo("fileObj", AVObject.createWithoutData("_File", titlePic.getObjectId()));
-                    List<AVObject> l = query.find();
-                    imageInfoDTO.setImageUrl(titlePic.getUrl());
-                    imageInfoDTO.setImageWidth(l.get(0).getInt("width"));
-                    imageInfoDTO.setImageHeight(l.get(0).getInt("height"));
-                    titlePicInfo.add(imageInfoDTO);
-                }
+                conArticleDTO.setTitlePicList(ImageInfoDTO.buildImageInfoDTO(titlePics));
             }
-            conArticleDTO.setTitlePicList(titlePicInfo);
-
-//            List<AVFile> contentPics = tmp.getContentPicObjArr();
-//            List<ImageInfoDTO> contentPicInfo = new ArrayList<ImageInfoDTO>();
-//            if (contentPics != null) {
-//                ImageInfoDTO imageInfoDTO = null;
-//                for (AVFile contentPic :  contentPics) {
-//                    imageInfoDTO = new ImageInfoDTO();
-//                    AVQuery<AVObject> query = new AVQuery<AVObject>("MediaInfo");
-//                    query.whereEqualTo("fileObj", AVObject.createWithoutData("_File", contentPic.getObjectId()));
-//                    List<AVObject> l = query.find();
-//                    imageInfoDTO.setImageUrl(contentPic.getUrl());
-//                    imageInfoDTO.setImageWidth(l.get(0).getInt("width"));
-//                    imageInfoDTO.setImageHeight(l.get(0).getInt("height"));
-////                    titlePicUrls.add(titlePic.getUrl());
-//                    contentPicInfo.add(imageInfoDTO);
-//                }
-//            }
-//            conArticleDTO.setContentPicObjArr(contentPicInfo);
-//            conArticleDTO.setContentPicObjArr(tmp.getContentPicObjArr());
-
             conArticleDTO.setViewCount(tmp.getInt("viewCount"));
         }
         return conArticleDTO;

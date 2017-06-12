@@ -151,23 +151,10 @@ public class ConArticleDetailDTO {
 			conArticleDetailDTO.setPubTime(DateUtil.formatFromDate(DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS,tmp.getArticleObj().getCreatedAt()));
 			conArticleDetailDTO.setCopyright(tmp.getPubicationObj().getString("name"));
 
-			List<ImageInfoDTO> titlePicInfo = new ArrayList<>();
 			List<AVFile> titlePics = tmp.getArticleObj().getList("titlePicObjArr");
 			if(titlePics!=null){
-				ImageInfoDTO imageInfoDTO = null;
-				for (AVFile titlePic : titlePics) {
-					imageInfoDTO = new ImageInfoDTO();
-					AVQuery<AVObject> query = new AVQuery<AVObject>("MediaInfo");
-					query.whereEqualTo("fileObj",AVObject.createWithoutData("_File",titlePic.getObjectId()));
-					List<AVObject> l = query.find();
-					imageInfoDTO.setImageUrl(titlePic.getUrl());
-					imageInfoDTO.setImageWidth(l.get(0).getInt("width"));
-					imageInfoDTO.setImageHeight(l.get(0).getInt("height"));
-					titlePicInfo.add(imageInfoDTO);
-//					titlePicUrls.add(titlePic.getUrl());
-				}
+				conArticleDetailDTO.setTitlePicList(ImageInfoDTO.buildImageInfoDTO(titlePics));
 			}
-			conArticleDetailDTO.setTitlePicList(titlePicInfo);
 			conArticleDetailDTO.setLikeCount(tmp.getInt("likeCount"));
 			conArticleDetailDTO.setNoLikeCount(tmp.getInt("noLikeCount"));
 		}

@@ -1,6 +1,13 @@
 package com.it7890.orange.api.dto;
 
 
+import com.avos.avoscloud.AVFile;
+import com.avos.avoscloud.AVObject;
+import com.it7890.orange.api.dao.MediaInfoDao;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class ImageInfoDTO {
     private String ImageUrl;
     private int ImageWidth;
@@ -28,5 +35,20 @@ public class ImageInfoDTO {
 
     public void setImageHeight(int imageHeight) {
         ImageHeight = imageHeight;
+    }
+
+    public static List<ImageInfoDTO> buildImageInfoDTO(List<AVFile> titlePics){
+        List<ImageInfoDTO> titlePicInfo = new ArrayList<ImageInfoDTO>();
+
+        ImageInfoDTO imageInfoDTO = null;
+        for (AVFile titlePic : titlePics) {
+            imageInfoDTO = new ImageInfoDTO();
+            AVObject avoFile = new MediaInfoDao().getByFileId(titlePic.getObjectId());
+            imageInfoDTO.setImageUrl(titlePic.getUrl());
+            imageInfoDTO.setImageWidth(avoFile.getInt("width"));
+            imageInfoDTO.setImageHeight(avoFile.getInt("height"));
+            titlePicInfo.add(imageInfoDTO);
+        }
+        return titlePicInfo;
     }
 }
