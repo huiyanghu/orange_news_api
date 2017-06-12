@@ -9,7 +9,7 @@ public class UserDTO {
 	private String username;
 	private String email;
 	private String avatarUrl;
-	private String nickName;
+	private String nickName = "";
 	private int sex;
 	private int loadSign;
 
