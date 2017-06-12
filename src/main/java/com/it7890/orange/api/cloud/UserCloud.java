@@ -271,7 +271,7 @@ public class UserCloud {
 			userDto.setEmail(userInfo.getString("email"));
 
 			userDto.setAvatarUrl(null != userInfo.getAVObject("avatarObj") ? userInfo.getAVObject("avatarObj").getString("url") : "");
-			userDto.setNickName(StringUtil.isNotEmpty(userInfo.getString("nickName")) ? userInfo.getString("nickNam") : "");
+			userDto.setNickName(StringUtil.isNotEmpty(userInfo.getString("nickName")) ? userInfo.getString("nickName") : "");
 			userDto.setSex(null != userInfo.get("sex") ? userInfo.getInt("sex") : -1);
 			userDto.setLoadSign(null != userInfo.get("loadSign") ? userInfo.getInt("loadSign") : 0);
 		}
