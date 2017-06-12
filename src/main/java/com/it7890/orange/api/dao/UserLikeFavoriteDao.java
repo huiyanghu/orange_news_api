@@ -61,6 +61,9 @@ public class UserLikeFavoriteDao {
 			avQuery.whereEqualTo("userObj",AVObject.createWithoutData("_User",userId));
 		}
 		avQuery.whereEqualTo("lType",lType);
+		if (lType==2){
+			avQuery.whereEqualTo("status",0);
+		}
 		avQuery.whereEqualTo("articleObj",AVObject.createWithoutData("conarticle",artId));
 
 		try {
