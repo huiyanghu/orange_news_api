@@ -112,8 +112,12 @@ public class UserLikeFavoriteDTO{
 			userLikeFavoriteDTO.setCreateDate(tmp.getCreatedAt().getTime());
 			userLikeFavoriteDTO.setlType(tmp.getInt("lType"));
 			userLikeFavoriteDTO.setStatus(tmp.getInt("status"));
-			userLikeFavoriteDTO.setObjId(tmp.getAVObject("articleObj").getObjectId());
-			userLikeFavoriteDTO.setUserId(tmp.getAVObject("userObj").getObjectId());
+			if(tmp.getAVObject("articleObj")!=null){
+				userLikeFavoriteDTO.setObjId(tmp.getAVObject("articleObj").getObjectId());
+			}
+			if(tmp.getAVObject("userObj")!=null){
+				userLikeFavoriteDTO.setUserId(tmp.getAVObject("userObj").getObjectId());
+			}
 			userLikeFavoriteDTO.setImei(tmp.getString("imei"));
 			userLikeFavoriteDTO.setSynTmp(tmp.getInt("synTmp"));
 		}

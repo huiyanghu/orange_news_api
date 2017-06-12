@@ -97,7 +97,9 @@ public class UserRssPublicationDTO {
             userRssPublicationDTO.setPubName(tmp.getAVObject("publicationObj").getString("name"));
             userRssPublicationDTO.setPubLogoUrl(tmp.getAVObject("publicationObj").getString("logourl"));
             userRssPublicationDTO.setCreateDate(tmp.getCreatedAt().getTime());
-            userRssPublicationDTO.setUserId(tmp.getAVObject("userObj").getObjectId());
+            if(tmp.getAVObject("userObj")!=null){
+                userRssPublicationDTO.setUserId(tmp.getAVObject("userObj").getObjectId());
+            }
             userRssPublicationDTO.setImei(tmp.getString("imei"));
             userRssPublicationDTO.setSynTmp(tmp.getInt("synTmp"));
             userRssPublicationDTO.setUserPubNum(tmp.getAVObject("publicationObj").getInt("subCount"));
