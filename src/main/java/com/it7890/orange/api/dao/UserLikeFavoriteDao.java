@@ -49,10 +49,9 @@ public class UserLikeFavoriteDao {
 		AVUser avUser = AVUser.getCurrentUser();
 		String userId = "";
 		List<AVObject> ls = new ArrayList<>();
-//		int tmpLikeOrFav = 0;//0默认未收藏或点赞操作
-//		if(avUser.getObjectId()!=null){
-//			userId=avUser.getObjectId();
-//		}
+		if(avUser!=null){
+			userId=avUser.getObjectId();
+		}
 		AVQuery avQuery = new AVQuery("UserLikeFavorite");
 		if(StringUtils.isNotBlank(imei)){
 			avQuery.whereEqualTo("imei",imei);
