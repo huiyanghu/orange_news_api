@@ -1,11 +1,16 @@
 package com.it7890.orange.api.dto;
 
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.AVQuery;
 import com.it7890.orange.api.entity.AppTopics;
 import com.it7890.orange.api.entity.UserLikeFavorite;
 import com.it7890.orange.api.util.DateUtil;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserLikeFavoriteDTO{
 	private String id;
@@ -17,6 +22,12 @@ public class UserLikeFavoriteDTO{
 	private long createDate;
 	private String imei;
 	private int synTmp;
+
+	private String title;
+	private List titlePicList;
+	private String sourceUrl;
+	private String publicationName;
+
 
 	public String getId() {
 		return id;
@@ -90,6 +101,38 @@ public class UserLikeFavoriteDTO{
 		this.synTmp = synTmp;
 	}
 
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public List getTitlePicList() {
+		return titlePicList;
+	}
+
+	public void setTitlePicList(List titlePicList) {
+		this.titlePicList = titlePicList;
+	}
+
+	public String getSourceUrl() {
+		return sourceUrl;
+	}
+
+	public void setSourceUrl(String sourceUrl) {
+		this.sourceUrl = sourceUrl;
+	}
+
+	public String getPublicationName() {
+		return publicationName;
+	}
+
+	public void setPublicationName(String publicationName) {
+		this.publicationName = publicationName;
+	}
+
 	public static UserLikeFavoriteDTO objectToDto(UserLikeFavorite tmp) {
 		UserLikeFavoriteDTO userLikeFavoriteDTO = null;
 		if(null != tmp) {
@@ -114,6 +157,33 @@ public class UserLikeFavoriteDTO{
 			userLikeFavoriteDTO.setStatus(tmp.getInt("status"));
 			if(tmp.getAVObject("articleObj")!=null){
 				userLikeFavoriteDTO.setObjId(tmp.getAVObject("articleObj").getObjectId());
+				userLikeFavoriteDTO.setTitle(tmp.getAVObject("articleObj").getString("title"));
+				userLikeFavoriteDTO.setSourceUrl(tmp.getAVObject("articleObj").getString("sourceUrl"));
+
+				List<ImageInfoDTO> titlePicInfo = new ArrayList<ImageInfoDTO>();
+				List<AVFile> titlePics = tmp.getList("titlePicObjArr");
+				if (titlePics != null) {
+					ImageInfoDTO imageInfoDTO = null;
+					for (AVFile titlePic : titlePics) {
+						imageInfoDTO = new ImageInfoDTO();
+						AVQuery<AVObject> query = new AVQuery<AVObject>("MediaInfo");
+						query.whereEqualTo("fileObj", AVObject.createWithoutData("_File", titlePic.getObjectId()));
+						List<AVObject> l = null;
+						try {
+							l = query.find();
+						} catch (AVException e) {
+							e.printStackTrace();
+						}
+						imageInfoDTO.setImageUrl(titlePic.getUrl());
+						imageInfoDTO.setImageWidth(l.get(0).getInt("width"));
+						imageInfoDTO.setImageHeight(l.get(0).getInt("height"));
+						titlePicInfo.add(imageInfoDTO);
+					}
+				}
+				userLikeFavoriteDTO.setTitlePicList(titlePicInfo);
+				if(tmp.getAVObject("articleObj").getAVObject("publicationObj")!=null){
+					userLikeFavoriteDTO.setPublicationName(tmp.getAVObject("articleObj").getAVObject("publicationObj").getString("name"));
+				}
 			}
 			if(tmp.getAVObject("userObj")!=null){
 				userLikeFavoriteDTO.setUserId(tmp.getAVObject("userObj").getObjectId());
