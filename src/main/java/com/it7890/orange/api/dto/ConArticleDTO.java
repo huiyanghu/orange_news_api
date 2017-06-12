@@ -433,23 +433,26 @@ public class ConArticleDTO {
             conArticleDTO.setCreateDate(tmp.getCreatedAt().getTime());
 //            conArticleDTO.setTitlePic(null != tmp.getTitlePicObj() ? tmp.getTitlePicObj().getUrl() : "");
 //            conArticleDTO.setTitlePicId(null != tmp.getTitlePicObj() ? tmp.getTitlePicObj().getObjectId() : "");
-            List<ImageInfoDTO> titlePicInfo = new ArrayList<ImageInfoDTO>();
+//            List<ImageInfoDTO> titlePicInfo = new ArrayList<ImageInfoDTO>();
             List<AVFile> titlePics = tmp.getTitlePicList();
+//            if (titlePics != null) {
+//                ImageInfoDTO imageInfoDTO = null;
+//                for (AVFile titlePic : titlePics) {
+//                    imageInfoDTO = new ImageInfoDTO();
+//                    AVQuery<AVObject> query = new AVQuery<AVObject>("MediaInfo");
+//                    query.whereEqualTo("fileObj", AVObject.createWithoutData("_File", titlePic.getObjectId()));
+//                    List<AVObject> l = query.find();
+//                    imageInfoDTO.setImageUrl(titlePic.getUrl());
+//                    imageInfoDTO.setImageWidth(l.get(0).getInt("width"));
+//                    imageInfoDTO.setImageHeight(l.get(0).getInt("height"));
+////                    titlePicUrls.add(titlePic.getUrl());
+//                    titlePicInfo.add(imageInfoDTO);
+//                }
+//            }
+//            conArticleDTO.setTitlePicList(titlePicInfo);
             if (titlePics != null) {
-                ImageInfoDTO imageInfoDTO = null;
-                for (AVFile titlePic : titlePics) {
-                    imageInfoDTO = new ImageInfoDTO();
-                    AVQuery<AVObject> query = new AVQuery<AVObject>("MediaInfo");
-                    query.whereEqualTo("fileObj", AVObject.createWithoutData("_File", titlePic.getObjectId()));
-                    List<AVObject> l = query.find();
-                    imageInfoDTO.setImageUrl(titlePic.getUrl());
-                    imageInfoDTO.setImageWidth(l.get(0).getInt("width"));
-                    imageInfoDTO.setImageHeight(l.get(0).getInt("height"));
-//                    titlePicUrls.add(titlePic.getUrl());
-                    titlePicInfo.add(imageInfoDTO);
-                }
+                conArticleDTO.setTitlePicList(ImageInfoDTO.buildImageInfoDTO(titlePics));
             }
-            conArticleDTO.setTitlePicList(titlePicInfo);
 
 //            List<AVFile> contentPics = tmp.getContentPicObjArr();
 //            List<ImageInfoDTO> contentPicInfo = new ArrayList<ImageInfoDTO>();
