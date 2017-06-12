@@ -27,6 +27,7 @@ public class UserLikeFavoriteDTO{
 	private List titlePicList;
 	private String sourceUrl;
 	private String publicationName;
+	private int viewCount;
 
 
 	public String getId() {
@@ -133,6 +134,14 @@ public class UserLikeFavoriteDTO{
 		this.publicationName = publicationName;
 	}
 
+	public int getViewCount() {
+		return viewCount;
+	}
+
+	public void setViewCount(int viewCount) {
+		this.viewCount = viewCount;
+	}
+
 	public static UserLikeFavoriteDTO objectToDto(UserLikeFavorite tmp) {
 		UserLikeFavoriteDTO userLikeFavoriteDTO = null;
 		if(null != tmp) {
@@ -184,6 +193,7 @@ public class UserLikeFavoriteDTO{
 				if(tmp.getAVObject("articleObj").getAVObject("publicationObj")!=null){
 					userLikeFavoriteDTO.setPublicationName(tmp.getAVObject("articleObj").getAVObject("publicationObj").getString("name"));
 				}
+				userLikeFavoriteDTO.setViewCount(tmp.getAVObject("articleObj").getInt("viewCount"));
 			}
 			if(tmp.getAVObject("userObj")!=null){
 				userLikeFavoriteDTO.setUserId(tmp.getAVObject("userObj").getObjectId());
