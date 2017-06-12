@@ -195,6 +195,7 @@ public class UserLikeFavoriteDTO{
 			}
 			userLikeFavoriteDTO.setImei(tmp.getString("imei"));
 			userLikeFavoriteDTO.setSynTmp(tmp.getInt("synTmp"));
+			userLikeFavoriteDTO.setCreateTime(DateUtil.formatFromDate(DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS,tmp.getCreatedAt().getTime()));
 		}
 		return userLikeFavoriteDTO;
 	}
