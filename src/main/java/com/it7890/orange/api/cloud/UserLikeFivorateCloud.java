@@ -159,7 +159,9 @@ public class UserLikeFivorateCloud {
                         String avobjId = ls.get(0).getObjectId();
                         if (istatus == 0) {
                             likeCount += 1;
+                            resultMsg = "点赞成功";
                         } else {
+                            resultMsg = "不喜欢成功";
                             noLikeCount += 1;
                         }
                         avObjectConArticleContent.setObjectId(avobjId);
