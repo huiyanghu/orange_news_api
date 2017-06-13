@@ -30,6 +30,7 @@ public class UserLikeFavoriteDTO{
 	private String publicationName;
 	private String publicationId;
 	private int viewCount;
+	private int imgCount;
 
 
 	public String getId() {
@@ -152,6 +153,14 @@ public class UserLikeFavoriteDTO{
 		this.publicationId = publicationId;
 	}
 
+	public int getImgCount() {
+		return imgCount;
+	}
+
+	public void setImgCount(int imgCount) {
+		this.imgCount = imgCount;
+	}
+
 	public static UserLikeFavoriteDTO objectToDto(UserLikeFavorite tmp) {
 		UserLikeFavoriteDTO userLikeFavoriteDTO = null;
 		if(null != tmp) {
@@ -196,6 +205,7 @@ public class UserLikeFavoriteDTO{
 			userLikeFavoriteDTO.setImei(tmp.getString("imei"));
 			userLikeFavoriteDTO.setSynTmp(tmp.getInt("synTmp"));
 			userLikeFavoriteDTO.setCreateTime(DateUtil.formatFromDate(DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS,tmp.getCreatedAt().getTime()));
+			userLikeFavoriteDTO.setImgCount(tmp.getAVObject("articleObj").getInt("imgcount"));
 		}
 		return userLikeFavoriteDTO;
 	}
