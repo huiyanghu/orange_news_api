@@ -12,6 +12,7 @@ import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -134,7 +135,7 @@ public class ConArticleDetailDTO {
 			conArticleDetailDTO = new ConArticleDetailDTO();
 			conArticleDetailDTO.setTitle(tmp.getArticleObj().getString("title"));
 //			conArticleDetailDTO.setContentBody(tmp.getContent());
-			BASE64Encoder encoder = new BASE64Encoder();
+//			BASE64Encoder encoder = new BASE64Encoder();
 
 //			String enStr = encoder.encode(tmp.getContent().getBytes());
 //			logger.info("enenenenenenen:::"+enStr);
@@ -144,7 +145,8 @@ public class ConArticleDetailDTO {
 //			String str = new String(decoder.decodeBuffer(tmp.getContent()));
 //			conArticleDetailDTO.setContentBody(StringEscapeUtils.unescapeHtml4(tmp.getContent()));
 
-			conArticleDetailDTO.setContentBody(encoder.encode(tmp.getContent().getBytes()));
+//			conArticleDetailDTO.setContentBody(encoder.encode(tmp.getContent().getBytes()));
+			conArticleDetailDTO.setContentBody(URLEncoder.encode(tmp.getContent(), "UTF-8"));
 			conArticleDetailDTO.setCategory(tmp.getTopicObj().getString("topicName"));
 			conArticleDetailDTO.setCategoryId(tmp.getTopicObj().getObjectId());
 			conArticleDetailDTO.setCountry(tmp.getArticleObj().getString("countrycode"));
