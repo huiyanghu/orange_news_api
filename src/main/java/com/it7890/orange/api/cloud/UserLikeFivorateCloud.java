@@ -202,7 +202,12 @@ public class UserLikeFivorateCloud {
                         if (list.size() > 0) {
                             avObjectUserLikeFavorite.setObjectId(list.get(0).getObjectId());
                             new UserLikeFavoriteDao().saveAVObj(avObjectUserLikeFavorite);
-                            resultMsg = "取消收藏成功";
+                            if(istatus != -1){
+                                resultMsg = "收藏成功";
+                            }else {
+                                resultMsg = "取消收藏成功";
+                            }
+
                         } else {
                             if (istatus != -1) {
                                 new UserLikeFavoriteDao().saveAVObj(avObjectUserLikeFavorite);
