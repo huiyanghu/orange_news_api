@@ -118,8 +118,8 @@ public class ConArtilesCloud {
 	public static String getArtContent(@EngineFunctionParam("articleId") String articleId,
 									   @EngineFunctionParam("imei") String imei) throws AVException, IOException {
 		int resultCode = Constants.CODE_SUCCESS;
-		int tmpLike = 0;
-		int tmpFav = 0;
+		int tmpLike = -1;
+		int tmpFav =-1;
 		String resultMsg = "成功";
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		ConArticleDetailDTO resArtContentDTO = new ConArticleDetailDTO();
@@ -134,11 +134,11 @@ public class ConArtilesCloud {
 			if(StringUtils.isNotBlank(imei)){
 				List<AVObject> lsLike = new UserLikeFavariteServiceImpl().getLikeList(1,articleId,imei);
 				if (lsLike.size()>0){
-					tmpLike = 1;
+					tmpLike = 0;
 				}
 				List<AVObject> lsFav = new UserLikeFavariteServiceImpl().getLikeList(2,articleId,imei);
 				if (lsFav.size()>0){
-					tmpFav = 1;
+					tmpFav = 0;
 				}
 			}else {
 				resultCode = Constants.CODE_SUCCESS;
