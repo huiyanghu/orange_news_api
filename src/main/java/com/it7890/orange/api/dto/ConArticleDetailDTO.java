@@ -22,7 +22,8 @@ public class ConArticleDetailDTO {
 	private String title;//标题
 	private String country;//国家
 	private String excerpt;//摘要
-	private String copyright;//来源
+	private String copyright;//来源媒体
+	private String copyrightId;//来源媒体id
 	private String keywords;//检索词
 	private String category;//目录
 	private String categoryId;//话题Id
@@ -129,6 +130,14 @@ public class ConArticleDetailDTO {
 		this.noLikeCount = noLikeCount;
 	}
 
+	public String getCopyrightId() {
+		return copyrightId;
+	}
+
+	public void setCopyrightId(String copyrightId) {
+		this.copyrightId = copyrightId;
+	}
+
 	public static ConArticleDetailDTO objectToDto(ConArticlesContent tmp) throws IOException, AVException {
 		ConArticleDetailDTO conArticleDetailDTO = null;
 		if(null != tmp) {
@@ -151,7 +160,11 @@ public class ConArticleDetailDTO {
 			conArticleDetailDTO.setCategoryId(tmp.getTopicObj().getObjectId());
 			conArticleDetailDTO.setCountry(tmp.getArticleObj().getString("countrycode"));
 			conArticleDetailDTO.setPubTime(DateUtil.formatFromDate(DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS,tmp.getArticleObj().getCreatedAt()));
-			conArticleDetailDTO.setCopyright(tmp.getPubicationObj().getString("name"));
+			if (tmp.getPubicationObj()!=null){
+				conArticleDetailDTO.setCopyright(tmp.getPubicationObj().getString("name"));
+				conArticleDetailDTO.setCopyrightId(tmp.getPubicationObj().getObjectId());
+			}
+
 
 			List<AVFile> titlePics = tmp.getArticleObj().getList("titlePicObjArr");
 			if(titlePics!=null){

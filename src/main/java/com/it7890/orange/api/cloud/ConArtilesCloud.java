@@ -120,6 +120,7 @@ public class ConArtilesCloud {
 		int resultCode = Constants.CODE_SUCCESS;
 		int tmpLike = -1;
 		int tmpFav =-1;
+		int tmpPub = -1;
 		String resultMsg = "成功";
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		ConArticleDetailDTO resArtContentDTO = new ConArticleDetailDTO();
@@ -140,9 +141,13 @@ public class ConArtilesCloud {
 				if (lsFav.size()>0){
 					tmpFav = 0;
 				}
+				List<AVObject> lsPub = new UserRssPublicationServiceImpl().getList(resArtContentDTO.getCopyrightId(),imei);
+				if (lsPub.size()>0){
+					tmpPub = 0;
+				}
 			}else {
 				resultCode = Constants.CODE_SUCCESS;
-				resultMsg = "获取点赞收藏状态失败,未传imei";
+				resultMsg = "获取点赞收藏订阅状态失败,未传imei";
 			}
 		}else {
 			resultCode = Constants.CODE_PARAMS_FAIL;
@@ -150,6 +155,7 @@ public class ConArtilesCloud {
 		}
 		resultMap.put("tmpLike", tmpLike);
 		resultMap.put("tmpFav", tmpFav);
+		resultMap.put("tmpPub", tmpPub);
 
 		resultMap.put("code", resultCode);
 		resultMap.put("msg", resultMsg);
