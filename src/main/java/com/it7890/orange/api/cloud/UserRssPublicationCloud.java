@@ -74,12 +74,14 @@ public class UserRssPublicationCloud {
                     publicationObj.save();
                 }
                 avObjectUserRssPublication.save();
+                resultMsg = "订阅成功!";
             } else {
                 if (list.size() > 0) {
                     list.get(0).delete();
                     subCount--;
                     publicationObj.put("subCount", subCount);
                     publicationObj.save();
+                    resultMsg = "取消订阅成功!";
                 } else {
                     resultCode = Constants.CODE_PARAMS_FAIL;
                     resultMsg = "参数错误";
