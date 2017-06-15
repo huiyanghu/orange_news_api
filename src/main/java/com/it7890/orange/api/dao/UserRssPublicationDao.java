@@ -16,7 +16,7 @@ public class UserRssPublicationDao {
 	public List<AVObject> getList(String pid,String imei) {
 		List<AVObject> avos = new ArrayList<>();
 		AVQuery avQuery = new AVQuery("UserRssPublication");
-		avQuery.whereEqualTo("publicationObj",pid);
+		avQuery.whereEqualTo("publicationObj",AVObject.createWithoutData("con_publications",pid));
 		avQuery.whereEqualTo("imei",imei);
 		try {
 			avos = avQuery.find();

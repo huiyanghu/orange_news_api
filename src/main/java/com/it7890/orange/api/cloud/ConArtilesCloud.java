@@ -141,6 +141,7 @@ public class ConArtilesCloud {
 				if (lsFav.size()>0){
 					tmpFav = 0;
 				}
+				logger.info("artid::>>{},pubid::>>{}",articleId,resArtContentDTO.getCopyrightId());
 				List<AVObject> lsPub = new UserRssPublicationServiceImpl().getList(resArtContentDTO.getCopyrightId(),imei);
 				if (lsPub.size()>0){
 					tmpPub = 0;

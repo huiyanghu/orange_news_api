@@ -12,7 +12,7 @@ import java.util.List;
  **/
 public class UserRssPublicationServiceImpl implements IUserRssPublicationService {
     @Override
-    public List<AVObject> getList(String hid, String imei) {
-        return new UserRssPublicationDao().getList(hid,imei);
+    public List<AVObject> getList(String pid, String imei) {
+        return new UserRssPublicationDao().getList(pid,imei);
     }
 }

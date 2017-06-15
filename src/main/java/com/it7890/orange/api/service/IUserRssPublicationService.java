@@ -9,5 +9,5 @@ import java.util.List;
  * @create 2017/6/14
  **/
 public interface IUserRssPublicationService {
-    public List<AVObject> getList(String hid,String imei);
+    public List<AVObject> getList(String pid,String imei);
 }
