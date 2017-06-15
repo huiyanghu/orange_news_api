@@ -515,9 +515,12 @@ public class ConArticleDTO {
             conArticleDTO.setCreatTime(DateUtil.formatFromDate(DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS, tmp.getCreatedAt()));
             conArticleDTO.setCreateDate(tmp.getCreatedAt().getTime());
             List<AVFile> titlePics = tmp.getList("titlePicObjArr");
+
+            List<ImageInfoDTO> imageInfoDTOs = new ArrayList<>();
             if (titlePics != null) {
-                conArticleDTO.setTitlePicList(ImageInfoDTO.buildImageInfoDTO(titlePics));
+                imageInfoDTOs = ImageInfoDTO.buildImageInfoDTO(titlePics);
             }
+            conArticleDTO.setTitlePicList(imageInfoDTOs);
             conArticleDTO.setViewCount(tmp.getInt("viewCount"));
         }
         return conArticleDTO;

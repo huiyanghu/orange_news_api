@@ -164,12 +164,12 @@ public class ConArticleDetailDTO {
 				conArticleDetailDTO.setCopyright(tmp.getPubicationObj().getString("name"));
 				conArticleDetailDTO.setCopyrightId(tmp.getPubicationObj().getObjectId());
 			}
-
-
 			List<AVFile> titlePics = tmp.getArticleObj().getList("titlePicObjArr");
+			List<ImageInfoDTO> imageInfoDTOs = new ArrayList<>();
 			if(titlePics!=null){
-				conArticleDetailDTO.setTitlePicList(ImageInfoDTO.buildImageInfoDTO(titlePics));
+				imageInfoDTOs = ImageInfoDTO.buildImageInfoDTO(titlePics);
 			}
+			conArticleDetailDTO.setTitlePicList(imageInfoDTOs);
 			conArticleDetailDTO.setLikeCount(tmp.getInt("likeCount"));
 			conArticleDetailDTO.setNoLikeCount(tmp.getInt("noLikeCount"));
 		}
