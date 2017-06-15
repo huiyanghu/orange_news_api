@@ -32,6 +32,8 @@ public class UserLikeFavoriteDTO{
 	private int viewCount;
 	private int imgCount;
 	private String writer;
+	private String topicId;
+	private String countryCode;
 
 
 	public String getId() {
@@ -170,6 +172,22 @@ public class UserLikeFavoriteDTO{
 		this.writer = writer;
 	}
 
+	public String getTopicId() {
+		return topicId;
+	}
+
+	public void setTopicId(String topicId) {
+		this.topicId = topicId;
+	}
+
+	public String getCountryCode() {
+		return countryCode;
+	}
+
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
+	}
+
 	public static UserLikeFavoriteDTO objectToDto(UserLikeFavorite tmp) {
 		UserLikeFavoriteDTO userLikeFavoriteDTO = null;
 		if(null != tmp) {
@@ -207,6 +225,10 @@ public class UserLikeFavoriteDTO{
 					userLikeFavoriteDTO.setPublicationId(tmp.getAVObject("articleObj").getAVObject("publicationObj").getObjectId());
 				}
 				userLikeFavoriteDTO.setViewCount(tmp.getAVObject("articleObj").getInt("viewCount"));
+				userLikeFavoriteDTO.setCountryCode(tmp.getAVObject("articleObj").getString("countrycode"));
+				if(tmp.getAVObject("articleObj").getAVObject("topicObj")!=null){
+					userLikeFavoriteDTO.setTopicId(tmp.getAVObject("articleObj").getAVObject("topicObj").getObjectId());
+				}
 			}
 			if(tmp.getAVObject("userObj")!=null){
 				userLikeFavoriteDTO.setUserId(tmp.getAVObject("userObj").getObjectId());

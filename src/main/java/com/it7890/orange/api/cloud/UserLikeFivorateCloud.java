@@ -350,49 +350,21 @@ public class UserLikeFivorateCloud {
     @EngineFunction("userFavoriteList")
     public static String userFavoriteList(@EngineFunctionParam("createTime") long createTime,
                                           @EngineFunctionParam("imei") String imei) throws AVException, ParseException {
-
         AVUser user = AVUser.getCurrentUser();
         int resultCode = Constants.CODE_SUCCESS;
         String resultMsg = "成功";
         Map<String, Object> resultMap = new HashMap<String, Object>();
-
-        AVQuery avQueryUserLikeFavorite = new AVQuery("UserLikeFavorite");
-        avQueryUserLikeFavorite.whereEqualTo("status", 0);
-        if (user != null) {
-            avQueryUserLikeFavorite.whereEqualTo("userObj", AVObject.createWithoutData("_User", user.getObjectId()));
+        List<UserLikeFavoriteDTO> resList = new ArrayList<>();
+        if (StringUtils.isNotBlank(imei)){
+            resList = new UserLikeFavariteServiceImpl().getFavList(user,imei,createTime);
+        }else {
+            resultCode = Constants.CODE_PARAMS_FAIL;
+            resultMsg = "imei can not null!";
         }
-        avQueryUserLikeFavorite.whereEqualTo("imei", imei);
-        avQueryUserLikeFavorite.whereEqualTo("lType", 2);
-        if (createTime != 0) {
-//            avQueryUserLikeFavorite.whereLessThan("createdAt", DateUtil.Long2StringUTC(createTime, DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS_1));
-            avQueryUserLikeFavorite.whereLessThan("createdAt",DateUtil.long2Date(createTime-1000));
-        }
-        avQueryUserLikeFavorite.addDescendingOrder("createdAt");
-        avQueryUserLikeFavorite.include("articleObj");
-        avQueryUserLikeFavorite.include("articleObj.titlePicObjArr");
-        avQueryUserLikeFavorite.include("articleObj.publicationObj");
-        avQueryUserLikeFavorite.limit(20);
-        List<AVObject> list = avQueryUserLikeFavorite.find();
-        List<UserLikeFavoriteDTO> resList = buildUserLikeFavoriteDtoList(list);
-
         resultMap.put("code", resultCode);
         resultMap.put("msg", resultMsg);
         resultMap.put("favoriteList", resList);
-
         return JSON.toJSONString(resultMap);
-
-    }
-
-    private static List<UserLikeFavoriteDTO> buildUserLikeFavoriteDtoList(List<AVObject> tmp) {
-        UserLikeFavoriteDTO userLikeFavoriteDTO;
-        List<UserLikeFavoriteDTO> DTOList = new ArrayList<UserLikeFavoriteDTO>();
-        for (AVObject avObject : tmp) {
-            userLikeFavoriteDTO = UserLikeFavoriteDTO.avobjectToDto(avObject);
-            if (null != userLikeFavoriteDTO) {
-                DTOList.add(userLikeFavoriteDTO);
-            }
-        }
-        return DTOList;
     }
 
 }

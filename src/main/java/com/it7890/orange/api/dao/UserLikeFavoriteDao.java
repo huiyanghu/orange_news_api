@@ -3,6 +3,7 @@ package com.it7890.orange.api.dao;
 import com.avos.avoscloud.*;
 import com.it7890.orange.api.entity.AppTopics;
 import com.it7890.orange.api.entity.UserLikeFavorite;
+import com.it7890.orange.api.util.DateUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -71,5 +72,32 @@ public class UserLikeFavoriteDao {
 			e.printStackTrace();
 		}
 		return ls;
+	}
+
+	public List<AVObject> getFavList(AVUser user,String imei,long createTime){
+		List<AVObject> list =  new ArrayList<>();
+		AVQuery avQueryUserLikeFavorite = new AVQuery("UserLikeFavorite");
+		avQueryUserLikeFavorite.whereEqualTo("status", 0);
+		if (user != null) {
+			avQueryUserLikeFavorite.whereEqualTo("userObj", AVObject.createWithoutData("_User", user.getObjectId()));
+		}
+		avQueryUserLikeFavorite.whereEqualTo("imei", imei);
+		avQueryUserLikeFavorite.whereEqualTo("lType", 2);
+		if (createTime != 0) {
+//            avQueryUserLikeFavorite.whereLessThan("createdAt", DateUtil.Long2StringUTC(createTime, DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS_1));
+			avQueryUserLikeFavorite.whereLessThan("createdAt", DateUtil.long2Date(createTime-1000));
+		}
+		avQueryUserLikeFavorite.addDescendingOrder("createdAt");
+		avQueryUserLikeFavorite.include("articleObj");
+		avQueryUserLikeFavorite.include("articleObj.titlePicObjArr");
+		avQueryUserLikeFavorite.include("articleObj.publicationObj");
+		avQueryUserLikeFavorite.include("articleObj.topicObj");
+		avQueryUserLikeFavorite.limit(20);
+		try {
+			list = avQueryUserLikeFavorite.find();
+		} catch (AVException e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 }

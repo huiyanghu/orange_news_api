@@ -1,6 +1,7 @@
 package com.it7890.orange.api.service.impl;
 
 import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.AVUser;
 import com.it7890.orange.api.dao.UserLikeFavoriteDao;
 import com.it7890.orange.api.dto.UserLikeFavoriteDTO;
 import com.it7890.orange.api.entity.UserLikeFavorite;
@@ -23,6 +24,12 @@ public class UserLikeFavariteServiceImpl implements IUserLikeFavoriteService {
 		return new UserLikeFavoriteDao().getLikeStatusByArtIdAndImei(lType,artId,imei);
 	}
 
+	@Override
+	public List<UserLikeFavoriteDTO> getFavList(AVUser user, String imei, long createTime) {
+		List<AVObject> ls = new UserLikeFavoriteDao().getFavList(user,imei,createTime);
+		return buildUserLikeFavoriteDtoList(ls);
+	}
+
 	private static List<UserLikeFavoriteDTO> buildDtoList(List<UserLikeFavorite> tmp) {
 		UserLikeFavoriteDTO userLikeFavoriteDTO;
 		List<UserLikeFavoriteDTO> DTOList = new ArrayList<UserLikeFavoriteDTO>();
@@ -34,4 +41,17 @@ public class UserLikeFavariteServiceImpl implements IUserLikeFavoriteService {
 		}
 		return DTOList;
 	}
+
+	private static List<UserLikeFavoriteDTO> buildUserLikeFavoriteDtoList(List<AVObject> tmp) {
+		UserLikeFavoriteDTO userLikeFavoriteDTO;
+		List<UserLikeFavoriteDTO> DTOList = new ArrayList<UserLikeFavoriteDTO>();
+		for (AVObject avObject : tmp) {
+			userLikeFavoriteDTO = UserLikeFavoriteDTO.avobjectToDto(avObject);
+			if (null != userLikeFavoriteDTO) {
+				DTOList.add(userLikeFavoriteDTO);
+			}
+		}
+		return DTOList;
+	}
+
 }
