@@ -8,10 +8,8 @@ import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.it7890.orange.api.dao.ConArticleDao;
 import com.it7890.orange.api.dao.HbCountrysDao;
-import com.it7890.orange.api.dto.AppTopDTO;
-import com.it7890.orange.api.dto.AppTopicsDTO;
-import com.it7890.orange.api.dto.ConArticleDTO;
-import com.it7890.orange.api.dto.ConArticleDetailDTO;
+import com.it7890.orange.api.dao.PubicationDao;
+import com.it7890.orange.api.dto.*;
 import com.it7890.orange.api.entity.AppTopics;
 import com.it7890.orange.api.entity.ConArticle;
 import com.it7890.orange.api.entity.HbCountrys;
@@ -222,6 +220,40 @@ public class ConArtilesCloud {
 			topTmp = 1;
 		}
 		return topTmp;
+	}
+
+	@EngineFunction("publicationHomePage")
+	public static String pubHomePage(@EngineFunctionParam("pubId") String pubId,
+									   @EngineFunctionParam("artTime") long artTime,
+										 @EngineFunctionParam("imei") String imei,
+									   @EngineFunctionParam("direct") int direct) throws AVException {
+
+		logger.info("pubId: {}, artTime: {}, direct: {}", pubId, artTime, direct);
+
+		int resultCode = Constants.CODE_SUCCESS;
+		String resultMsg = "成功";
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		List<ConArticleDTO> articleDtoList = new ArrayList<>();
+		int tmpPub = -1;
+		AVObject avObject = null;
+		if (StringUtil.isNotEmpty(pubId)) {
+			avObject = new PubicationDao().getById(pubId);
+			if (StringUtils.isNotBlank(imei)){
+				List<AVObject> lsPub = new UserRssPublicationServiceImpl().getList(pubId,imei);
+				if (lsPub.size()>0){
+					tmpPub = 0;
+				}
+			}
+			articleDtoList = new ConArticleServiceImpl().getArtByPubId(pubId,artTime,direct);
+		} else {
+			resultCode = Constants.CODE_PARAMS_FAIL;
+			resultMsg = "params pubId can not null!";
+		}
+		resultMap.put("code", resultCode);
+		resultMap.put("msg", resultMsg);
+		resultMap.put("articleList", articleDtoList);
+		resultMap.put("publicationObj",PublicatiomHomeDTO.buildDTO(avObject,tmpPub));
+		return JSON.toJSONString(resultMap);
 	}
 
 }

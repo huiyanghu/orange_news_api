@@ -59,6 +59,12 @@ public class ConArticleServiceImpl implements IConArticleService {
 		return new ConArticleDao().findArticleListByKeywords(keywords, date, direct);
 	}
 
+	@Override
+	public List<ConArticleDTO> getArtByPubId(String pubId, long time, int direct) throws AVException {
+		List<AVObject> ls = new ConArticleDao().getArtByPubId(pubId,time,direct);
+		return buildavoDtoList(ls);
+	}
+
 	private static List<ConArticleDTO> buildDtoList(List<ConArticle> tmp) throws AVException {
 		ConArticleDTO conArticleDTO;
 		List<ConArticleDTO> DTOList = new ArrayList<ConArticleDTO>();
@@ -82,6 +88,7 @@ public class ConArticleServiceImpl implements IConArticleService {
 		}
 		return DTOList;
 	}
+
 
 	private static ConArticleDetailDTO buildContentDtoList(ConArticlesContent tmp) throws IOException, AVException {
 		return ConArticleDetailDTO.objectToDto(tmp);

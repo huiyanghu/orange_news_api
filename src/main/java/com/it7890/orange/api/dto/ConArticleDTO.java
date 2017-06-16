@@ -100,6 +100,9 @@ public class ConArticleDTO {
     private Long createDate;
     private int viewCount;
 
+    private int tmpFav;
+    private int tmpPub;
+
     public String getPublicationName() {
         return publicationName;
     }
@@ -396,6 +399,22 @@ public class ConArticleDTO {
         this.viewCount = viewCount;
     }
 
+    public int getTmpFav() {
+        return tmpFav;
+    }
+
+    public void setTmpFav(int tmpFav) {
+        this.tmpFav = tmpFav;
+    }
+
+    public int getTmpPub() {
+        return tmpPub;
+    }
+
+    public void setTmpPub(int tmpPub) {
+        this.tmpPub = tmpPub;
+    }
+
     public static ConArticleDTO objectToDto(ConArticle tmp) throws AVException {
         ConArticleDTO conArticleDTO = null;
         if (null != tmp) {
@@ -522,6 +541,8 @@ public class ConArticleDTO {
             }
             conArticleDTO.setTitlePicList(imageInfoDTOs);
             conArticleDTO.setViewCount(tmp.getInt("viewCount"));
+            conArticleDTO.setTmpPub(-1);
+            conArticleDTO.setTmpFav(-1);
         }
         return conArticleDTO;
     }

@@ -196,4 +196,31 @@ public class ConArticleDao {
         }
         return articleList;
     }
+
+    public List<AVObject> getArtByPubId(String pubId,long time,int direct){
+        List<AVObject> ls = null;
+        AVQuery query = new AVQuery("conarticle");
+        query.include("titlePicObjArr");
+        query.include("publicationObj");
+        query.addDescendingOrder("createdAt");
+        query.limit(10);
+        if (StringUtils.isNotBlank(pubId)){
+            query.whereEqualTo("publicationObj",AVObject.createWithoutData("con_publications",pubId));
+        }
+        if (time!=0){
+            if(direct == 0){
+                Date date = DateUtil.long2Date(time+1000);
+                query.whereGreaterThan("createdAt",date);
+            } else if (direct == 1) {
+                Date date = DateUtil.long2Date(time-1000);
+                query.whereLessThan("createdAt",date);
+            }
+        }
+        try {
+            ls = query.find();
+        } catch (AVException e) {
+            e.printStackTrace();
+        }
+        return ls;
+    }
 }
