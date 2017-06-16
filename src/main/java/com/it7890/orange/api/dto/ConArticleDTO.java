@@ -545,5 +545,6 @@ public class ConArticleDTO {
             conArticleDTO.setTmpFav(-1);
         }
         return conArticleDTO;
+
     }
 }
