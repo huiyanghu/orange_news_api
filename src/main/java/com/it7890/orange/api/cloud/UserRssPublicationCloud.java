@@ -135,6 +135,7 @@ public class UserRssPublicationCloud {
         }
         avQueryUserRssPublication.addDescendingOrder("createdAt");
         avQueryUserRssPublication.include("publicationObj");
+        avQueryUserRssPublication.include("publicationObj.logoFileObj");
         avQueryUserRssPublication.limit(20);
         List<AVObject> list = avQueryUserRssPublication.find();
         List<UserRssPublicationDTO> resList = buildUserRssPublicationDtoList(list);
