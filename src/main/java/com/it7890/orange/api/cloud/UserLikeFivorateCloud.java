@@ -269,42 +269,44 @@ public class UserLikeFivorateCloud {
         } else {
             logger.info("未登录用户");
         }
-        if (StringUtils.isNotBlank(articleId)) {
-            if (StringUtils.isNotBlank(userId)) {
-                AVObject avoobj = new AVObject("UserComment");
-                AVQuery<AVObject> artavQuery = new AVQuery<>("conarticle");
-                AVObject artObject = artavQuery.get(articleId);
-                AVQuery<AVObject> useravQuery = new AVQuery<>("_User");
-                AVObject userObject = useravQuery.get(userId);
-                avoobj.put("userObj", userObject);
-                avoobj.put("articleObj", artObject);
-                if (status != -1) {//添加评论
+
+        if (StringUtils.isNotBlank(userId)) {
+            AVObject avoobj = new AVObject("UserComment");
+            AVQuery<AVObject> artavQuery = new AVQuery<>("conarticle");
+            AVObject artObject = artavQuery.get(articleId);
+            AVQuery<AVObject> useravQuery = new AVQuery<>("_User");
+            AVObject userObject = useravQuery.get(userId);
+            avoobj.put("userObj", userObject);
+            avoobj.put("articleObj", artObject);
+            if (status != -1) {//添加评论
+                if (StringUtils.isNotBlank(articleId)) {
                     avoobj.put("status", status);
                     avoobj.put("content", content);
                     new UserCommentDao().saveObj(avoobj);
-                } else {//删除
-                    AVQuery<AVObject> commentavQuery = new AVQuery<>("UserComment");
-                    AVObject commentObj = commentavQuery.get(commentId);
-                    if (commentObj.getInt("status") != status) {
-                        avoobj.setObjectId(commentObj.getObjectId());
-                        avoobj.put("status", status);
-                        new UserCommentDao().saveObj(avoobj);
-                    } else {
-                        resultCode = Constants.CODE_PARAMS_FAIL;
-                        resultMsg = "状态错误";
-                        resultMap.put("code", resultCode);
-                        resultMap.put("msg", resultMsg);
-                        return JSON.toJSONString(resultMap);
-                    }
+                } else {
+                    resultCode = Constants.CODE_PARAMS_FAIL;
+                    resultMsg = "articleId不能为空";
                 }
-            } else {
-                resultCode = Constants.CODE_PARAMS_FAIL;
-                resultMsg = "请登录";
+            } else {//删除
+                AVQuery<AVObject> commentavQuery = new AVQuery<>("UserComment");
+                AVObject commentObj = commentavQuery.get(commentId);
+                if (commentObj.getInt("status") != status) {
+                    avoobj.setObjectId(commentObj.getObjectId());
+                    avoobj.put("status", status);
+                    new UserCommentDao().saveObj(avoobj);
+                } else {
+                    resultCode = Constants.CODE_PARAMS_FAIL;
+                    resultMsg = "状态错误";
+                    resultMap.put("code", resultCode);
+                    resultMap.put("msg", resultMsg);
+                    return JSON.toJSONString(resultMap);
+                }
             }
         } else {
             resultCode = Constants.CODE_PARAMS_FAIL;
-            resultMsg = "articleId不能为空";
+            resultMsg = "请登录";
         }
+
 
         resultMap.put("code", resultCode);
         resultMap.put("msg", resultMsg);
