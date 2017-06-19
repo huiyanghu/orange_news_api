@@ -272,12 +272,12 @@ public class UserLikeFivorateCloud {
 
         if (StringUtils.isNotBlank(userId)) {
             AVObject avoobj = new AVObject("UserComment");
-            AVQuery<AVObject> artavQuery = new AVQuery<>("conarticle");
-            AVObject artObject = artavQuery.get(articleId);
             AVQuery<AVObject> useravQuery = new AVQuery<>("_User");
             AVObject userObject = useravQuery.get(userId);
             if (status != -1) {//添加评论
                 if (StringUtils.isNotBlank(articleId)) {
+                    AVQuery<AVObject> artavQuery = new AVQuery<>("conarticle");
+                    AVObject artObject = artavQuery.get(articleId);
                     avoobj.put("userObj", userObject);
                     avoobj.put("articleObj", artObject);
                     avoobj.put("status", status);
