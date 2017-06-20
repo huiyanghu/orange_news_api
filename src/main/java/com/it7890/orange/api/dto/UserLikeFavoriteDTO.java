@@ -15,7 +15,7 @@ import java.util.List;
 
 public class UserLikeFavoriteDTO{
 	private String id;
-	private String objId;
+	private String articleId;
 	private String userId;
 	private int lType;//1:like喜欢 2:favorite收藏
 	private String createTime;
@@ -44,12 +44,12 @@ public class UserLikeFavoriteDTO{
 		this.id = id;
 	}
 
-	public String getObjId() {
-		return objId;
+	public String getArticleId() {
+		return articleId;
 	}
 
-	public void setObjId(String objId) {
-		this.objId = objId;
+	public void setArticleId(String articleId) {
+		this.articleId = articleId;
 	}
 
 	public String getUserId() {
@@ -196,7 +196,7 @@ public class UserLikeFavoriteDTO{
 			userLikeFavoriteDTO.setCreateTime(DateUtil.formatFromDate(DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS,tmp.getCreatedAt()));
 			userLikeFavoriteDTO.setlType(tmp.getLType());
 			userLikeFavoriteDTO.setStatus(tmp.getStatus());
-			userLikeFavoriteDTO.setObjId(tmp.getArticleObj().getObjectId());
+			userLikeFavoriteDTO.setArticleId(tmp.getArticleObj().getObjectId());
 			userLikeFavoriteDTO.setUserId(tmp.getUserObj().getObjectId());
 		}
 		return userLikeFavoriteDTO;
@@ -211,7 +211,7 @@ public class UserLikeFavoriteDTO{
 			userLikeFavoriteDTO.setlType(tmp.getInt("lType"));
 			userLikeFavoriteDTO.setStatus(tmp.getInt("status"));
 			if(tmp.getAVObject("articleObj")!=null){
-				userLikeFavoriteDTO.setObjId(tmp.getAVObject("articleObj").getObjectId());
+				userLikeFavoriteDTO.setArticleId(tmp.getAVObject("articleObj").getObjectId());
 				userLikeFavoriteDTO.setTitle(tmp.getAVObject("articleObj").getString("title"));
 				userLikeFavoriteDTO.setSourceUrl(tmp.getAVObject("articleObj").getString("sourceurl"));
 
