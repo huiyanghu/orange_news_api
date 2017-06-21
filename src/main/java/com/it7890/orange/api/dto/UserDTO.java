@@ -12,6 +12,7 @@ public class UserDTO {
 	private String nickName;
 	private int sex;
 	private int loadSign;
+	private boolean emailBind;
 
 	public String getObjectId() {
 		return objectId;
@@ -67,5 +68,13 @@ public class UserDTO {
 
 	public void setLoadSign(int loadSign) {
 		this.loadSign = loadSign;
+	}
+
+	public boolean isEmailBind() {
+		return emailBind;
+	}
+
+	public void setEmailBind(boolean emailBind) {
+		this.emailBind = emailBind;
 	}
 }

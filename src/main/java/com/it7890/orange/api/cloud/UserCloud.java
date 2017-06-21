@@ -307,6 +307,7 @@ public class UserCloud {
 			userDto.setNickName(StringUtil.isNotEmpty(userInfo.getString("nickName")) ? userInfo.getString("nickName") : "");
 			userDto.setSex(null != userInfo.get("sex") ? userInfo.getInt("sex") : -1);
 			userDto.setLoadSign(null != userInfo.get("loadSign") ? userInfo.getInt("loadSign") : 0);
+			userDto.setEmailBind(userInfo.getBoolean("emailVerified"));
 		}
 		return userDto;
 	}
