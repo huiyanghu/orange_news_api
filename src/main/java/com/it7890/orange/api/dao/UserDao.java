@@ -66,7 +66,7 @@ public class UserDao {
 		avQuery.whereEqualTo("email",email);
 		try {
 			ls = avQuery.find();
-			if (ls!=null&&ls.get(0).getBoolean("emailVerified")==true){
+			if (ls!=null&&ls.size()!=0&&ls.get(0).getBoolean("emailVerified")==true){
 				isBind = true;
 			}
 		} catch (AVException e) {

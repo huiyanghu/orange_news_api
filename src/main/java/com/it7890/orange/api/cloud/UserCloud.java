@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSON;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVUser;
+import com.avos.avoscloud.RequestEmailVerifyCallback;
 import com.it7890.orange.api.dao.UserDao;
 import com.it7890.orange.api.dto.UserDTO;
 import com.it7890.orange.api.service.impl.FileServiceImpl;
@@ -249,7 +250,16 @@ public class UserCloud {
 				resultCode = Constants.CODE_CANNOT_FIND;
 				resultMsg = "该邮箱已被绑定";
 			} else {
-				AVUser.requestEmailVerify(email);
+//				AVUser.requestEmailVerify(email);
+				AVUser.requestEmailVerifyInBackground(email, new RequestEmailVerifyCallback() {
+					public void done(AVException e) {
+						if (e!=null){
+							logger.info(e.getMessage());
+						}else {
+							logger.info("ok");
+						}
+					}
+				});
 			}
 		} else {
 			resultCode = Constants.CODE_PARAMS_FAIL;
