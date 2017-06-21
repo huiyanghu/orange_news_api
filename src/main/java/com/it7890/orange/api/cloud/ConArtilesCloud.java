@@ -35,7 +35,8 @@ public class ConArtilesCloud {
 													@EngineFunctionParam("langId") String langId,
 													@EngineFunctionParam("artCreateTime") long artCreateTime,
 													@EngineFunctionParam("topCreateTime") long topCreateTime,
-													@EngineFunctionParam("direct") int direct) throws AVException, ParseException {
+													@EngineFunctionParam("direct") int direct,
+													@EngineFunctionParam("limit") int limit) throws AVException, ParseException {
 		int resultCode = Constants.CODE_SUCCESS;
 		String resultMsg = "成功";
 		Map<String, Object> resultMap = new HashMap<String, Object>();
@@ -53,7 +54,7 @@ public class ConArtilesCloud {
 		}
 
 		//开始文章查询
-		resArtDTOList = new ConArticleServiceImpl().getArticlesList(countryCode,artCreateTime, direct);
+		resArtDTOList = new ConArticleServiceImpl().getArticlesList(countryCode,artCreateTime, direct,limit);
 		if(resArtDTOList==null){
 			resultMsg = "文章已最新";
 		}else {
@@ -74,7 +75,8 @@ public class ConArtilesCloud {
 												 @EngineFunctionParam("langId") String langId,
 												 @EngineFunctionParam("createTime") long createTime,
 												 @EngineFunctionParam("topCreateTime") long topCreateTime,
-												 @EngineFunctionParam("direct") int direct) throws AVException, ParseException {
+												 @EngineFunctionParam("direct") int direct,
+												 @EngineFunctionParam("limit") int limit) throws AVException, ParseException {
 		int resultCode = Constants.CODE_SUCCESS;
 		String resultMsg = "成功";
 		Map<String, Object> resultMap = new HashMap<String, Object>();
@@ -92,7 +94,7 @@ public class ConArtilesCloud {
 		}
 
 		if (StringUtils.isNotEmpty(topicID)){
-			resArtDTOList = new ConArticleServiceImpl().getTopicsArticlesList(countryCode,topicID, createTime,direct);
+			resArtDTOList = new ConArticleServiceImpl().getTopicsArticlesList(countryCode,topicID, createTime,direct,limit);
 			if(resArtDTOList!=null){
 				resultMap.put("artsList", resArtDTOList);
 			}else {
@@ -117,7 +119,7 @@ public class ConArtilesCloud {
 									   @EngineFunctionParam("imei") String imei) throws AVException, IOException {
 		int resultCode = Constants.CODE_SUCCESS;
 		int tmpLike = -1;
-		int tmpFav =-1;
+		int tmpFav = -1;
 		int tmpPub = -1;
 		String resultMsg = "成功";
 		Map<String, Object> resultMap = new HashMap<String, Object>();

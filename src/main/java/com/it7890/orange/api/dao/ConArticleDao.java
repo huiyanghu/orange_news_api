@@ -105,7 +105,7 @@ public class ConArticleDao {
         return articlesList;
     }
 
-    public List<AVObject> getTopicsArticlesList1(String countryCode,String tid,long ltime, int direct) throws ParseException {//direct 0下拉 1上拉,默认0
+    public List<AVObject> getTopicsArticlesList1(String countryCode,String tid,long ltime, int direct,int limit) throws ParseException {//direct 0下拉 1上拉,默认0
         List<AVObject> articlesList = new ArrayList<AVObject>();
         AVQuery queryConarticles = new AVQuery("conarticle");
         queryConarticles.include("titlePicObj");
@@ -118,7 +118,7 @@ public class ConArticleDao {
             queryConarticles.whereEqualTo("topicObj", AVObject.createWithoutData("AppTopics",tid));
         }
         queryConarticles.addDescendingOrder("createdAt");
-        queryConarticles.limit(10);
+        queryConarticles.limit(limit);
         if(ltime != 0){
 //            Date date = DateUtil.long2Date(ltime);
             logger.info("long time====>"+ltime);

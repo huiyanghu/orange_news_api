@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSON;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVUser;
+import com.it7890.orange.api.dao.UserDao;
 import com.it7890.orange.api.dto.UserDTO;
 import com.it7890.orange.api.service.impl.FileServiceImpl;
 import com.it7890.orange.api.service.impl.UserServiceImpl;
@@ -238,6 +239,28 @@ public class UserCloud {
 		return JSON.toJSONString(resultMap);
 	}
 
+	@EngineFunction("bindEmial")
+	public static String bindEmial(@EngineFunctionParam("email") String email) {
+		int resultCode = Constants.CODE_SUCCESS;
+		String resultMsg = "成功";
+		if (StringUtil.isNotEmpty(email)) {
+			boolean isBind = new UserDao().getIsBindEmail(email);
+			if (isBind) {
+				resultCode = Constants.CODE_CANNOT_FIND;
+				resultMsg = "该邮箱已被绑定";
+			} else {
+				AVUser.requestEmailVerify(email);
+			}
+		} else {
+			resultCode = Constants.CODE_PARAMS_FAIL;
+			resultMsg = "参数错误";
+		}
+
+		Map<String, Object> resultMap = new HashMap<>();
+		resultMap.put("code", resultCode);
+		resultMap.put("msg", resultMsg);
+		return JSON.toJSONString(resultMap);
+	}
 	private static String getRegisterMsg(int errorCode) {
 		String resultMsg = "服务异常，请稍后再试";
 		switch (errorCode) {

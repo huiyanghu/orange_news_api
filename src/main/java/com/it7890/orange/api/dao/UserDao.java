@@ -1,11 +1,9 @@
 package com.it7890.orange.api.dao;
 
-import com.avos.avoscloud.AVCloudQueryResult;
-import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVQuery;
-import com.avos.avoscloud.AVUser;
+import com.avos.avoscloud.*;
 import com.it7890.orange.api.util.StringUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -55,6 +53,26 @@ public class UserDao {
 			}
 		}
 		return isExist;
+	}
+	/**
+	 * 邮箱是否被绑定
+	 * @param email
+	 * @return
+	 */
+	public boolean getIsBindEmail(String email) {
+		List<AVObject> ls = new ArrayList<>();
+		boolean isBind = false;
+		AVQuery avQuery = new AVQuery("_User");
+		avQuery.whereEqualTo("email",email);
+		try {
+			ls = avQuery.find();
+			if (ls!=null&&ls.get(0).getBoolean("emailVerified")==true){
+				isBind = true;
+			}
+		} catch (AVException e) {
+			e.printStackTrace();
+		}
+		return isBind;
 	}
 
 	/**

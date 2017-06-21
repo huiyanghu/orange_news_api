@@ -12,11 +12,11 @@ import java.util.List;
 
 
 public interface IConArticleService {
-	public List<ConArticleDTO> getArticlesList(String countryCode,long ltime,int direct) throws AVException, ParseException;
+	public List<ConArticleDTO> getArticlesList(String countryCode,long ltime,int direct,int limit) throws AVException, ParseException;
 
 	public List<ConArticleDTO> getArticleById(String articleid) throws AVException;
 
-	public List<ConArticleDTO> getTopicsArticlesList(String countryCode,String id,long ltime,int direct) throws AVException, ParseException;
+	public List<ConArticleDTO> getTopicsArticlesList(String countryCode,String id,long ltime,int direct,int limit) throws AVException, ParseException;
 
 	public  ConArticleDetailDTO getArtContentById(String articleid) throws IOException, AVException;
 
