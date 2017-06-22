@@ -354,10 +354,10 @@ public class AppTopDTO {
 			appTopDTO.setcType(tmp.getInt("cType"));
 			appTopDTO.setStatus(tmp.getInt("status"));
 			appTopDTO.setPushNum(tmp.getInt("pushNum"));
-			appTopDTO.setChannelId(tmp.getAVObject("channelObj").getObjectId());
-			appTopDTO.setLangId(tmp.getAVObject("languagesObj").getObjectId());
-			appTopDTO.setTopicsId(tmp.getAVObject("topicsObj").getObjectId());
-			appTopDTO.setPublicationId(tmp.getAVObject("publicationObj").getObjectId());
+			appTopDTO.setChannelId(null!=tmp.getAVObject("channelObj")?tmp.getAVObject("channelObj").getObjectId():"");
+			appTopDTO.setLangId(null!=tmp.getAVObject("languagesObj")?tmp.getAVObject("languagesObj").getObjectId():"");
+			appTopDTO.setTopicsId(null!=tmp.getAVObject("topicsObj")?tmp.getAVObject("topicsObj").getObjectId():"");
+			appTopDTO.setPublicationId(null !=tmp.getAVObject("publicationObj")?tmp.getAVObject("publicationObj").getObjectId():"");
 			appTopDTO.setCreateDate(tmp.getCreatedAt().getTime());
 			appTopDTO.setCreatTime(DateUtil.formatFromDate(DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS,tmp.getCreatedAt()));
 
