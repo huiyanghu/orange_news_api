@@ -375,6 +375,9 @@ public class AppTopDTO {
 				appTopDTO.setMediaLink(tmp.getAVObject("articleObj").getString("mediaLink"));
 				appTopDTO.setWriter(tmp.getAVObject("articleObj").getString("writer"));
 				titlePicObjList = (List<AVFile>) tmp.getAVObject("articleObj").get("titlePicObjArr");
+				appTopDTO.setSourceUrl(tmp.getAVObject("articleObj").getString("sourceurl"));
+				appTopDTO.setSourceTitilePic(tmp.getAVObject("articleObj").getString("sourceTitlePic"));
+				appTopDTO.setTitle(tmp.getAVObject("articleObj").getString("title"));
 			}
 
 
@@ -395,11 +398,8 @@ public class AppTopDTO {
 				}
 			}
 			appTopDTO.setTitlePicList(titlePicInfo);
-			appTopDTO.setSourceUrl(tmp.getAVObject("articleObj").getString("sourceurl"));
-			appTopDTO.setSourceTitilePic(tmp.getAVObject("articleObj").getString("sourceTitlePic"));
-
 			appTopDTO.setCreaterId(null != tmp.getAVUser("createUserObj") ? tmp.getAVUser("createUserObj").getObjectId() : "");
-			appTopDTO.setTitle(tmp.getAVObject("articleObj").getString("title"));
+
 		}
 		return appTopDTO;
 	}
