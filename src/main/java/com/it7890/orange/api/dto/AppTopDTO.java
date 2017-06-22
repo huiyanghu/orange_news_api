@@ -363,22 +363,23 @@ public class AppTopDTO {
 
 //			appTopDTO.setCreaterId(tmp.getAVObject("sysUserObj").getObjectId());
 			List<AVFile> titlePicObjList = new ArrayList<>();
-			if (tmp.getAVObject("articleObj")!=null){
-				appTopDTO.setKeyWords(tmp.getAVObject("articleObj").getString("keyWords"));
-				appTopDTO.setAbstracts(tmp.getAVObject("articleObj").getString("abstracts"));
-				appTopDTO.setArticleId(tmp.getAVObject("articleObj").getObjectId());
-				appTopDTO.setAttr(tmp.getAVObject("articleObj").getInt("attr"));
-				appTopDTO.setAuthor(tmp.getAVObject("articleObj").getString("author"));
-				appTopDTO.setCommentNum(tmp.getAVObject("articleObj").getInt("commentNum"));
-				appTopDTO.setImgCount(tmp.getAVObject("articleObj").getInt("imgCount"));
-				appTopDTO.setLinkUrl(tmp.getAVObject("articleObj").getString("linkUrl"));
-				appTopDTO.setMediaLink(tmp.getAVObject("articleObj").getString("mediaLink"));
-				appTopDTO.setWriter(tmp.getAVObject("articleObj").getString("writer"));
+
+			appTopDTO.setKeyWords(null != tmp.getAVObject("articleObj") ? tmp.getAVObject("articleObj").getString("keyWords") : "");
+			appTopDTO.setAbstracts(null != tmp.getAVObject("articleObj") ? tmp.getAVObject("articleObj").getString("abstracts") : "");
+			appTopDTO.setArticleId(null != tmp.getAVObject("articleObj") ? tmp.getAVObject("articleObj").getObjectId() : "");
+			appTopDTO.setAttr(null != tmp.getAVObject("articleObj") ? tmp.getAVObject("articleObj").getInt("attr") : 0);
+			appTopDTO.setAuthor(null != tmp.getAVObject("articleObj") ? tmp.getAVObject("articleObj").getString("author") : "");
+			appTopDTO.setCommentNum(null != tmp.getAVObject("articleObj") ? tmp.getAVObject("articleObj").getInt("commentNum") : 0);
+			appTopDTO.setImgCount(null != tmp.getAVObject("articleObj") ? tmp.getAVObject("articleObj").getInt("imgCount") : 0);
+			appTopDTO.setLinkUrl(null != tmp.getAVObject("articleObj") ? tmp.getAVObject("articleObj").getString("linkUrl") : "");
+			appTopDTO.setMediaLink(null != tmp.getAVObject("articleObj") ? tmp.getAVObject("articleObj").getString("mediaLink") : "");
+			appTopDTO.setWriter(null != tmp.getAVObject("articleObj") ? tmp.getAVObject("articleObj").getString("writer") : "");
+			if (null != tmp.getAVObject("articleObj")&&null!=tmp.getAVObject("articleObj").get("titlePicObjArr")){
 				titlePicObjList = (List<AVFile>) tmp.getAVObject("articleObj").get("titlePicObjArr");
-				appTopDTO.setSourceUrl(tmp.getAVObject("articleObj").getString("sourceurl"));
-				appTopDTO.setSourceTitilePic(tmp.getAVObject("articleObj").getString("sourceTitlePic"));
-				appTopDTO.setTitle(tmp.getAVObject("articleObj").getString("title"));
 			}
+			appTopDTO.setSourceUrl(null != tmp.getAVObject("articleObj") ? tmp.getAVObject("articleObj").getString("sourceurl") : "");
+			appTopDTO.setSourceTitilePic(null != tmp.getAVObject("articleObj") ? tmp.getAVObject("articleObj").getString("sourceTitlePic") : "");
+			appTopDTO.setTitle(null != tmp.getAVObject("articleObj") ? tmp.getAVObject("articleObj").getString("title") : "");
 
 
 			List<ImageInfoDTO> titlePicInfo = new ArrayList<ImageInfoDTO>();
