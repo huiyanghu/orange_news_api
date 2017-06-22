@@ -362,19 +362,24 @@ public class AppTopDTO {
 			appTopDTO.setCreatTime(DateUtil.formatFromDate(DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS,tmp.getCreatedAt()));
 
 //			appTopDTO.setCreaterId(tmp.getAVObject("sysUserObj").getObjectId());
-			appTopDTO.setKeyWords(tmp.getAVObject("articleObj").getString("keyWords"));
-			appTopDTO.setAbstracts(tmp.getAVObject("articleObj").getString("abstracts"));
-			appTopDTO.setArticleId(tmp.getAVObject("articleObj").getObjectId());
-			appTopDTO.setAttr(tmp.getAVObject("articleObj").getInt("attr"));
-			appTopDTO.setAuthor(tmp.getAVObject("articleObj").getString("author"));
-			appTopDTO.setCommentNum(tmp.getAVObject("articleObj").getInt("commentNum"));
-			appTopDTO.setImgCount(tmp.getAVObject("articleObj").getInt("imgCount"));
-			appTopDTO.setLinkUrl(tmp.getAVObject("articleObj").getString("linkUrl"));
-			appTopDTO.setMediaLink(tmp.getAVObject("articleObj").getString("mediaLink"));
-			appTopDTO.setWriter(tmp.getAVObject("articleObj").getString("writer"));
+			List<AVFile> titlePicObjList = new ArrayList<>();
+			if (tmp.getAVObject("articleObj")!=null){
+				appTopDTO.setKeyWords(tmp.getAVObject("articleObj").getString("keyWords"));
+				appTopDTO.setAbstracts(tmp.getAVObject("articleObj").getString("abstracts"));
+				appTopDTO.setArticleId(tmp.getAVObject("articleObj").getObjectId());
+				appTopDTO.setAttr(tmp.getAVObject("articleObj").getInt("attr"));
+				appTopDTO.setAuthor(tmp.getAVObject("articleObj").getString("author"));
+				appTopDTO.setCommentNum(tmp.getAVObject("articleObj").getInt("commentNum"));
+				appTopDTO.setImgCount(tmp.getAVObject("articleObj").getInt("imgCount"));
+				appTopDTO.setLinkUrl(tmp.getAVObject("articleObj").getString("linkUrl"));
+				appTopDTO.setMediaLink(tmp.getAVObject("articleObj").getString("mediaLink"));
+				appTopDTO.setWriter(tmp.getAVObject("articleObj").getString("writer"));
+				titlePicObjList = (List<AVFile>) tmp.getAVObject("articleObj").get("titlePicObjArr");
+			}
+
 
 			List<ImageInfoDTO> titlePicInfo = new ArrayList<ImageInfoDTO>();
-			List<AVFile> titlePicObjList = (List<AVFile>) tmp.getAVObject("articleObj").get("titlePicObjArr");
+
 			if(null != titlePicObjList && titlePicObjList.size() > 0){
 				ImageInfoDTO imageInfoDTO = null;
 				for (AVFile titlePic : titlePicObjList) {

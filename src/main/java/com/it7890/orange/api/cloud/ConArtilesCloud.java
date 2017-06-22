@@ -37,6 +37,7 @@ public class ConArtilesCloud {
 													@EngineFunctionParam("topCreateTime") long topCreateTime,
 													@EngineFunctionParam("direct") int direct,
 													@EngineFunctionParam("limit") int limit) throws AVException, ParseException {
+		logger.info("临时测试临时测试临时测试临时测试临时测试临时测试临时测试");
 		int resultCode = Constants.CODE_SUCCESS;
 		String resultMsg = "成功";
 		Map<String, Object> resultMap = new HashMap<String, Object>();
@@ -77,6 +78,7 @@ public class ConArtilesCloud {
 												 @EngineFunctionParam("topCreateTime") long topCreateTime,
 												 @EngineFunctionParam("direct") int direct,
 												 @EngineFunctionParam("limit") int limit) throws AVException, ParseException {
+		logger.info("临时测试临时测试临时测试临时测试临时测试临时测试临时测试");
 		int resultCode = Constants.CODE_SUCCESS;
 		String resultMsg = "成功";
 		Map<String, Object> resultMap = new HashMap<String, Object>();
