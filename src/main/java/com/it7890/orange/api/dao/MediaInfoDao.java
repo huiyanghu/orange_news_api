@@ -15,7 +15,7 @@ import java.util.List;
  **/
 public class MediaInfoDao {
     private static Logger logger = LogManager.getLogger(MediaInfoDao.class);
-    public AVObject getByFileId(String fileId){
+    public List<AVObject> getByFileId(String fileId){
         List<AVObject> l = null;
         AVQuery<AVObject> query = new AVQuery<AVObject>("MediaInfo");
         query.whereEqualTo("fileObj", AVObject.createWithoutData("_File", fileId));
@@ -24,6 +24,6 @@ public class MediaInfoDao {
         } catch (AVException e) {
             e.printStackTrace();
         }
-        return l.get(0);
+        return l;
     }
 }
