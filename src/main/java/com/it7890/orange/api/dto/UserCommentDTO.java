@@ -14,6 +14,7 @@ public class UserCommentDTO{
 	private int status;
 	private String userName;
 	private String userEmail;
+	private String nickName;
 
 	public String getCommentId() {
 		return commentId;
@@ -79,6 +80,14 @@ public class UserCommentDTO{
 		this.userEmail = userEmail;
 	}
 
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+
 	public static UserCommentDTO AVOBbjToDTO(AVObject tmp) {
 		UserCommentDTO userCommentDTO = null;
 		if(null != tmp) {
@@ -87,6 +96,7 @@ public class UserCommentDTO{
 			userCommentDTO.setUserId(tmp.getAVObject("userObj").getObjectId());
 			userCommentDTO.setUserName(tmp.getAVObject("userObj").getString("username"));
 			userCommentDTO.setUserEmail(tmp.getAVObject("userObj").getString("email"));
+			userCommentDTO.setNickName(tmp.getAVObject("userObj").getString("nickName"));
 			userCommentDTO.setArticleId(tmp.getAVObject("articleObj").getObjectId());
 			userCommentDTO.setStatus(tmp.getInt("status"));
 			userCommentDTO.setContent(tmp.getString("content"));
