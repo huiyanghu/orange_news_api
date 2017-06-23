@@ -3,12 +3,16 @@ package com.it7890.orange.api.dto;
 
 import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVObject;
+import com.it7890.orange.api.cloud.AppTopCloud;
 import com.it7890.orange.api.dao.MediaInfoDao;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ImageInfoDTO {
+    private static Logger logger = LogManager.getLogger(ImageInfoDTO.class);
     private String ImageUrl;
     private int ImageWidth;
     private int ImageHeight;
@@ -43,6 +47,7 @@ public class ImageInfoDTO {
         ImageInfoDTO imageInfoDTO = null;
         for (AVFile titlePic : titlePics) {
             imageInfoDTO = new ImageInfoDTO();
+            logger.info("fileid===={}",titlePic.getObjectId());
             AVObject avoFile = new MediaInfoDao().getByFileId(titlePic.getObjectId());
             imageInfoDTO.setImageUrl(titlePic.getUrl());
             imageInfoDTO.setImageWidth(avoFile.getInt("width"));
