@@ -244,27 +244,39 @@ public class UserCloud {
 	public static String bindEmial(@EngineFunctionParam("email") String email) {
 		int resultCode = Constants.CODE_SUCCESS;
 		String resultMsg = "成功";
-		if (StringUtil.isNotEmpty(email)) {
-			boolean isBind = new UserDao().getIsBindEmail(email);
-			if (isBind) {
-				resultCode = Constants.CODE_CANNOT_FIND;
-				resultMsg = "该邮箱已被绑定";
-			} else {
-//				AVUser.requestEmailVerify(email);
-				AVUser.requestEmailVerifyInBackground(email, new RequestEmailVerifyCallback() {
-					public void done(AVException e) {
-						if (e!=null){
-							logger.info(e.getMessage());
-						}else {
-							logger.info("ok");
+		AVUser currentUser = AVUser.getCurrentUser();
+		if (currentUser==null){
+			if (StringUtil.isNotEmpty(email)) {
+				boolean isBind = new UserDao().getIsBindEmail(email);
+				if (isBind) {
+					resultCode = Constants.CODE_CANNOT_FIND;
+					resultMsg = "该邮箱已被绑定";
+				} else {
+					AVUser.requestEmailVerify(email);
+					AVUser.requestEmailVerifyInBackground(email, new RequestEmailVerifyCallback() {
+						public void done(AVException e) {
+							if (e!=null){
+								logger.info(e.getMessage());
+							}else {
+								logger.info("ok");
+							}
 						}
-					}
-				});
+					});
+
+//					RequestEmail requestEmail = new RequestEmail();
+//					AVUser.requestEmailVerifyInBackground(email, requestEmail);
+//					int success = requestEmail.success;
+//					logger.info("ggggggggggg{}",success);
+				}
+			} else {
+				resultCode = Constants.CODE_PARAMS_FAIL;
+				resultMsg = "参数错误";
 			}
-		} else {
-			resultCode = Constants.CODE_PARAMS_FAIL;
-			resultMsg = "参数错误";
+		}else {
+			resultCode = Constants.CODE_CANNOT_FIND;
+			resultMsg = "请登录";
 		}
+
 
 		Map<String, Object> resultMap = new HashMap<>();
 		resultMap.put("code", resultCode);
@@ -312,3 +324,24 @@ public class UserCloud {
 		return userDto;
 	}
 }
+
+//class RequestEmail extends RequestEmailVerifyCallback {
+//
+//	public int success;
+//	@Override
+//	public void done(AVException e) {
+//		if (e!=null){
+//			success = 1;
+//		} else {
+//			success = 9;
+//		}
+//	}
+//
+//	public int getSuccess() {
+//		return success;
+//	}
+//
+//	public void setSuccess(int success) {
+//		this.success = success;
+//	}
+//}
