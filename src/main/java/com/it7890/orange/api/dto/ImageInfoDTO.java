@@ -47,10 +47,10 @@ public class ImageInfoDTO {
         ImageInfoDTO imageInfoDTO = null;
         for (AVFile titlePic : titlePics) {
             imageInfoDTO = new ImageInfoDTO();
-            AVObject avoFile = new MediaInfoDao().getByFileId(titlePic.getObjectId());
+            List<AVObject> avoFile = new MediaInfoDao().getByFileId(titlePic.getObjectId());
             imageInfoDTO.setImageUrl(titlePic.getUrl());
-            imageInfoDTO.setImageWidth(avoFile.getInt("width"));
-            imageInfoDTO.setImageHeight(avoFile.getInt("height"));
+            imageInfoDTO.setImageWidth(avoFile!=null&&avoFile.size()>0 ? avoFile.get(0).getInt("width"):30);
+            imageInfoDTO.setImageHeight(avoFile!=null&&avoFile.size()>0 ? avoFile.get(0).getInt("height"):30);
             titlePicInfo.add(imageInfoDTO);
         }
         return titlePicInfo;
