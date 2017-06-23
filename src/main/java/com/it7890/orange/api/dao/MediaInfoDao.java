@@ -18,7 +18,6 @@ public class MediaInfoDao {
     public AVObject getByFileId(String fileId){
         List<AVObject> l = null;
         AVQuery<AVObject> query = new AVQuery<AVObject>("MediaInfo");
-        logger.info("fileId={}",fileId);
         query.whereEqualTo("fileObj", AVObject.createWithoutData("_File", fileId));
         try {
             l = query.find();

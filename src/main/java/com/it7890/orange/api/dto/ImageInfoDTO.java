@@ -47,7 +47,6 @@ public class ImageInfoDTO {
         ImageInfoDTO imageInfoDTO = null;
         for (AVFile titlePic : titlePics) {
             imageInfoDTO = new ImageInfoDTO();
-            logger.info("fileid===={}",titlePic.getObjectId());
             AVObject avoFile = new MediaInfoDao().getByFileId(titlePic.getObjectId());
             imageInfoDTO.setImageUrl(titlePic.getUrl());
             imageInfoDTO.setImageWidth(avoFile.getInt("width"));
