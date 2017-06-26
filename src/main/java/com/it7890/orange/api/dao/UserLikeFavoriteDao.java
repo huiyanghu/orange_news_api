@@ -4,6 +4,7 @@ import com.avos.avoscloud.*;
 import com.it7890.orange.api.entity.AppTopics;
 import com.it7890.orange.api.entity.UserLikeFavorite;
 import com.it7890.orange.api.util.DateUtil;
+import com.it7890.orange.api.util.StringUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -43,6 +44,16 @@ public class UserLikeFavoriteDao {
 		} catch (AVException e) {
 			logger.info(e.getMessage());
 			e.printStackTrace();
+		}
+	}
+
+	public void updateAVObject(AVObject avObject) {
+		if (null != avObject && StringUtil.isNotEmpty(avObject.getObjectId())) {
+			try {
+				avObject.save();
+			} catch (AVException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

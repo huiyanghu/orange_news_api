@@ -58,6 +58,31 @@ public class TestCloud {
 //	}
 
 
+	@EngineFunction("updateArticle")
+	public static String updateArticle() {
+		List<AVObject> articleList = new ArrayList<>();
+		try {
+			AVCloudQueryResult queryResult = AVQuery.doCloudQuery("select objectId from GrabDetailRule limit 1000");
+			articleList = (List<AVObject>) queryResult.getResults();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		logger.info("articleContentList length: {}", articleList.size());
+
+		for (AVObject articleInfo : articleList) {
+			articleInfo.put("status", -1);
+		}
+
+		try {
+			AVObject.saveAll(articleList);
+		} catch (AVException e) {
+			e.printStackTrace();
+		}
+
+		return "success";
+	}
+
+
 	@EngineFunction("updateTitlePic")
 	public static String updateTitlePic(@EngineFunctionParam("skip") int skip, @EngineFunctionParam("limit") int limit) {
 		List<AVObject> fileList = new ArrayList<>();

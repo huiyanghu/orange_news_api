@@ -148,9 +148,8 @@ public class UserLikeFivorateCloud {
         }
         if (StringUtils.isNotBlank(objId)) {
             if (StringUtils.isNotBlank(imei)) {
-
                 if (lType == 1) {//点赞,对文章喜欢|不喜欢数操作
-                    List<AVObject> list = getUserFLSize(lType, objId, imei);
+                    List<AVObject> list = getUserFLSize(lType, objId, imei, userId);
                     if (list.size() == 0) {
                         queryConArticleContent.whereEqualTo("articleObj", AVObject.createWithoutData("conarticle", objId));
                         List<AVObject> ls = queryConArticleContent.find();
@@ -178,11 +177,24 @@ public class UserLikeFivorateCloud {
                         avObjectUserLikeFavorite.put("imei", imei);
                         new UserLikeFavoriteDao().saveAVObj(avObjectUserLikeFavorite);
                     } else {
-                        resultCode = Constants.CODE_PARAMS_FAIL;
-                        resultMsg = "您已操作过,不能重复操作";
-                        resultMap.put("code", resultCode);
-                        resultMap.put("msg", resultMsg);
-                        return JSON.toJSONString(resultMap);
+                        AVObject userLikeFavoriteInfo = list.get(0);
+                        int old_status = userLikeFavoriteInfo.getInt("status");
+                        if (old_status == istatus) {
+                            resultCode = Constants.CODE_PARAMS_FAIL;
+                            resultMsg = "您已操作过,不能重复操作";
+                            resultMap.put("code", resultCode);
+                            resultMap.put("msg", resultMsg);
+                            return JSON.toJSONString(resultMap);
+                        } else {
+                            userLikeFavoriteInfo.put("status", istatus);
+                            new UserLikeFavoriteDao().updateAVObject(userLikeFavoriteInfo);
+
+                            if(old_status != 0) {
+                                resultMsg = "点赞成功";
+                            } else {
+                                resultMsg = "不喜欢成功";
+                            }
+                        }
                     }
                 } else {//收藏
                     String[] objIdss = objId.split(",");
@@ -198,7 +210,7 @@ public class UserLikeFivorateCloud {
                         avObjectUserLikeFavorite.put("lType", lType);
                         avObjectUserLikeFavorite.put("status", istatus);
                         avObjectUserLikeFavorite.put("imei", imei);
-                        List<AVObject> list = getUserFLSize(lType, objIds, imei);
+                        List<AVObject> list = getUserFLSize(lType, objIds, imei, userId);
                         if (list.size() > 0) {
                             avObjectUserLikeFavorite.setObjectId(list.get(0).getObjectId());
                             new UserLikeFavoriteDao().saveAVObj(avObjectUserLikeFavorite);
@@ -235,11 +247,16 @@ public class UserLikeFivorateCloud {
         return JSON.toJSONString(resultMap);
     }
 
-    public static List<AVObject> getUserFLSize(int lType, String artId, String imei) throws AVException {
+    public static List<AVObject> getUserFLSize(int lType, String artId, String imei, String userId) throws AVException {
         AVQuery<AVObject> queryUserLikeFavorite = new AVQuery<AVObject>("UserLikeFavorite");
         queryUserLikeFavorite.whereEqualTo("lType", lType);
         queryUserLikeFavorite.whereEqualTo("articleObj", AVObject.createWithoutData("conarticle", artId));
-        queryUserLikeFavorite.whereEqualTo("imei", imei);
+
+        if (StringUtil.isNotEmpty(userId)) {
+            queryUserLikeFavorite.whereEqualTo("userObj", AVObject.createWithoutData("_User", userId));
+        } else {
+            queryUserLikeFavorite.whereEqualTo("imei", imei);
+        }
         return queryUserLikeFavorite.find();
     }
 
