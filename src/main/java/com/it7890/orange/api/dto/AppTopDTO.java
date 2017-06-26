@@ -392,8 +392,8 @@ public class AppTopDTO {
 					query.whereEqualTo("fileObj",AVObject.createWithoutData("_File",titlePic.getObjectId()));
 					List<AVObject> l = query.find();
 					imageInfoDTO.setImageUrl(titlePic.getUrl());
-					imageInfoDTO.setImageWidth(l.get(0).getInt("width"));
-					imageInfoDTO.setImageHeight(l.get(0).getInt("height"));
+					imageInfoDTO.setImageWidth(l!=null&&l.size()>0?l.get(0).getInt("width"):30);
+					imageInfoDTO.setImageHeight(l!=null&&l.size()>0?l.get(0).getInt("height"):30);
 //                    titlePicUrls.add(titlePic.getUrl());
 					titlePicInfo.add(imageInfoDTO);
 				}
