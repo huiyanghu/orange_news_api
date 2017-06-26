@@ -245,7 +245,7 @@ public class UserCloud {
 		int resultCode = Constants.CODE_SUCCESS;
 		String resultMsg = "成功";
 		AVUser currentUser = AVUser.getCurrentUser();
-		if (currentUser==null){
+		if (null != currentUser){
 			if (StringUtil.isNotEmpty(email)) {
 				boolean isBind = new UserDao().getIsBindEmail(email);
 				if (isBind) {
