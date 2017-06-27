@@ -537,10 +537,6 @@ public class ConArticleDTO {
 
             List<ImageInfoDTO> imageInfoDTOs = new ArrayList<>();
             if (titlePics != null&&titlePics.size()>0) {
-                logger.info("文章id===={}",tmp.getObjectId());
-                for (AVFile a : titlePics){
-                    logger.info("fileID==={}",a.getObjectId());
-                }
                 imageInfoDTOs = ImageInfoDTO.buildImageInfoDTO(titlePics);
             }
             conArticleDTO.setTitlePicList(imageInfoDTOs);
