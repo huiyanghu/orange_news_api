@@ -3,6 +3,7 @@ package com.it7890.orange.api.dto;
 import com.avos.avoscloud.AVObject;
 import com.it7890.orange.api.entity.UserLikeFavorite;
 import com.it7890.orange.api.util.DateUtil;
+import org.apache.commons.lang.StringUtils;
 
 public class UserCommentDTO{
 	
@@ -91,12 +92,14 @@ public class UserCommentDTO{
 	public static UserCommentDTO AVOBbjToDTO(AVObject tmp) {
 		UserCommentDTO userCommentDTO = null;
 		if(null != tmp) {
+			String nickName = tmp.getAVObject("userObj").getString("nickName");
+			String email = tmp.getAVObject("userObj").getString("email");
 			userCommentDTO = new UserCommentDTO();
 			userCommentDTO.setCommentId(tmp.getObjectId());
 			userCommentDTO.setUserId(tmp.getAVObject("userObj").getObjectId());
 			userCommentDTO.setUserName(tmp.getAVObject("userObj").getString("username"));
-			userCommentDTO.setUserEmail(tmp.getAVObject("userObj").getString("email"));
-			userCommentDTO.setNickName(tmp.getAVObject("userObj").getString("nickName"));
+			userCommentDTO.setUserEmail(email);
+			userCommentDTO.setNickName(StringUtils.isNotBlank(nickName)?nickName:email.substring(0,email.indexOf("@")));
 			userCommentDTO.setArticleId(tmp.getAVObject("articleObj").getObjectId());
 			userCommentDTO.setStatus(tmp.getInt("status"));
 			userCommentDTO.setContent(tmp.getString("content"));
