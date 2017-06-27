@@ -78,6 +78,9 @@ public class ConArtilesCloud {
 												 @EngineFunctionParam("topCreateTime") long topCreateTime,
 												 @EngineFunctionParam("direct") int direct,
 												 @EngineFunctionParam("limit") int limit) throws AVException, ParseException {
+
+		logger.info("topicID: {}, countryCode: {}, langId: {}, createTime: {}, topCreateTime: {}, direct: {}, limit: {}", new Object[]{topicID, countryCode, langId, createTime, topCreateTime, direct, limit});
+
 		int resultCode = Constants.CODE_SUCCESS;
 		String resultMsg = "成功";
 		Map<String, Object> resultMap = new HashMap<String, Object>();
@@ -120,7 +123,7 @@ public class ConArtilesCloud {
 									   @EngineFunctionParam("imei") String imei) throws AVException, IOException {
 		int resultCode = Constants.CODE_SUCCESS;
 		AVUser user = AVUser.getCurrentUser();
-		int tmpLike = -1;
+		int tmpLike = -2; // 点赞状态 -2未点赞 0喜欢 -1不喜欢
 		int tmpFav = -1;
 		int tmpPub = -1;
 		String resultMsg = "成功";
@@ -135,8 +138,8 @@ public class ConArtilesCloud {
 				resultMsg = "文章内容不存在";
 			}
 			if(StringUtils.isNotBlank(imei)){
-				List<AVObject> lsLike = new UserLikeFavariteServiceImpl().getLikeList(1,articleId,imei);
-				if (lsLike.size()>0){
+				List<AVObject> lsLike = new UserLikeFavariteServiceImpl().getLikeList(1, articleId, imei);
+				if (lsLike.size()>0) {
 					tmpLike = 0;
 				}
 				List<AVObject> lsFav = new UserLikeFavariteServiceImpl().getLikeList(2,articleId,imei);
