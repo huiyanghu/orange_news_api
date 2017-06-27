@@ -119,37 +119,72 @@ public class ConArticleDao {
         }
         queryConarticles.addDescendingOrder("createdAt");
         queryConarticles.limit(limit);
-        if(ltime != 0){
-//            Date date = DateUtil.long2Date(ltime);
-            logger.info("long time====>"+ltime);
 
+        int defaultSkip = 100;  // 跳过指定新闻条数
+        if(ltime != 0){
             if(direct == 0){
-                logger.info("下拉刷新");
-                Date date = DateUtil.long2Date(ltime+1000);
-//                Date date = DateUtil.long2Befor8HoursDate(ltime+1000);
-                logger.info("date time====>"+date);
-                queryConarticles.whereGreaterThan("createdAt",date);
+                // 1、下拉刷新时，新闻条数大于指定条数，则直接从跳过条数开始，否则正常下拉刷新加载
+                int newsArticleCount = getNewsArticleCount(countryCode, tid, ltime);
+                logger.info("newsArticleCount: {}", newsArticleCount);
+                if (newsArticleCount > defaultSkip) {
+                    queryConarticles.skip(defaultSkip);
+                } else {
+                    queryConarticles.skip(newsArticleCount - limit);
+
+                    logger.info("下拉刷新");
+                    Date date = DateUtil.long2Date(ltime + 1000);
+                    logger.info("date time====>" + DateUtil.formatFromDate(DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS, date));
+                    queryConarticles.whereGreaterThan("createdAt", date);
+                }
             } else if (direct == 1) {
                 logger.info("上拉加载");
                 Date date = DateUtil.long2Date(ltime-1000);
-//                Date date = DateUtil.long2Befor8HoursDate(ltime-1000);
                 logger.info("date time====>"+date);
                 queryConarticles.whereLessThan("createdAt",date);
             }
-            try {
-                articlesList = queryConarticles.find();
-            } catch (Exception e) {
-                e.printStackTrace();
-                logger.info(e.getMessage());
-            }
         }else {//首次刷新
-            try {
-                articlesList = queryConarticles.find();
-            } catch (Exception e) {
-                logger.info(e.getMessage());
-            }
+            queryConarticles.skip(defaultSkip);  // 首次加载 跳过指定条数最新新闻
         }
+
+        try {
+            articlesList = queryConarticles.find();
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.info(e.getMessage());
+        }
+
         return articlesList;
+    }
+
+    /**
+     * 查询最新新闻条数
+     * @param countryCode
+     * @param topicId
+     * @param updateTime
+     * @return
+     */
+    public int getNewsArticleCount(String countryCode, String topicId, long updateTime) {
+        AVQuery query = new AVQuery("conarticle");
+        query.include("titlePicObj");
+        query.include("titlePicObjArr");
+        query.include("publicationObj");
+        query.include("topicObj");
+        query.whereEqualTo("status", 0);
+        query.whereEqualTo("countrycode",countryCode);
+        if(StringUtils.isNotBlank(topicId)){
+            query.whereEqualTo("topicObj", AVObject.createWithoutData("AppTopics", topicId));
+        }
+        Date date = DateUtil.long2Date(updateTime + 1000);
+        query.whereGreaterThan("createdAt",date);
+
+        int newArticleCount = 0;
+        try {
+            newArticleCount = query.count();
+        } catch (AVException e) {
+            e.printStackTrace();
+        }
+
+        return newArticleCount;
     }
 
 

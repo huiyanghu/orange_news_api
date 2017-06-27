@@ -95,7 +95,7 @@ public class ConArtilesCloud {
 		}
 
 		if (StringUtils.isNotEmpty(topicID)){
-			resArtDTOList = new ConArticleServiceImpl().getTopicsArticlesList(countryCode,topicID, createTime,direct,limit);
+			resArtDTOList = new ConArticleServiceImpl().getTopicsArticlesList(countryCode, topicID, createTime, direct, limit);
 			if(resArtDTOList!=null){
 				resultMap.put("artsList", resArtDTOList);
 			}else {
