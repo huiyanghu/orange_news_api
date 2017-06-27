@@ -9,7 +9,7 @@ import java.util.List;
 public interface IUserLikeFavoriteService {
 	public List<UserLikeFavoriteDTO> getUserLFList(int lType,String artId,String userId);
 
-	public List<AVObject> getLikeList(int lType,String artId,String imei);
+	public List<AVObject> getLikeList(int lType,String artId,String imei, String userId);
 
 	public List<UserLikeFavoriteDTO> getFavList(AVUser user, String imei, long createTime);
 }

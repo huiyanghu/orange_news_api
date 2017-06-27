@@ -123,6 +123,11 @@ public class ConArtilesCloud {
 									   @EngineFunctionParam("imei") String imei) throws AVException, IOException {
 		int resultCode = Constants.CODE_SUCCESS;
 		AVUser user = AVUser.getCurrentUser();
+		String userId = "";
+		if (null != user) {
+			userId = user.getObjectId();
+		}
+
 		int tmpLike = -2; // 点赞状态 -2未点赞 0喜欢 -1不喜欢
 		int tmpFav = -1;
 		int tmpPub = -1;
@@ -138,11 +143,11 @@ public class ConArtilesCloud {
 				resultMsg = "文章内容不存在";
 			}
 			if(StringUtils.isNotBlank(imei)){
-				List<AVObject> lsLike = new UserLikeFavariteServiceImpl().getLikeList(1, articleId, imei);
+				List<AVObject> lsLike = new UserLikeFavariteServiceImpl().getLikeList(1, articleId, imei, userId);
 				if (lsLike.size()>0) {
-					tmpLike = 0;
+					tmpLike = lsLike.get(0).getInt("status");
 				}
-				List<AVObject> lsFav = new UserLikeFavariteServiceImpl().getLikeList(2,articleId,imei);
+				List<AVObject> lsFav = new UserLikeFavariteServiceImpl().getLikeList(2,articleId,imei, userId);
 				if (lsFav.size()>0){
 					tmpFav = 0;
 				}

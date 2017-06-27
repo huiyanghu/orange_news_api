@@ -57,13 +57,9 @@ public class UserLikeFavoriteDao {
 		}
 	}
 
-	public List<AVObject> getLikeStatusByArtIdAndImei(int lType,String artId,String imei){
-		AVUser avUser = AVUser.getCurrentUser();
-		String userId = "";
+	public List<AVObject> getLikeStatusByArtIdAndImei(int lType,String artId,String imei, String userId){
 		List<AVObject> ls = new ArrayList<>();
-		if(avUser!=null){
-			userId=avUser.getObjectId();
-		}
+
 		AVQuery avQuery = new AVQuery("UserLikeFavorite");
 		if (StringUtils.isNotBlank(userId)){
 			avQuery.whereEqualTo("userObj",AVObject.createWithoutData("_User",userId));

@@ -20,8 +20,8 @@ public class UserLikeFavariteServiceImpl implements IUserLikeFavoriteService {
 	}
 
 	@Override
-	public List<AVObject> getLikeList(int lType, String artId, String imei) {
-		return new UserLikeFavoriteDao().getLikeStatusByArtIdAndImei(lType,artId,imei);
+	public List<AVObject> getLikeList(int lType, String artId, String imei, String userId) {
+		return new UserLikeFavoriteDao().getLikeStatusByArtIdAndImei(lType,artId,imei, userId);
 	}
 
 	@Override
