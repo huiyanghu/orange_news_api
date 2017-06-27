@@ -122,18 +122,46 @@ public class UserCloud {
 		return JSON.toJSONString(resultMap);
 	}
 
+//	@EngineFunction("forgotPassword")
+//	public static String forgotPassword(@EngineFunctionParam("email") String email) {
+//		int resultCode = Constants.CODE_SUCCESS;
+//		String resultMsg = "成功";
+//
+//		if (StringUtil.isNotEmpty(email)) {
+//			boolean isExist = new UserServiceImpl().getIsExistEmail(email);
+//			if (isExist) {
+//				AVUser.requestPasswordReset(email);
+//			} else {
+//				resultCode = Constants.CODE_CANNOT_FIND;
+//				resultMsg = "该邮箱未注册";
+//			}
+//		} else {
+//			resultCode = Constants.CODE_PARAMS_FAIL;
+//			resultMsg = "参数错误";
+//		}
+//
+//		Map<String, Object> resultMap = new HashMap<>();
+//		resultMap.put("code", resultCode);
+//		resultMap.put("msg", resultMsg);
+//		return JSON.toJSONString(resultMap);
+//	}
 	@EngineFunction("forgotPassword")
-	public static String forgotPassword(@EngineFunctionParam("email") String email) {
+	public static String forgotPassword(@EngineFunctionParam("email") String email,
+										@EngineFunctionParam("newPassWord") String newPassWord) {
 		int resultCode = Constants.CODE_SUCCESS;
 		String resultMsg = "成功";
 
 		if (StringUtil.isNotEmpty(email)) {
-			boolean isExist = new UserServiceImpl().getIsExistEmail(email);
-			if (isExist) {
+			AVObject avObject = new AVObject("ResetPassLogs");
+			avObject.put("email",email);
+			avObject.put("newPassWord",newPassWord);
+			try {
+				avObject.save();
 				AVUser.requestPasswordReset(email);
-			} else {
-				resultCode = Constants.CODE_CANNOT_FIND;
-				resultMsg = "该邮箱未注册";
+			} catch (AVException e) {
+				e.printStackTrace();
+				resultCode = Constants.CODE_SERVER_FAIL;
+				resultMsg = "服务器错误";
 			}
 		} else {
 			resultCode = Constants.CODE_PARAMS_FAIL;

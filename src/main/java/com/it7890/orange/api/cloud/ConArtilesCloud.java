@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSON;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
+import com.avos.avoscloud.AVUser;
 import com.it7890.orange.api.dao.ConArticleDao;
 import com.it7890.orange.api.dao.HbCountrysDao;
 import com.it7890.orange.api.dao.PubicationDao;
@@ -118,6 +119,7 @@ public class ConArtilesCloud {
 	public static String getArtContent(@EngineFunctionParam("articleId") String articleId,
 									   @EngineFunctionParam("imei") String imei) throws AVException, IOException {
 		int resultCode = Constants.CODE_SUCCESS;
+		AVUser user = AVUser.getCurrentUser();
 		int tmpLike = -1;
 		int tmpFav = -1;
 		int tmpPub = -1;

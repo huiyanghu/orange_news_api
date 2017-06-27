@@ -127,8 +127,9 @@ public class UserRssPublicationCloud {
         AVQuery avQueryUserRssPublication = new AVQuery("UserRssPublication");
         if (user != null) {
             avQueryUserRssPublication.whereEqualTo("userObj", AVObject.createWithoutData("_User", user.getObjectId()));
+        }else{
+            avQueryUserRssPublication.whereEqualTo("imei", imei);
         }
-        avQueryUserRssPublication.whereEqualTo("imei", imei);
         if (createTime != 0) {
 //            avQueryUserRssPublication.whereLessThan("createdAt", DateUtil.Long2StringUTC(createTime, DateUtil.FORMATER_UTC_YYYY_MM_DD_HH_MM_SS_1));
             avQueryUserRssPublication.whereLessThan("createdAt",DateUtil.long2Date(createTime-1000));

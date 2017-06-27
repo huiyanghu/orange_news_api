@@ -14,10 +14,17 @@ public class UserRssPublicationDao {
 	private static Logger logger = LogManager.getLogger(UserRssPublicationDao.class);
 
 	public List<AVObject> getList(String pid,String imei) {
+		AVUser user = AVUser.getCurrentUser();
 		List<AVObject> avos = new ArrayList<>();
 		AVQuery avQuery = new AVQuery("UserRssPublication");
-		avQuery.whereEqualTo("publicationObj",AVObject.createWithoutData("con_publications",pid));
-		avQuery.whereEqualTo("imei",imei);
+		if (StringUtils.isNotBlank(pid)){
+			avQuery.whereEqualTo("publicationObj",AVObject.createWithoutData("con_publications",pid));
+		}
+		if (user!=null){
+			avQuery.whereEqualTo("userObj",AVObject.createWithoutData("_User",user.getObjectId()));
+		}else if(StringUtils.isNotBlank(imei)){
+			avQuery.whereEqualTo("imei",imei);
+		}
 		try {
 			avos = avQuery.find();
 		} catch (AVException e) {

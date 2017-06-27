@@ -65,11 +65,10 @@ public class UserLikeFavoriteDao {
 			userId=avUser.getObjectId();
 		}
 		AVQuery avQuery = new AVQuery("UserLikeFavorite");
-		if(StringUtils.isNotBlank(imei)){
-			avQuery.whereEqualTo("imei",imei);
-		}
 		if (StringUtils.isNotBlank(userId)){
 			avQuery.whereEqualTo("userObj",AVObject.createWithoutData("_User",userId));
+		}else if(StringUtils.isNotBlank(imei)){
+			avQuery.whereEqualTo("imei",imei);
 		}
 		avQuery.whereEqualTo("lType",lType);
 		if (lType==2){
