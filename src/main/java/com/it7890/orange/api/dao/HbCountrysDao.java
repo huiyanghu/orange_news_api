@@ -33,7 +33,7 @@ public class HbCountrysDao {
     public List<AVObject> findCountryList() {
         List<AVObject> countryList = new ArrayList<>();
         try {
-            AVCloudQueryResult queryResult = AVQuery.doCloudQuery("select include iconFileObj, * from hb_countrys where status = 1 order by orderCode asc limit 1000");
+            AVCloudQueryResult queryResult = AVQuery.doCloudQuery("select include iconFileObj, * from hb_countrys where status = 0 order by orderCode asc limit 1000");
             countryList = (List<AVObject>) queryResult.getResults();
         } catch (Exception e) {
             e.printStackTrace();
