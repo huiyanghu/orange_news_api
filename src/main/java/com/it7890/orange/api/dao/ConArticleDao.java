@@ -169,7 +169,11 @@ public class ConArticleDao {
         AVQuery query = new AVQuery("conarticle");
         query.whereEqualTo("status", 0);
         query.whereEqualTo("countrycode",countryCode);
-        query.whereEqualTo("topicObj", AVObject.createWithoutData("AppTopics", topicId));
+
+        if(StringUtils.isNotBlank(topicId)) {
+            query.whereEqualTo("topicObj", AVObject.createWithoutData("AppTopics", topicId));
+        }
+
         Date date = DateUtil.long2Date(updateTime + 1000);
         query.whereGreaterThan("createdAt", date);
         logger.info("date: {}, date str: {}", date, DateUtil.formatFromDate(DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS, date));
