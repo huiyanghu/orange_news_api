@@ -3,10 +3,7 @@ package com.it7890.orange.api.cloud;
 import cn.leancloud.EngineFunction;
 import cn.leancloud.EngineFunctionParam;
 import com.alibaba.fastjson.JSON;
-import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVObject;
-import com.avos.avoscloud.AVUser;
-import com.avos.avoscloud.RequestEmailVerifyCallback;
+import com.avos.avoscloud.*;
 import com.it7890.orange.api.dao.UserDao;
 import com.it7890.orange.api.dto.UserDTO;
 import com.it7890.orange.api.service.impl.FileServiceImpl;
@@ -131,7 +128,15 @@ public class UserCloud {
 		if (StringUtil.isNotEmpty(email)) {
 			boolean isBind = new UserDao().getIsBindEmail(email);
 			if (isBind) {
-				AVUser.requestPasswordReset(email);
+				AVUser.requestPasswordResetInBackground(email, new RequestPasswordResetCallback() {
+					public void done(AVException e) {
+						if (e!=null){
+							logger.info("重置密码邮件发送失败，cause: {}, code: {}", e.getMessage(), e.getCode());
+						}else {
+							logger.info("重置密码邮件发送成功：{}", email);
+						}
+					}
+				});
 			} else {
 				resultCode = Constants.CODE_CANNOT_FIND;
 				resultMsg = "该邮箱未被绑定";
@@ -253,13 +258,12 @@ public class UserCloud {
 					resultCode = Constants.CODE_CANNOT_FIND;
 					resultMsg = "该邮箱已被绑定";
 				} else {
-//					AVUser.requestEmailVerify(email);
 					AVUser.requestEmailVerifyInBackground(email, new RequestEmailVerifyCallback() {
 						public void done(AVException e) {
 							if (e!=null){
-								logger.info(e.getMessage());
+								logger.info("发送绑定邮箱邮件失败，cause: {}， code: {}", e.getMessage(), e.getCode());
 							}else {
-								logger.info("ok");
+								logger.info("发送绑定邮箱邮件成功：{}", email);
 							}
 						}
 					});
