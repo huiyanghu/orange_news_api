@@ -122,29 +122,6 @@ public class UserCloud {
 		return JSON.toJSONString(resultMap);
 	}
 
-//	@EngineFunction("forgotPassword")
-//	public static String forgotPassword(@EngineFunctionParam("email") String email) {
-//		int resultCode = Constants.CODE_SUCCESS;
-//		String resultMsg = "成功";
-//
-//		if (StringUtil.isNotEmpty(email)) {
-//			boolean isExist = new UserServiceImpl().getIsExistEmail(email);
-//			if (isExist) {
-//				AVUser.requestPasswordReset(email);
-//			} else {
-//				resultCode = Constants.CODE_CANNOT_FIND;
-//				resultMsg = "该邮箱未注册";
-//			}
-//		} else {
-//			resultCode = Constants.CODE_PARAMS_FAIL;
-//			resultMsg = "参数错误";
-//		}
-//
-//		Map<String, Object> resultMap = new HashMap<>();
-//		resultMap.put("code", resultCode);
-//		resultMap.put("msg", resultMsg);
-//		return JSON.toJSONString(resultMap);
-//	}
 	@EngineFunction("forgotPassword")
 	public static String forgotPassword(@EngineFunctionParam("email") String email,
 										@EngineFunctionParam("newPassWord") String newPassWord) {
@@ -152,16 +129,12 @@ public class UserCloud {
 		String resultMsg = "成功";
 
 		if (StringUtil.isNotEmpty(email)) {
-			AVObject avObject = new AVObject("ResetPassLogs");
-			avObject.put("email",email);
-			avObject.put("newPassWord",newPassWord);
-			try {
-				avObject.save();
+			boolean isBind = new UserDao().getIsBindEmail(email);
+			if (isBind) {
 				AVUser.requestPasswordReset(email);
-			} catch (AVException e) {
-				e.printStackTrace();
-				resultCode = Constants.CODE_SERVER_FAIL;
-				resultMsg = "服务器错误";
+			} else {
+				resultCode = Constants.CODE_CANNOT_FIND;
+				resultMsg = "该邮箱未被绑定";
 			}
 		} else {
 			resultCode = Constants.CODE_PARAMS_FAIL;
@@ -280,7 +253,7 @@ public class UserCloud {
 					resultCode = Constants.CODE_CANNOT_FIND;
 					resultMsg = "该邮箱已被绑定";
 				} else {
-					AVUser.requestEmailVerify(email);
+//					AVUser.requestEmailVerify(email);
 					AVUser.requestEmailVerifyInBackground(email, new RequestEmailVerifyCallback() {
 						public void done(AVException e) {
 							if (e!=null){
@@ -290,11 +263,6 @@ public class UserCloud {
 							}
 						}
 					});
-
-//					RequestEmail requestEmail = new RequestEmail();
-//					AVUser.requestEmailVerifyInBackground(email, requestEmail);
-//					int success = requestEmail.success;
-//					logger.info("ggggggggggg{}",success);
 				}
 			} else {
 				resultCode = Constants.CODE_PARAMS_FAIL;
@@ -352,24 +320,3 @@ public class UserCloud {
 		return userDto;
 	}
 }
-
-//class RequestEmail extends RequestEmailVerifyCallback {
-//
-//	public int success;
-//	@Override
-//	public void done(AVException e) {
-//		if (e!=null){
-//			success = 1;
-//		} else {
-//			success = 9;
-//		}
-//	}
-//
-//	public int getSuccess() {
-//		return success;
-//	}
-//
-//	public void setSuccess(int success) {
-//		this.success = success;
-//	}
-//}
