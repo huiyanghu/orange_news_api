@@ -164,20 +164,15 @@ public class ConArticleDao {
      * @return
      */
     public int getNewsArticleCount(String countryCode, String topicId, long updateTime) {
+        int newArticleCount = 0;
+
         AVQuery query = new AVQuery("conarticle");
-        query.include("titlePicObj");
-        query.include("titlePicObjArr");
-        query.include("publicationObj");
-        query.include("topicObj");
         query.whereEqualTo("status", 0);
         query.whereEqualTo("countrycode",countryCode);
-        if(StringUtils.isNotBlank(topicId)){
-            query.whereEqualTo("topicObj", AVObject.createWithoutData("AppTopics", topicId));
-        }
+        query.whereEqualTo("topicObj", AVObject.createWithoutData("AppTopics", topicId));
         Date date = DateUtil.long2Date(updateTime + 1000);
-        query.whereGreaterThan("createdAt",date);
-
-        int newArticleCount = 0;
+        query.whereGreaterThan("createdAt", date);
+        logger.info("date: {}, date str: {}", date, DateUtil.formatFromDate(DateUtil.FORMATER_YYYY_MM_DD_HH_MM_SS, date));
         try {
             newArticleCount = query.count();
         } catch (AVException e) {
