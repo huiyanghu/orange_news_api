@@ -168,6 +168,7 @@ public class UserCloud {
 					avatarObj.fetch();
 				} catch (AVException e) {
 					e.printStackTrace();
+					logger.warn("用户头像对象存在，但是属性取不到，{}", e.getMessage());
 				}
 			}
 		}
@@ -315,7 +316,11 @@ public class UserCloud {
 			userDto.setUsername(userInfo.getString("username"));
 			userDto.setEmail(userInfo.getString("email"));
 
-			userDto.setAvatarUrl(null != userInfo.getAVObject("avatarObj") ? userInfo.getAVObject("avatarObj").getString("url") : "");
+			String avatarUrl = "";
+			if (null != userInfo.getAVObject("avatarObj") && StringUtil.isNotEmpty(userInfo.getAVObject("avatarObj").getString("url"))) {
+				avatarUrl = userInfo.getAVObject("avatarObj").getString("url");
+			}
+			userDto.setAvatarUrl(avatarUrl);
 			userDto.setNickName(StringUtil.isNotEmpty(userInfo.getString("nickName")) ? userInfo.getString("nickName") : "");
 			userDto.setSex(null != userInfo.get("sex") ? userInfo.getInt("sex") : -1);
 			userDto.setLoadSign(null != userInfo.get("loadSign") ? userInfo.getInt("loadSign") : 0);
