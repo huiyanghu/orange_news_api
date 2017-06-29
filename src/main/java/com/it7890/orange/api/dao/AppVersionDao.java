@@ -13,7 +13,7 @@ public class AppVersionDao {
 	public AVObject getNewAppVersion(String channelId, String appId, int versionCode) {
 		AVObject newAppVersion = null;
 		if (StringUtil.isNotEmpty(channelId) && StringUtil.isNotEmpty(appId) && versionCode > 0) {
-			String cql = "select * from AppVersion where channelObj = pointer('ConChannel', ?) and appId = ? and versionCode > ?";
+			String cql = "select * from AppVersion where channelId = ? and appId = ? and versionCode > ?";
 			try {
 				AVCloudQueryResult queryResult = AVQuery.doCloudQuery(cql, new Object[]{channelId, appId, versionCode});
 				if (null != queryResult.getResults() && queryResult.getResults().size() > 0) {
