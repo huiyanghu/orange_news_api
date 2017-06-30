@@ -91,8 +91,8 @@ public class UserCloud {
 					} catch (AVException e) {
 						e.printStackTrace();
 						logger.info("用户修改密码失败，errorCode:{}, cause: {}", e.getCode(), e);
-						resultCode = Constants.CODE_SERVER_FAIL;
-						resultMsg = "操作失败，请稍后再试";
+						resultCode = Constants.CODE_USER_PASSWORD_FAIL;
+						resultMsg = "原密码错误";
 					}
 				} else {
 					resultCode = Constants.CODE_AUTHORIZE_FAIL;
