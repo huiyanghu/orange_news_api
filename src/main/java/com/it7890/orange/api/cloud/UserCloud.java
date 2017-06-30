@@ -120,7 +120,6 @@ public class UserCloud {
 		String resultMsg = "成功";
 
 		if (StringUtil.isNotEmpty(email)) {
-//			boolean isBind = new UserDao().getIsBindEmail(email);
 			boolean isExists = new UserDao().getIsExistEmail(email);
 			if (isExists) {
 				AVUser.requestPasswordResetInBackground(email, new RequestPasswordResetCallback() {
@@ -134,7 +133,6 @@ public class UserCloud {
 				});
 			} else {
 				resultCode = Constants.CODE_CANNOT_FIND;
-//				resultMsg = "该邮箱未被绑定";
 				resultMsg = "该邮箱未注册";
 			}
 		} else {
