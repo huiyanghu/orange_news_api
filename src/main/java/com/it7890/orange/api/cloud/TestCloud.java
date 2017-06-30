@@ -58,29 +58,37 @@ public class TestCloud {
 //	}
 
 
-	@EngineFunction("updateArticle")
-	public static String updateArticle() {
-		List<AVObject> articleList = new ArrayList<>();
-		try {
-			AVCloudQueryResult queryResult = AVQuery.doCloudQuery("select objectId from GrabDetailRule limit 1000");
-			articleList = (List<AVObject>) queryResult.getResults();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		logger.info("articleContentList length: {}", articleList.size());
-
-		for (AVObject articleInfo : articleList) {
-			articleInfo.put("status", -1);
-		}
-
-		try {
-			AVObject.saveAll(articleList);
-		} catch (AVException e) {
-			e.printStackTrace();
-		}
-
-		return "success";
-	}
+//	@EngineFunction("updateArticle")
+//	public static String updateArticle(@EngineFunctionParam("skip") int skip) {
+//		try {
+//			AVCloudQueryResult queryResult = AVQuery.doCloudQuery("select objectId from conarticle where grabListRuleObj = pointer('GrabListRule', '594b9b49728670006577054c') order by createdAt limit ?, 30", skip);
+//			List<AVObject> articleList = (List<AVObject>) queryResult.getResults();
+//			logger.info("articleList length: {}", articleList.size());
+//
+//			AVQuery<AVObject> query = AVQuery.getQuery("con_articles_content");
+//			query.whereContainedIn("articleObj", articleList);
+//			List<AVObject> acList = query.find();
+//			logger.info("articleContentList length: {}", acList.size());
+//
+//			for (AVObject acObj : acList) {
+//				String content = acObj.getString("content");
+//
+//				if (content.contains("<!--揪in bottom-->")) {
+//					content = content.substring(0, content.indexOf("<!--揪in bottom-->"));
+//					content += "</p>";
+//				}
+//				content = content.replaceAll("&nbsp;", "");
+//				content = content.replaceAll("<br>", "");
+//				acObj.put("content", content);
+//			}
+//			AVObject.saveAll(acList);
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//
+//		return "success";
+//	}
 
 
 	@EngineFunction("updateTitlePic")

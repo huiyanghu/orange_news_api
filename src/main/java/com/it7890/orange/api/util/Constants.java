@@ -21,6 +21,11 @@ public class Constants {
 	/** 无效授权 **/
 	public final static int CODE_AUTHORIZE_FAIL = 102;
 
+	/** 密码错误 **/
+	public final static int CODE_USER_PASSWORD_FAIL = 10001;
+	/** 两次密码不相等 **/
+	public final static int CODE_USER_PASSWORD_NOT_EQUALS = 10002;
+
 	/**-------------------- Leancloud错误码 --------------------**/
 	/** 用户名为空 **/
 	public final static int CODE_USERNAME_EMPTY = 200;
